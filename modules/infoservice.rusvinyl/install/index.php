@@ -102,14 +102,35 @@ class infoservice_rusvinyl extends CModule
          * Настройки для создания типов инфоблока. В "значении" указываются параметры для создания типа инфоблока.
          * Обязательно нужен параметр LANG_CODE с именем языковой константы для названия
          */
-        'IBlockTypes' => [],
+        'IBlockTypes' => [
+            'INFS_RUSVINYL_IBLOCK_TYPE' => [
+                'LANG_CODE' => 'IBLOCK_TYPE_TITLE'
+            ]
+        ],
 
         /**
          * Настройки для создания инфоблоков. В "значении" указываются параметры для создания инфоблоков. Обязательно
          * нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_TYPE_ID с именем константы, в
          * которой хранится код типа инфоблока
          */
-        'IBlocks' => [],
+        'IBlocks' => [
+            'INFS_RUSVINYL_IBLOCK_NEWS' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_NEWS_TITLE'
+            ],
+            'INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_ANNOUNCEMENT_TITLE'
+            ],
+            'INFS_RUSVINYL_IBLOCK_POLL' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_POLL_TITLE'
+            ],
+            'INFS_RUSVINYL_IBLOCK_LEADER' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_LEADER_TITLE'
+            ],
+        ],
 
         /**
          * Настройки для создания свойств инфоблоков. В "значении" указываются параметры для создания свойств инфоблоков.
@@ -129,7 +150,30 @@ class infoservice_rusvinyl extends CModule
          * такие же, как и в описании метода CIBlockElement::Add.
          * "Ключ" необходимо указать, так как всё специально созданное модулем должно запоминаться в его опциях.
          */
-        'IBlockElements' => [],
+        'IBlockElements' => [
+            'INFS_IBLOCK_NEWS_ELEMENT1' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_NEWS',
+                'LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_NAME',
+                'PREVIEW_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_PREVIEW',
+                'DETAIL_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_DETAIL'
+            ],
+            'INFS_IBLOCK_NEWS_ELEMENT2' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_NEWS',
+                'LANG_CODE' => 'IBLOCK_NEWS_ELEMENT2_NAME',
+                'PREVIEW_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT2_PREVIEW',
+                'DETAIL_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT2_DETAIL',
+                'PREVIEW_PICTURE' => 'images/ib_element_2_anon.jpg',
+                'DETAIL_PICTURE' => 'images/ib_element_2_anon.jpg',
+            ],
+            'INFS_IBLOCK_NEWS_ELEMENT3' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_NEWS',
+                'LANG_CODE' => 'IBLOCK_NEWS_ELEMENT3_NAME',
+                'PREVIEW_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT3_PREVIEW',
+                'DETAIL_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT3_DETAIL',
+                'PREVIEW_PICTURE' => 'images/ib_element_3_anon.png',
+                'DETAIL_PICTURE' => 'images/ib_element_3_anon.png',
+            ]
+        ],
 
         /**
          * Настройки для создания агентов, в "значении" указываются параметры, которые передаются
@@ -175,7 +219,9 @@ class infoservice_rusvinyl extends CModule
      * Если при установке выяснится, что символьная ссылка на последнюю часть пути уже существует, или на ее месте
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
-    const FILE_LINKS = [];
+    const FILE_LINKS = [
+        'templates/rusvinyl'
+    ];
 
     /**
      * Аналогично FILE_LINKS, только для файлов в папке www, что лежит в папке install модуля. Указываются файлы и
@@ -187,7 +233,16 @@ class infoservice_rusvinyl extends CModule
      * даже не существующие в папке www модуля данные, можно добиться переименования существующих в корне сайта
      * файлов или папок без необходимости создавать для этого пустой файл в папке www модуля
      */
-    const WWW_FILES = [];
+    const WWW_FILES = [
+        'index.php',
+        // меню
+        '.top.menu.php', '.top.menu_ext.php',
+        '.left.menu.php', '.left.menu_ext.php',
+        '.footer.menu_ext.php', '.main.menu_ext.php',
+        'lang/ru/.top.menu.php', 'lang/ru/.top.menu_ext.php',
+        'lang/ru/.left.menu.php', 'lang/ru/.left.menu_ext.php',
+        'lang/ru/.footer.menu_ext.php', 'lang/ru/.main.menu_ext.php',
+    ];
 
     const USER_ID = 1;
 
