@@ -1,8 +1,6 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
-file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/local/323.txt', print_r($arResult['ITEMS'], true), FILE_APPEND);
-
 $itemCount = count($arResult['ITEMS']);
 ?>
 <div class="news-list rusv-news-list" data-count="<?=$itemCount?>"><?

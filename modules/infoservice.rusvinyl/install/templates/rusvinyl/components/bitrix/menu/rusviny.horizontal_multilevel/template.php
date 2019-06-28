@@ -15,7 +15,7 @@ foreach ($arResult as $arItem):?>
 
         <?if ($arItem["DEPTH_LEVEL"] == 1):?>
             <li>
-                <a class="root-item<?= $arItem['SELECTED'] ? ' root-item-selected' : ''?>"
+                <a class="root-item<?=$arItem['SELECTED'] ? ' root-item-selected' : ''?>"
                     href="<?=$arItem['LINK']?>"><?=$arItem['TEXT']?></a>
                 <ul>
         <?else:?>

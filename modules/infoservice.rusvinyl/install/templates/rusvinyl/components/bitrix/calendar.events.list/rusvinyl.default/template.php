@@ -1,5 +1,5 @@
 <?
-use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\{Localization\Loc, Type\DateTime};
 
 if(!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 ?>
@@ -17,7 +17,7 @@ if(!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
     else:
         foreach ($arResult['ITEMS'] as $arItem):
-            $dateTime = \Bitrix\Main\Type\DateTime::createFromUserTime($arItem['DATE_FROM']);?>
+            $dateTime = DateTime::createFromUserTime($arItem['DATE_FROM']);?>
             <a class="rusv-calendar-link" href="<?=$arItem['_DETAIL_URL']?>">
                 <span class="rusv-news-date"><?=ltrim(FormatDate('d F', $dateTime), '0')?></span>
                 <span class="rusv-news-name"><?=$arItem['NAME']?></span>
