@@ -1,0 +1,25 @@
+.rusv-search-layer {
+    display: inline-block;
+}
+
+.rusv-search-form-title {
+    display: inline-block;
+    padding-right: 15px;
+}
+
+.rusv-search-form-input {
+    padding: 2px;
+    width: 200px;
+}
+
+.rusv-search-form-title:not(.rusv-hidden) ~ input {
+    display: none;
+}
+
+.rusv-search-form-button {
+    cursor: pointer;
+}
+
+.rusv-search-form-button > img {
+    vertical-align: bottom;
+}
