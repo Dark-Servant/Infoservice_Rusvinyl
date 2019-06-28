@@ -5,7 +5,7 @@
 
 <?
 $previousLevel = 0;
-foreach($arResult as $arItem):?>
+foreach ($arResult as $arItem):?>
 
     <?if ($previousLevel && $arItem["DEPTH_LEVEL"] < $previousLevel):?>
         <?=str_repeat("</ul></li>", ($previousLevel - $arItem["DEPTH_LEVEL"]));?>
@@ -14,7 +14,9 @@ foreach($arResult as $arItem):?>
     <?if ($arItem["IS_PARENT"]):?>
 
         <?if ($arItem["DEPTH_LEVEL"] == 1):?>
-            <li><a href="<?=$arItem["LINK"]?>" class="<?if ($arItem["SELECTED"]):?>root-item-selected<?else:?>root-item<?endif?>"><?=$arItem["TEXT"]?></a>
+            <li>
+                <a class="root-item<?=$arItem['SELECTED'] ? ' root-item-selected' : ''?>"
+                    href="<?=$arItem['LINK']?>"><?=$arItem['TEXT']?></a>
                 <ul>
         <?else:?>
             <li<?if ($arItem["SELECTED"]):?> class="item-selected"<?endif?>><a href="<?=$arItem["LINK"]?>" class="parent"><?=$arItem["TEXT"]?></a>
