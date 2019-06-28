@@ -25,5 +25,6 @@ $MESS['ERROR_IBLOCK_ELEMENT_LANG'] = 'Отсутствует параметр LA
 $MESS['ERROR_IBLOCK_ELEMENT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для элемента инфоблока ELEMENT';
 $MESS['ERROR_IBLOCK_ELEMENT_CREATING'] = 'Не удалось создать элемент инфоблока ELEMENT';
 $MESS['ERROR_AGENT_EMPTY_NAME'] = 'Не указано имя агента AGENT';
-$MESS['ERROR_LINK_CREATING'] = 'Не удалось создать символьную ссылку для LINK';
+$MESS['ERROR_LINK_CREATING'] = 'Не удалось создать символьную ссылку в local для LINK';
+$MESS['ERROR_MAIN_LINK_CREATING'] = 'Не удалось создать символьную ссылку в корне сайта для LINK';
 $MESS['ERROR_USER_LANG_RESULT'] = 'FILE не является папкой';

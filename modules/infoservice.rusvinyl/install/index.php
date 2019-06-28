@@ -89,7 +89,7 @@ class infoservice_rusvinyl extends CModule
         'UserFields' => [],
 
         /**
-         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должны
+         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должна
          * быть объявлена в файле include.php, а "значение" хранит параметры группы, важным из которых является
          * параметр LANG_CODE с наванием языковой константы, в которой хранится название группы. При отсутсвии
          * LANG_CODE параметр будет восприниматсья как группировка нескольких групп, которые уже должны быть созданы
@@ -121,7 +121,13 @@ class infoservice_rusvinyl extends CModule
         /**
          * Настройки для создания элементов инфоблоков. В "значении" указываются параметры для элементов инфоблоков.
          * Обязательно нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_ID с именем константы,
-         * в которой указано значение кода, под которым хранится ID инфоблока в настройках модуля
+         * в которой указано значение кода, под которым хранится ID инфоблока в настройках модуля.
+         * Для указания подробного описания или краткого можно использовать DETAIL_LANG_CODE и PREVIEW_LANG_CODE
+         * соответственно, в них указываются языковые константы, под которыми хранятся значения.
+         * Для картинки к анонсу или детальной картинки можно использовать PREVIEW_PICTURE и DETAIL_PICTURE, в
+         * которых указывается путь относительно папки install в модуле. Остальные параметры для создания элементов
+         * такие же, как и в описании метода CIBlockElement::Add.
+         * "Ключ" необходимо указать, так как всё специально созданное модулем должно запоминаться в его опциях.
          */
         'IBlockElements' => [],
 
@@ -163,13 +169,25 @@ class infoservice_rusvinyl extends CModule
 
     /**
      * Пути к файлам и папкам, что лежат в папке install модуля,  на которые необходимо создать символьные ссылки
-     * относительно папки local. Символная ссылка будет созданна на последнюю часть указанного пути, по остальным
-     * частям будут созданны папки, если их нет. При удалении модуля сивмольная ссылка удалится, а затем и все папки,
-     * в которые она входит, если в них больше ничего нет.
+     * относительно папки local. Игнорируются файлы из папки www. Символная ссылка будет созданна на последнюю часть
+     * указанного пути, по остальным частям будут созданны папки, если их нет. При удалении модуля сивмольная ссылка
+     * удалится, а затем и все папки, в которые она входит, если в них больше ничего нет.
      * Если при установке выяснится, что символьная ссылка на последнюю часть пути уже существует, или на ее месте
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
     const FILE_LINKS = [];
+
+    /**
+     * Аналогично FILE_LINKS, только для файлов в папке www, что лежит в папке install модуля. Указываются файлы и
+     * папки, на которые надо создать символьные ссылки в корневой папке сайта, инорируются указания на все в
+     * папках bitrix и local. В отличии от FILE_LINKS здесь можно указывать файлы и папки, которых нет в www модуля,
+     * а так же при создании символьной ссылки в корневой папке сайта не будет ошибки, если на месте будет уже
+     * существовать файл или папка. Уже существующие файлы или папки будут просто переименованы и запомнены,
+     * благодаря чему при удалении модуля снова вернутся на свое место. Благодаря тому, что тут можно указывать
+     * даже не существующие в папке www модуля данные, можно добиться переименования существующих в корне сайта
+     * файлов или папок без необходимости создавать для этого пустой файл в папке www модуля
+     */
+    const WWW_FILES = [];
 
     const USER_ID = 1;
 
@@ -457,6 +475,7 @@ class infoservice_rusvinyl extends CModule
      */
     public function initIBlockTypesOptions(string $constName, array $optionValue)
     {
+        Loader::includeModule('iblock');
 
         $iblockTypeID = constant($constName);
         if (CIBlockType::GetList([], ['ID' => $iblockTypeID])->Fetch())
@@ -570,16 +589,31 @@ class infoservice_rusvinyl extends CModule
                     'IBLOCK_ID' => $this->optionUnits['IBlocks'][$iblockCode]
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE', 'IBLOCK_ID']);
+                    return !in_array($key, [
+                                'LANG_CODE', 'IBLOCK_ID', 'PREVIEW_LANG_CODE',
+                                'DETAIL_LANG_CODE', 'PREVIEW_TEXT', 'DETAIL_TEXT',
+                                'DETAIL_PICTURE', 'PREVIEW_PICTURE'
+                            ]);
                 }, ARRAY_FILTER_USE_KEY)
               + [
                     'MODIFIED_BY' => self::USER_ID,
                     'IBLOCK_SECTION_ID' => false,
                     'PROPERTY_VALUES' => [],
-                    'PREVIEW_TEXT' => '',
-                    'DETAIL_TEXT' => '',
-                    'DETAIL_PICTURE' => 0
+                    'PREVIEW_TEXT' => empty($optionValue['PREVIEW_LANG_CODE']) ? ''
+                                    : Loc::getMessage($optionValue['PREVIEW_LANG_CODE']),
+                    'DETAIL_TEXT' => empty($optionValue['DETAIL_LANG_CODE']) ? ''
+                                   : Loc::getMessage($optionValue['DETAIL_LANG_CODE']),
                 ];
+
+        foreach (['DETAIL_PICTURE', 'PREVIEW_PICTURE'] as $pictureCode) {
+            if (empty($optionValue[$pictureCode])) continue;
+
+            $picturePath = __DIR__ . '/' . ltrim($optionValue[$pictureCode], '/\/');
+            if (!file_exists($picturePath)) continue;
+
+            $data[$pictureCode] = \CFile::MakeFileArray($picturePath);
+        }
+
         $element = new CIBlockElement;
         $elementId = $element->Add($data);
         if (!$elementId)
@@ -717,33 +751,103 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
-     * Создание символьных ссылок
+     * Функция-генератор, по списку переданных файлов делает предобработку названия каждого файла
+     * и возвращает  обработанное название файла, рарзделенный на части путь к файлу и его длину.
+     * Благодаря второму параметру exclude, в котором указываются пути для исключений, можно отбросить
+     * все переданные в списке файлы, путь к которым введен в эти пути для исключения
+     * 
+     * @param array $files - список файлов
+     * @param array $exclude - пути для исключения файлов
+     */
+    protected static function getFileParts(array $files, array $exclude = [])
+    {
+        $excludeFiles = array_map(
+            function($eFile) {
+                $parts = preg_split('/[\\\\\/]+/', strtolower(trim($eFile , '\\/')));
+                return ['count' => count($parts), 'path' => implode('/', $parts)];
+            }, $exclude
+        );
+
+        foreach ($files as $moduleFile) {
+            $fileTarget = strtolower(preg_replace('/[\\\\\/]+/', '/', trim($moduleFile , '\\/')));
+            $fileParts = explode('/', $fileTarget);
+            $filePartsSize = count($fileParts);
+            if (
+                count(array_filter(
+                    $excludeFiles,
+                    function($ePath) use($fileParts, $filePartsSize) {
+                        return (
+                            ($ePath['count'] <= $filePartsSize)
+                            && (implode('/', array_slice($fileParts, 0, $ePath['count'])) == $ePath['path'])
+                        );
+                    }
+                ))
+            ) continue;
+            yield ['target' => $fileTarget, 'parts' => $fileParts, 'count' => $filePartsSize];
+        }
+    }
+
+    /**
+     * Создание символьных ссылок в папке local
      * 
      * @return void
      */
     public function initFileLinks()
     {
-        foreach (static::FILE_LINKS as $moduleFile) {
-            $fileTarget = preg_replace('/[\\\\\/]+/', '/', trim($moduleFile , '\\/'));
-            if (!file_exists(__DIR__ . '/' . $fileTarget)) continue;
+        $fromPath = __DIR__ . '/';
+        foreach (self::getFileParts(static::FILE_LINKS, ['www']) as $moduleFile) {
+            if (!file_exists($fromPath . $moduleFile['target'])) continue;
 
-            $fileParts = explode('/', $fileTarget);
-            $lastPartNum = count($fileParts) - 1;
+            $lastPartNum = $moduleFile['count'] - 1;
             $result = $_SERVER['DOCUMENT_ROOT'] . '/local';
-
-            foreach ($fileParts as $pathNum => $subPath) {
+            foreach ($moduleFile['parts'] as $pathNum => $subPath) {
                 $result .= '/' . $subPath;
                 if (!file_exists($result)) {
                     if ($lastPartNum > $pathNum) {
                         mkdir($result);
 
                     } else {
-                        symlink(__DIR__ . '/' . $fileTarget, $result);
+                        symlink($fromPath . $moduleFile['target'], $result);
                     }
 
                 } elseif (!is_dir($result) || is_link($result) || ($lastPartNum == $pathNum)) {
-                    throw new Exception(Loc::getMessage('ERROR_LINK_CREATING', ['LINK' => $moduleFile]));
+                    throw new Exception(Loc::getMessage('ERROR_LINK_CREATING', ['LINK' => $moduleFile['target']]));
                 }
+            }
+        }
+    }
+
+    /**
+     * Создание символьных ссылок в корне сайта, исключая папки bitrix и local,
+     * оригинальные файлы сохраняются, при удалении модуля восстанавливаются
+     * 
+     * @return void
+     */
+    public function initWWWFiles()
+    {
+        foreach (self::getFileParts(static::WWW_FILES, ['bitrix', 'local']) as $moduleFile) {
+            $lastPartNum = $moduleFile['count'] - 1;
+            $result = '';
+
+            foreach ($moduleFile['parts'] as $pathNum => $subPath) {
+                $newResult = $result . '/' . $subPath;
+                $fullPath = $_SERVER['DOCUMENT_ROOT'] . $newResult;
+                if ($lastPartNum == $pathNum) {
+                    if (file_exists($fullPath)) {
+                        $savingFile = $newResult . '.' . date('YmdHis');
+                        rename($fullPath, $_SERVER['DOCUMENT_ROOT'] . $savingFile);
+                        $this->optionUnits['WWW_FILES'][$moduleFile['target']] = $savingFile;
+                    }
+                    $fullTagerPath = __DIR__ . '/www/' . $moduleFile['target'];
+                    if (file_exists($fullTagerPath)) symlink($fullTagerPath, $fullPath);
+
+                } elseif (!file_exists($fullPath)) {
+                    mkdir($fullPath);
+
+                } elseif (!is_dir($fullPath) || is_link($fullPath)) {
+                    throw new Exception(Loc::getMessage('ERROR_MAIN_LINK_CREATING', ['LINK' => $moduleFile['target']]));
+                }
+                $result = $newResult;
             }
         }
     }
@@ -871,6 +975,7 @@ class infoservice_rusvinyl extends CModule
             $this->addBX24MenuLinks();
             $this->initEventHandles();
             $this->initFileLinks();
+            $this->initWWWFiles();
             $this->addUserLangValues();
             $this->runSQLFile('install');
             Option::set($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, json_encode($this->optionUnits));
@@ -973,6 +1078,8 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeIBlockTypesOptions(string $constName)
     {
+        Loader::includeModule('iblock');
+
         $iblockTypeID = constant($constName);
         if (CIBlock::GetList([], ['TYPE' => $iblockTypeID])->Fetch())
             return;
@@ -988,6 +1095,8 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeIBlocksOptions(string $constName)
     {
+        Loader::includeModule('iblock');
+
         $iblockCode = constant($constName);
         if (empty($this->optionUnits['IBlocks'][$iblockCode])
             || !is_numeric($this->optionUnits['IBlocks'][$iblockCode]))
@@ -1090,12 +1199,13 @@ class infoservice_rusvinyl extends CModule
      * Удаляет файла, а затем папку, в которой он лежит, если в ней больше ничего нет,
      * после чего по такому же принципу удаляет все родительские папки до папки local
      * 
-     * @param string $fileTarget - путь к файлу
+     * @param string $fileTarget - относительный путь к файлу
+     * @param string $where - начальный путь к файлу
      * @return void
      */
-    protected static function deleteEmptyPath(string $fileTarget)
+    protected static function deleteEmptyPath(string $fileTarget, string $where)
     {
-        $result = $_SERVER['DOCUMENT_ROOT'] . '/local/' . $fileTarget;
+        $result = $where . $fileTarget;
         if (is_dir($result)) {
             rmdir($result);
 
@@ -1105,7 +1215,7 @@ class infoservice_rusvinyl extends CModule
 
         $toDelete = true;
         for (; $toDelete && ($fileTarget = preg_replace('/\/?[^\/]+$/', '', $fileTarget)); ) {
-            $result = $_SERVER['DOCUMENT_ROOT'] . '/local/' . $fileTarget;
+            $result = $where . $fileTarget;
             $dUnit = opendir($result);
             while ($fUnit = readdir($dUnit)) {
                 if (($fUnit == '.') || ($fUnit == '..')) continue;
@@ -1119,21 +1229,53 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Удаляет файлы, которые были созданы модулем как символьная ссылка на такой же файл в модуле.
+     * Вызывает callback-функцию, если она была передана, с обработанным названием файла
+     * 
+     * @param array $files - список файлов из папки модуля с установочным файлом index.php
+     * @param string $from - относительный путь к подпапке из папки модуля с установочным файлом index.php, где
+     * должны лежать указанные в $files файлы
+     * @param string $where - путь относительно корня сайта, где будут проверяться и удаляться файлы
+     * @return void
+     */
+    protected static function removeFiles(array $files, string $from, string $where, $callback = null)
+    {
+        $fromPath = __DIR__  . (trim($from) ? '/' : '') . trim($from) . '/';
+        $wherePath = $_SERVER['DOCUMENT_ROOT'] . (trim($where) ? '/' : '') . trim($where) . '/';
+        foreach ($files as $moduleFile) {
+            $fileTarget = strtolower(preg_replace('/[\\\\\/]+/', '/', trim($moduleFile , '\\/')));
+            if (file_exists($fromPath . $fileTarget) && is_link($wherePath . $fileTarget))
+                self::deleteEmptyPath($fileTarget, $wherePath);
+
+            if (is_callable($callback)) $callback($fileTarget);
+        }
+    }
+
+    /**
      * Удаление всех созданных модулем символьных ссылок
      * 
      * @return void
      */
     public function removeFileLinks()
     {
-        foreach (static::FILE_LINKS as $moduleFile) {
-            $fileTarget = preg_replace('/[\\\\\/]+/', '/', trim($moduleFile , '\\/'));
-            if (!file_exists(__DIR__ . '/' . $fileTarget)) continue;
+        self::removeFiles(static::FILE_LINKS, '', 'local');
+    }
 
-            $result = $_SERVER['DOCUMENT_ROOT'] . '/local/' . $fileTarget;
-            if (!is_link($result)) continue;
+    /**
+     * Удаляет созданные модулем файлы в корневом каталоге портала, возвращает старые файлы
+     * 
+     * @return void
+     */
+    public function removeWWWFiles()
+    {
+        self::removeFiles(static::WWW_FILES, 'www', '', function($moduleFile) {
+            if (empty($this->optionUnits['WWW_FILES'][$moduleFile])) return;
 
-            self::deleteEmptyPath($fileTarget);
-        }
+            $oldFileName = $_SERVER['DOCUMENT_ROOT'] . $this->optionUnits['WWW_FILES'][$moduleFile];
+            if (!file_exists($oldFileName)) return;
+
+            rename($oldFileName, $_SERVER['DOCUMENT_ROOT'] . '/' . $moduleFile);
+        });
     }
 
     /**
@@ -1170,7 +1312,7 @@ class infoservice_rusvinyl extends CModule
                 }
 
                 if (empty($savedMESS)) {
-                    self::deleteEmptyPath($resultLangPath . '/' . $langFileName);
+                    self::deleteEmptyPath($resultLangPath . '/' . $langFileName, $_SERVER['DOCUMENT_ROOT'] . '/local/');
 
                 } else {
                     self::saveUserLangValues($resultLangFile, $savedMESS);
@@ -1192,6 +1334,7 @@ class infoservice_rusvinyl extends CModule
         $this->removeAddrRules();
         $this->removeOptions();
         $this->removeEventHandles();
+        $this->removeWWWFiles();
         $this->removeFileLinks();
         $this->removeUserLangValues();
         $this->runSQLFile('uninstall');
