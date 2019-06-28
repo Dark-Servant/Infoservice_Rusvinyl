@@ -242,6 +242,10 @@ class infoservice_rusvinyl extends CModule
         'lang/ru/.top.menu.php', 'lang/ru/.top.menu_ext.php',
         'lang/ru/.left.menu.php', 'lang/ru/.left.menu_ext.php',
         'lang/ru/.footer.menu_ext.php', 'lang/ru/.main.menu_ext.php',
+        // разделы
+        'brain', 'company', 'competition', 'hr', 'media',
+        'participate', 'phonebook', 'pulse', 'question',
+        'services', 'thanks', 'useful',
     ];
 
     const USER_ID = 1;

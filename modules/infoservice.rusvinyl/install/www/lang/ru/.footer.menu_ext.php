@@ -1,0 +1,5 @@
+<?
+$MESS['FOOTER_MENU_BITRIX_TITLE'] = '©Битрикс 2019';
+$MESS['FOOTER_MENU_DEV_TITLE'] = 'Поддержка';
+$MESS['FOOTER_MENU_THEMES_TITLE'] = 'Темы';
+$MESS['FOOTER_MENU_PRINTING_TITLE'] = 'Печать';

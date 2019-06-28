@@ -1,0 +1,8 @@
+/components/*/*
+/templates/*/*
+/php_interface/user_lang/*/*
+*.txt
+
+/vendor/
+/node_modules/*/*
+package-lock.json
