@@ -1,0 +1,3 @@
+<?
+$MESS['TEMPLATE_NAME'] = 'РусВинил';
+$MESS['TEMPLATE_DESCRIPTION'] = '';
