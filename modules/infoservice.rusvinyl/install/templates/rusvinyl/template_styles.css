@@ -348,6 +348,11 @@ img.rusv-video-icon {
     padding: 0 25px;
 }
 
+.rusv-main-page-unit-title a {
+    color: black;
+    text-decoration: none;
+}
+
 .rusv-news-list {
     display: inline-block;
     width: 435px;

@@ -4,6 +4,7 @@
         printBtn: '.rusv-footer-menu li:last a',
         newsList: '.rusv-news-list',
         newsItem: '.rusv-news-item',
+        newsListPages: '.rusv-news-list-pages',
         newsListPage: '.rusv-news-list-page',
         simpleNewsListPage: '.rusv-news-list-page:not(.rusv-selected)',
     };
@@ -11,6 +12,7 @@
         hidden: 'rusv-hidden',
         selected: 'rusv-selected',
     };
+    const PAGE_WATING_TIME = 5000;
 
     /**
      * Обработчик пункта нижнего меню "Печать"
@@ -41,12 +43,47 @@
     }
 
     /**
+     * Автоматически показывает следующую новость
+     * 
+     * @param selector - 
+     * @return void
+     */
+    var nextNewsUnit = function(selector) {
+        var page = selector.find(rusvSelector.newsListPage + '.' + rusvClass.selected).next();
+        if (page.length) {
+            page.click();
+
+        } else {
+            selector.find(rusvSelector.simpleNewsListPage).first().click();
+        }
+
+        setTimeout(() => nextNewsUnit(selector), PAGE_WATING_TIME);
+    }
+
+    /**
+     * Запускает процесс листания страниц для указанной области и 
+     * процесс ожидания такого же запуска листания для следующей
+     * области
+     * 
+     * @param selector - селектор ко всем областям страниц
+     * @param number - номер конкретной области
+     * @return void
+     */
+    var initPageChoosing = function(selector, number) {
+        if (!selector.get(number)) return;
+        
+        setTimeout(() => nextNewsUnit($(selector.get(number))), PAGE_WATING_TIME);
+        setTimeout(() => initPageChoosing(selector, number + 1), PAGE_WATING_TIME);
+    }
+
+    /**
      * Обработчик инициализации страницы при ее полной готовности
      * 
      * @return void
      */
     var initPage = function() {
         nextSecond();
+        initPageChoosing($(rusvSelector.newsListPages), 0);
     }
 
     /**

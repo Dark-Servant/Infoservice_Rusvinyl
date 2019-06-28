@@ -56,7 +56,7 @@ foreach (
             'PARENT_SECTION' => '',
             'PARENT_SECTION_CODE' => '',
             'PREVIEW_TRUNCATE_LEN' => '',
-            'PROPERTY_CODE' => array('',''),
+            'PROPERTY_CODE' => ['', ''],
             'SET_BROWSER_TITLE' => 'Y',
             'SET_LAST_MODIFIED' => 'N',
             'SET_META_DESCRIPTION' => 'Y',
@@ -72,7 +72,9 @@ foreach (
         ]
     );?>
         <div class="rusv-main-page-unit-title">
-            <span><?=Loc::getMessage('MAIN_PAGE_UNIT_' . $iblockCode . '_TITLE')?></span>
+            <a href="media/news/?IBLOCK_ID=<?=$options['IBlocks'][$iblockCode]?>"><?=
+                Loc::getMessage('MAIN_PAGE_UNIT_' . $iblockCode . '_TITLE')
+            ?></a>
         </div>
     </div><?
     endforeach;?>
