@@ -1,5 +1,7 @@
 <?
+use Bitrix\Main\Localization\Loc;
+
 $aMenuLinks = [
-    ['ДМС', 'vhi/', [], [], ''],
-    ['Страхование жизни', 'life/', [], [], ''],
+    [Loc::getMessage('MENU_VHI_TITLE'), 'vhi/', [], [], ''],
+    [Loc::getMessage('MENU_LIFE_TITLE'), 'life/', [], [], ''],
 ];

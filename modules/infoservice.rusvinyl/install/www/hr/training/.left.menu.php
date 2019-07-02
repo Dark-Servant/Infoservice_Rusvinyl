@@ -1,9 +1,11 @@
 <?
+use Bitrix\Main\Localization\Loc;
+
 $aMenuLinks = [
-    ['Программа обучения', 'program/', [], [], ''],
-    ['Каталог учебных курсов', 'catalog/', [], [], ''],
-    ['Электронное обучение', 'electronic/', [], [], ''],
-    ['База знаний', 'knowledge/', [], [], ''],
-    ['Подать заявку на обучение', 'training/', [], [], ''],
-    ['Календарь учебных мероприятий', 'events/', [], [], ''],
+    [Loc::getMessage('MENU_PROGRAM_TITLE'), 'program/', [], [], ''],
+    [Loc::getMessage('MENU_CATALOG_TITLE'), 'catalog/', [], [], ''],
+    [Loc::getMessage('MENU_ELECTRONIC_TITLE'), 'electronic/', [], [], ''],
+    [Loc::getMessage('MENU_KNOWLEDGE_TITLE'), 'knowledge/', [], [], ''],
+    [Loc::getMessage('MENU_TRAINING_TITLE'), 'training/', [], [], ''],
+    [Loc::getMessage('MENU_EVENTS_TITLE'), 'events/', [], [], ''],
 ];
