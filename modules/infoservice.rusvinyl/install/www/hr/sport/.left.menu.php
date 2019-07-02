@@ -1,6 +1,8 @@
 <?
+use Bitrix\Main\Localization\Loc;
+
 $aMenuLinks = [
-    ['Тренировки команд', 'trainings/', [], [], ''],
-    ['Заявки на абонемент', 'subscription/', [], [], ''],
-    ['Компенсация фитнеса', 'compensation/', [], [], ''],
+    [Loc::getMessage('MENU_TRAININGS_TITLE'), 'trainings/', [], [], ''],
+    [Loc::getMessage('MENU_SUBSCRIPTION_TITLE'), 'subscription/', [], [], ''],
+    [Loc::getMessage('MENU_COMPENSATION_TITLE'), 'compensation/', [], [], ''],
 ];

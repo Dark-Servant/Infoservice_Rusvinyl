@@ -1,5 +1,7 @@
 <?
+use Bitrix\Main\Localization\Loc;
+
 $aMenuLinks = [
-    ['Политика по оплате труда', 'policy/', [], [], ''],
-    ['Материальная помощь', 'financial/', [], [], ''],
+    [Loc::getMessage('MENU_POLICY_TITLE'), 'policy/', [], [], ''],
+    [Loc::getMessage('MENU_FINANCIAL_TITLE'), 'financial/', [], [], ''],
 ];

@@ -1,9 +1,11 @@
 <?
+use Bitrix\Main\Localization\Loc;
+
 $aMenuLinks = [
-    ['Заявка в ServiceDesk', 'servicedesk/', [], [], ''],
-    ['Справка 2 НДФЛ', '2-pit/', [], [], ''],
-    ['Копия трудовой книжки', 'servicerecord/', [], [], ''],
-    ['Справка на визу (не деловой)', 'visa/', [], [], ''],
-    ['Справка с места работы', 'reference/', [], [], ''],
-    ['Заказ пропуска', 'admission/', [], [], ''],
+    [Loc::getMessage('MENU_SERVICEDESK_TITLE'), 'servicedesk/', [], [], ''],
+    [Loc::getMessage('MENU_2_PIT_TITLE'), '2-pit/', [], [], ''],
+    [Loc::getMessage('MENU_SERVICERECORD_TITLE'), 'servicerecord/', [], [], ''],
+    [Loc::getMessage('MENU_VISA_TITLE'), 'visa/', [], [], ''],
+    [Loc::getMessage('MENU_REFERENCE_TITLE'), 'reference/', [], [], ''],
+    [Loc::getMessage('MENU_ADMISSION_TITLE'), 'admission/', [], [], ''],
 ];
