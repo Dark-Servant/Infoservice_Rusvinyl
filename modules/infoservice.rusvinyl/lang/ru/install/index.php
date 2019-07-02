@@ -32,8 +32,9 @@ $MESS['ERROR_USER_LANG_RESULT'] = 'FILE не является папкой';
 $MESS['IBLOCK_TYPE_TITLE'] = 'РусВинил';
 $MESS['IBLOCK_NEWS_TITLE'] = 'Новости';
 $MESS['IBLOCK_ANNOUNCEMENT_TITLE'] = 'Анонсы';
-$MESS['IBLOCK_POLL_TITLE'] = 'Опрос';
+$MESS['IBLOCK_POLL_TITLE'] = 'Опросы';
 $MESS['IBLOCK_LEADER_TITLE'] = 'Лидер месяца';
+$MESS['IBLOCK_MASTERBLOG_TITLE'] = 'Влог ген. директора';
 
 // Тестовые элементы "Новости"
 $MESS['IBLOCK_NEWS_ELEMENT1_NAME'] = 'РусВинил принимает заявки на конкурс проектов "Экосознание"';

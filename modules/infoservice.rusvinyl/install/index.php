@@ -131,19 +131,33 @@ class infoservice_rusvinyl extends CModule
         'IBlocks' => [
             'INFS_RUSVINYL_IBLOCK_NEWS' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
-                'LANG_CODE' => 'IBLOCK_NEWS_TITLE'
+                'LANG_CODE' => 'IBLOCK_NEWS_TITLE',
+                'DETAIL_PAGE_URL' => '/media/news/#ID#/',
+                'LIST_PAGE_URL' => '/media/news/',
             ],
             'INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
-                'LANG_CODE' => 'IBLOCK_ANNOUNCEMENT_TITLE'
+                'LANG_CODE' => 'IBLOCK_ANNOUNCEMENT_TITLE',
+                'DETAIL_PAGE_URL' => '/announ/#ID#/',
+                'LIST_PAGE_URL' => '/announ/',
             ],
             'INFS_RUSVINYL_IBLOCK_POLL' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
-                'LANG_CODE' => 'IBLOCK_POLL_TITLE'
+                'LANG_CODE' => 'IBLOCK_POLL_TITLE',
+                'DETAIL_PAGE_URL' => '/pulse/poll/#ID#/',
+                'LIST_PAGE_URL' => '/pulse/poll/',
             ],
             'INFS_RUSVINYL_IBLOCK_LEADER' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
-                'LANG_CODE' => 'IBLOCK_LEADER_TITLE'
+                'LANG_CODE' => 'IBLOCK_LEADER_TITLE',
+                'DETAIL_PAGE_URL' => '/leader/#ID#/',
+                'LIST_PAGE_URL' => '/leader/',
+            ],
+            'INFS_RUSVINYL_IBLOCK_MASTERBLOG' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_MASTERBLOG_TITLE',
+                'DETAIL_PAGE_URL' => '/media/masterblog/#ID#/',
+                'LIST_PAGE_URL' => '/media/masterblog/',
             ],
         ],
 
@@ -170,7 +184,9 @@ class infoservice_rusvinyl extends CModule
                 'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_NEWS',
                 'LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_NAME',
                 'PREVIEW_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_PREVIEW',
-                'DETAIL_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_DETAIL'
+                'DETAIL_LANG_CODE' => 'IBLOCK_NEWS_ELEMENT1_DETAIL',
+                'PREVIEW_PICTURE' => 'images/ib_element_1_anon.png',
+                'DETAIL_PICTURE' => 'images/ib_element_1_anon.png',
             ],
             'INFS_IBLOCK_NEWS_ELEMENT2' => [
                 'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_NEWS',
@@ -207,6 +223,22 @@ class infoservice_rusvinyl extends CModule
          * В значениях массива можно использовать константы модуля по их названию
          * как часть строки
          */
+        '#^/media/(news|masterblog)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/media/news/index.php',
+            'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
+        ],
+        '#^/pulse/poll/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/media/news/index.php',
+            'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_POLL&$1'
+        ],
+        '#^/(announ|leader)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/media/news/index.php',
+            'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
+        ],
+        '#^/(?:media/news|pulse/poll|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/media/news/unit.php',
+            'PARAMS' => 'ELEMENT_ID=$1&$2'
+        ],
     ];
 
     /**
@@ -237,7 +269,8 @@ class infoservice_rusvinyl extends CModule
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
     const FILE_LINKS = [
-        'templates/rusvinyl'
+        'components/infoservice/iblock.showblock',
+        'templates/rusvinyl', 'public/media/news'
     ];
 
     /**
