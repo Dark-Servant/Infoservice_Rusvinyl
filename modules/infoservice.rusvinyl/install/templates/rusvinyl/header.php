@@ -25,7 +25,7 @@ use Bitrix\Main\Localization\Loc;
                 <img src="<?=SITE_TEMPLATE_PATH?>/images/logo.svg?<?=INFS_CURRENT_TIMESTAMP?>">
             </a>
         </div>
-        <div class="rusv-head-date"><?=strtolower(FormatDate('d F H:i:s', INFS_CURRENT_TIMESTAMP))?></div>
+        <div class="rusv-head-date"><?=ltrim(strtolower(FormatDate('d F H:i:s', INFS_CURRENT_TIMESTAMP)), '0')?></div>
         <div class="rusv-head-incident-static">
             <span><?=Loc::getMessage('INCIDENT_STATIC_VALUE', ['#VALUE#' => INFS_INCIDENT_STATIC_EXAMPLE_VALUE])?></span>
         </div>

@@ -189,15 +189,19 @@ body {
     vertical-align: top;
 }
 
-.rusv-footer-icons > img {
+.rusv-icon {
+    display: inline-block;
+}
+
+.rusv-icon > img {
     height: 28px;
 }
 
-img.rusv-icon + .rusv-icon {
+.rusv-icon + .rusv-icon {
     margin-left: 15px;
 }
 
-img.rusv-video-icon {
+.rusv-video-icon img {
     height: 24px;
 }
 
