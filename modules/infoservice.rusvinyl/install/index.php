@@ -14,6 +14,10 @@ class infoservice_rusvinyl extends CModule
     protected $optionUnits = [];
     protected $nameSpaceValue;
     protected $defaultSiteID;
+    protected $definedContants;
+
+    const ADMIN_GROUP_ID = 1;
+    const ALL_USER_GROUP_ID = 2;
 
     /**
      * Опции, которые необходимо добавить в проект, сгруппированные по названию методов, которые их
@@ -111,7 +115,18 @@ class infoservice_rusvinyl extends CModule
         /**
          * Настройки для создания инфоблоков. В "значении" указываются параметры для создания инфоблоков. Обязательно
          * нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_TYPE_ID с именем константы, в
-         * которой хранится код типа инфоблока
+         * которой хранится код типа инфоблока.
+         * В параметре PERMISSIONS указываются права доступа к инфоблоку, где "ключ" - идентификатор пользовательской
+         * группы, а "значение" - код права доступа. По-умолчанию, для администраторов  установлен "полный доступ",
+         * а для всех пользователей - "чтение".
+         * Права доступа:
+         *     E - добавление элементов инфоблока в публичной части;
+         *     S - просмотр элементов и разделов в административной части;
+         *     T - добавление элементов инфоблока в административной части; 
+         *     R - чтение; 
+         *     U - редактирование через документооборот; 
+         *     W - запись; 
+         *     X - полный доступ (запись + назначение прав доступа на данный инфоблок).
          */
         'IBlocks' => [
             'INFS_RUSVINYL_IBLOCK_NEWS' => [
@@ -189,6 +204,8 @@ class infoservice_rusvinyl extends CModule
          * "значение" - массив с параметрами
          *     FILE - путь к файлу
          *     PARAMS - параметры запроса
+         * В значениях массива можно использовать константы модуля по их названию
+         * как часть строки
          */
     ];
 
@@ -569,12 +586,15 @@ class infoservice_rusvinyl extends CModule
         $data = [
                     'ACTIVE' => 'Y',
                     'NAME' => $title,
+                    'CODE' => constant($constName),
                     'IBLOCK_TYPE_ID' => constant($optionValue['IBLOCK_TYPE_ID'])
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE', 'IBLOCK_TYPE_ID']);
+                    return !in_array($key, ['LANG_CODE', 'IBLOCK_TYPE_ID', 'PERMISSIONS']);
                 }, ARRAY_FILTER_USE_KEY)
               + [
+                    'DETAIL_PAGE_URL' => '',
+                    'LIST_PAGE_URL' => '',
                     'WORKFLOW' => 'N',
                     'BIZPROC' => 'N',
                     'SITE_ID' => $this->defaultSiteID
@@ -588,6 +608,11 @@ class infoservice_rusvinyl extends CModule
                 . PHP_EOL . $iblock->LAST_ERROR
             );
 
+        $permissions = [self::ADMIN_GROUP_ID => 'X', self::ALL_USER_GROUP_ID => 'R'];
+        if (!empty($optionValue['PERMISSIONS']))
+            $permissions = array_merge($permissions, $optionValue['PERMISSIONS']);
+
+        CIBlock::SetPermission($iblockId, $permissions);
         return $iblockId;
     }
 
@@ -748,6 +773,10 @@ class infoservice_rusvinyl extends CModule
     {
         foreach (static::GROUP_ADDR_RULE as $rule => $data) {
             $filter = ['SITE_ID' => $this->defaultSiteID, 'CONDITION' => $rule];
+
+            array_walk($data, function(&$value) {
+                $value = strtr($value, $this->definedContants);
+            });
             $fields = ['ID' => '', 'PATH' => $data['FILE'], 'RULE' => $data['PARAMS'], 'SORT' => 100];
             $rules = CUrlRewriter::GetList($filter, ['SORT' => 'ASC']);
 
@@ -1018,6 +1047,28 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Подключает модуль и сохраняет созданные им константы
+     * 
+     * @return void
+     */
+    protected function initDefinedContants()
+    {
+        /**
+         * array_keys нужен, так как в array_filter функция isset дает
+         * лишнии результаты
+         */
+        $this->definedContants = array_keys(get_defined_constants());
+
+        Loader::IncludeModule($this->MODULE_ID);
+        $this->definedContants = array_filter(
+            get_defined_constants(),
+            function($key) {
+                return !in_array($key, $this->definedContants);
+            }, ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    /**
      * Функция, вызываемая при установке модуля
      *
      * @return void
@@ -1026,7 +1077,8 @@ class infoservice_rusvinyl extends CModule
     {
         global $APPLICATION;
         RegisterModule($this->MODULE_ID);
-        Loader::IncludeModule($this->MODULE_ID);
+        $this->initDefinedContants();
+
         $_SESSION[$this->MODULE_ID]['PROCESS'] = true;
         try {
             $this->initOptions();
@@ -1037,6 +1089,7 @@ class infoservice_rusvinyl extends CModule
             $this->initWWWFiles();
             $this->addUserLangValues();
             $this->runSQLFile('install');
+            $this->optionUnits['CONSTANTS'] = array_keys($this->definedContants);
             Option::set($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, json_encode($this->optionUnits));
             $_SESSION[$this->MODULE_ID]['PROCESS'] = false;
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_INSTALLED'), __DIR__ . '/step1.php');
@@ -1140,14 +1193,20 @@ class infoservice_rusvinyl extends CModule
         Loader::includeModule('iblock');
 
         $iblockTypeID = constant($constName);
-        if (CIBlock::GetList([], ['TYPE' => $iblockTypeID])->Fetch())
-            return;
+        $iblocks = CIBlock::GetList([], ['CHECK_PERMISSIONS' => 'N']);
+        while ($iblock = $iblocks->Fetch()) {
+            if ($iblock['IBLOCK_TYPE_ID'] != $iblockTypeID) continue;
+
+            CIBlock::Delete($iblock['ID']);
+        }
 
         CIBlockType::Delete($iblockTypeID);
     }
 
     /**
-     * Удаление инфоблока
+     * Удаление инфоблока. Метод нужен, не смотря на то, что при удалении типа инфоблока
+     * удаляются и все его инфоблоки, но модуль можно заставить создавать инфоблоки в
+     * других типах инфоблоков
      * 
      * @param $constName - название константы
      * @return void
@@ -1411,6 +1470,9 @@ class infoservice_rusvinyl extends CModule
         Loader::IncludeModule($this->MODULE_ID);
         $_SESSION[$this->MODULE_ID]['PROCESS'] = true;
         $this->optionUnits = json_decode(Option::get($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, $this->defaultSiteID), true);
+        $this->definedContants = array_fill_keys($this->optionUnits['CONSTANTS'], '');
+        array_walk($this->definedContants, function(&$value, $key) { $value = constant($key); });
+
         $this->removeAll();
         Option::delete($this->MODULE_ID, ['name' => INFS_RUSVINYL_OPTION_NAME]);
         $_SESSION[$this->MODULE_ID]['PROCESS'] = false;
