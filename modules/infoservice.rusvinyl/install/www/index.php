@@ -1,86 +1,10 @@
-<?require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
-
-use Bitrix\Main\{Localization\Loc, Config\Option};
-
-$options = json_decode(Option::get(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, SITE_ID), true);
-
-foreach (
-        [
-            [INFS_RUSVINYL_IBLOCK_NEWS, INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT],
-            [INFS_RUSVINYL_IBLOCK_POLL, INFS_RUSVINYL_IBLOCK_LEADER],
-        ] as $areaUnits
-    ):?>
-<div class="rusv-main-page"><?
-
-    foreach ($areaUnits as $iblockCode):
-?>
-    <div class="rusv-main-page-unit"><?
-    $APPLICATION->IncludeComponent(
-        'bitrix:news.list', 'rusvinyl.default',
-        [
-            'ACTIVE_DATE_FORMAT' => 'd.m.Y',
-            'ADD_SECTIONS_CHAIN' => 'Y',
-            'AJAX_MODE' => 'N',
-            'AJAX_OPTION_ADDITIONAL' => '',
-            'AJAX_OPTION_HISTORY' => 'N',
-            'AJAX_OPTION_JUMP' => 'N',
-            'AJAX_OPTION_STYLE' => 'Y',
-            'CACHE_FILTER' => 'N',
-            'CACHE_GROUPS' => 'Y',
-            'CACHE_TIME' => '36000000',
-            'CACHE_TYPE' => 'A',
-            'CHECK_DATES' => 'Y',
-            'DETAIL_URL' => '',
-            'DISPLAY_BOTTOM_PAGER' => 'Y',
-            'DISPLAY_DATE' => 'Y',
-            'DISPLAY_NAME' => 'Y',
-            'DISPLAY_PICTURE' => 'Y',
-            'DISPLAY_PREVIEW_TEXT' => 'Y',
-            'DISPLAY_TOP_PAGER' => 'N',
-            'FIELD_CODE' => array('',''),
-            'FILTER_NAME' => '',
-            'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
-            'IBLOCK_ID' => $options['IBlocks'][$iblockCode],
-            'IBLOCK_TYPE' => INFS_RUSVINYL_IBLOCK_TYPE,
-            'INCLUDE_IBLOCK_INTO_CHAIN' => 'Y',
-            'INCLUDE_SUBSECTIONS' => 'Y',
-            'MESSAGE_404' => '',
-            'NEWS_COUNT' => '3',
-            'PAGER_BASE_LINK_ENABLE' => 'N',
-            'PAGER_DESC_NUMBERING' => 'N',
-            'PAGER_DESC_NUMBERING_CACHE_TIME' => '36000',
-            'PAGER_SHOW_ALL' => 'N',
-            'PAGER_SHOW_ALWAYS' => 'N',
-            'PAGER_TEMPLATE' => '.default',
-            'PAGER_TITLE' => '',
-            'PARENT_SECTION' => '',
-            'PARENT_SECTION_CODE' => '',
-            'PREVIEW_TRUNCATE_LEN' => '',
-            'PROPERTY_CODE' => ['', ''],
-            'SET_BROWSER_TITLE' => 'Y',
-            'SET_LAST_MODIFIED' => 'N',
-            'SET_META_DESCRIPTION' => 'Y',
-            'SET_META_KEYWORDS' => 'Y',
-            'SET_STATUS_404' => 'N',
-            'SET_TITLE' => 'Y',
-            'SHOW_404' => 'N',
-            'SORT_BY1' => 'ACTIVE_FROM',
-            'SORT_BY2' => 'SORT',
-            'SORT_ORDER1' => 'DESC',
-            'SORT_ORDER2' => 'ASC',
-            'STRICT_SECTION_CHECK' => 'N'
-        ]
-    );?>
-        <div class="rusv-main-page-unit-title">
-            <a href="media/news/?IBLOCK_ID=<?=$options['IBlocks'][$iblockCode]?>"><?=
-                Loc::getMessage('MAIN_PAGE_UNIT_' . $iblockCode . '_TITLE')
-            ?></a>
-        </div>
-    </div><?
-    endforeach;?>
-</div><?
-endforeach;
-
-?>
-</div><?
-require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php');?>
+<?require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');?>
+<?$APPLICATION->IncludeComponent(
+    'infoservice:iblock.showblock', '',
+    [
+        'IBLOCK_CODES' => INFS_RUSVINYL_MAIN_PAGE_IBLOCKS,
+        'IBLOCK_ELEMENT_COUNT' => INFS_RUSVINYL_MAIN_PAGE_UNIT_MAX_COUNT,
+        'IBLOCK_ROW_COUNT' => INFS_RUSVINYL_MAIN_PAGE_ROW_MAX_COUNT
+    ]
+);?>
+<?require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php');?>

@@ -3,9 +3,9 @@ if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
 $itemCount = count($arResult['ITEMS']);
 ?>
-<div class="news-list rusv-news-list" data-count="<?=$itemCount?>"><?
+<div class="rusv-news-list" data-count="<?=$itemCount?>" data-id="<?=$arResult['ID']?>"><?
 foreach ($arResult['ITEMS'] as $arNum => $arItem):?>
-    <div class="news-item rusv-news-item<?=$arNum ? ' rusv-hidden' : ''?>" data-id="<?=$arItem['ID']?>"><?
+    <div class="rusv-news-item<?=$arNum ? ' rusv-hidden' : ''?>" data-id="<?=$arItem['ID']?>"><?
         $previewImg = is_array($arItem['PREVIEW_PICTURE']) ? $arItem['PREVIEW_PICTURE']['SRC']
                     : SITE_TEMPLATE_PATH . '/images/news-default.svg';?>
         <div class="rusv-news-item-image">
@@ -34,4 +34,7 @@ if ($itemCount):?>
     endfor;?>
     </div><?
 endif?>
+</div>
+<div class="rusv-main-page-unit-title">
+    <a href="<?=$arResult['LIST_PAGE_URL']?>"><?=$arResult['NAME']?></a>
 </div>
