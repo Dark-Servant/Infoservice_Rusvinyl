@@ -1,4 +1,7 @@
-</div></div>
+<?
+use Bitrix\Main\Localization\Loc;
+
+?></div></div>
     </div>
 
     <div class="rusv-footer">
@@ -12,10 +15,18 @@
             ]
         );?></div>
         <div class="rusv-footer-icons">
-            <img class="rusv-icon rusv-video-icon" src="<?=SITE_TEMPLATE_PATH?>/images/video.svg">
-            <img class="rusv-icon rusv-teacher-icon" src="<?=SITE_TEMPLATE_PATH?>/images/teacher.svg">
-            <img class="rusv-icon rusv-circle-icon" src="<?=SITE_TEMPLATE_PATH?>/images/circle.svg">
-            <img class="rusv-icon rusv-text-icon" src="<?=SITE_TEMPLATE_PATH?>/images/text.svg">
+            <a class="rusv-icon rusv-video-icon" href="#" title="<?=Loc::getMessage('ICON_CAMERA_TITLE')?>">
+                <img src="<?=SITE_TEMPLATE_PATH?>/images/video.svg">
+            </a>
+            <a class="rusv-icon rusv-teacher-icon" href="#" title="<?=Loc::getMessage('ICON_ITS_KONSULTANT_PLUS_TITLE')?>">
+                <img src="<?=SITE_TEMPLATE_PATH?>/images/teacher.svg">
+            </a>
+            <a class="rusv-icon rusv-circle-icon" href="#" title="<?=Loc::getMessage('ICON_WEB_SERVISDESK_TITLE')?>">
+                <img src="<?=SITE_TEMPLATE_PATH?>/images/circle.svg">
+            </a>
+            <a class="rusv-icon rusv-text-icon" href="#" title="<?=Loc::getMessage('ICON_DIRECTUM_EDMS_TITLE')?>">
+                <img src="<?=SITE_TEMPLATE_PATH?>/images/text.svg">
+            </a>
         </div>
     </div>
 </body>
