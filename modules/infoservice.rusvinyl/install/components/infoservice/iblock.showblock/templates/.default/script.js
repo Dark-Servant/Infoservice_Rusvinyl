@@ -10,7 +10,7 @@
         hidden: 'rusv-hidden',
         selected: 'rusv-selected',
     };
-    const PAGE_WATING_TIME = 5000;
+    const PAGE_WAITING_TIME = 5000;
     var lastStart = {};
 
     /**
@@ -25,7 +25,7 @@
         var newWaintingTime = 0;
 
         if (lastStart[selectorId])
-            newWaintingTime = PAGE_WATING_TIME - currTime + lastStart[selectorId];
+            newWaintingTime = PAGE_WAITING_TIME - currTime + lastStart[selectorId];
 
         if (newWaintingTime < 1) {
             var page = selector.find(rusvSelector.newsListPage + '.' + rusvClass.selected).next();
@@ -35,7 +35,7 @@
             } else {
                 selector.find(rusvSelector.simpleNewsListPage).first().click();
             }
-            newWaintingTime = PAGE_WATING_TIME;
+            newWaintingTime = PAGE_WAITING_TIME;
             lastStart[selectorId] = currTime;
         }
 
@@ -54,8 +54,8 @@
     var initPageChoosing = function(selector, number) {
         if (!selector.get(number)) return;
         
-        setTimeout(() => nextNewsUnit($(selector.get(number))), PAGE_WATING_TIME);
-        setTimeout(() => initPageChoosing(selector, number + 1), PAGE_WATING_TIME);
+        setTimeout(() => nextNewsUnit($(selector.get(number))), PAGE_WAITING_TIME);
+        setTimeout(() => initPageChoosing(selector, number + 1), PAGE_WAITING_TIME);
     }
 
     /**
