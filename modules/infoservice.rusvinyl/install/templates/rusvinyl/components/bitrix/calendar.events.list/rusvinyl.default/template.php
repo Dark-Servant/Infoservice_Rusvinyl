@@ -23,7 +23,7 @@ if(!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
                 <span class="rusv-news-name"><?=$arItem['NAME']?></span>
             </a><?
         endforeach;?>
-        <a class="rusv-calendar-all-events-link" href="#"><?=Loc::getMessage('ALL_EVENT_LINK_TITLE')?></a><?
+        <a class="rusv-calendar-all-events-link" href="/pulse/calendar/"><?=Loc::getMessage('ALL_EVENT_LINK_TITLE')?></a><?
     endif;?>
     </div>
 </div>

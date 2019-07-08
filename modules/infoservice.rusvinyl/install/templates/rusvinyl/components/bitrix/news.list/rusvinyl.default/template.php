@@ -22,6 +22,7 @@ foreach ($arResult['ITEMS'] as $arNum => $arItem):?>
         <div class="rusv-news-item-preview-text">
             <span><?=$arItem['PREVIEW_TEXT'];?></span>
         </div>
+        <div class="rusv-news-item-preview-bottom"></div>
     </div><?
 endforeach;
 

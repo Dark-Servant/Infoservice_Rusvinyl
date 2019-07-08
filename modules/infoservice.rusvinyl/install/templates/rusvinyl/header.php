@@ -40,7 +40,8 @@ use Bitrix\Main\Localization\Loc;
             );?>
         </div>
     </div>
-    <div class="rusv-menu"><?
+    <div class="rusv-menu-area">
+        <div class="rusv-menu"><?
         $APPLICATION->IncludeComponent(
             'bitrix:menu', 'rusviny.horizontal_multilevel', 
             [
@@ -49,8 +50,9 @@ use Bitrix\Main\Localization\Loc;
                 'MAX_LEVEL' => '3',
                 'USE_EXT' => 'Y'
             ]
-        );
-    ?></div>
+        );?>
+        </div>
+    </div>
     <div class="rusv-body">
         <div class="rusv-body-left-part">
             <div class="rusv-body-next-event"><?
