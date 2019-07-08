@@ -18,6 +18,7 @@ class infoservice_rusvinyl extends CModule
 
     const ADMIN_GROUP_ID = 1;
     const ALL_USER_GROUP_ID = 2;
+    const SIMPLE_USER_GROUP_ID = 3;
 
     /**
      * Опции, которые необходимо добавить в проект, сгруппированные по названию методов, которые их
@@ -210,7 +211,40 @@ class infoservice_rusvinyl extends CModule
          * Настройки для создания агентов, в "значении" указываются параметры, которые передаются
          * методу CAgent::AddAgent, с "ключами" как названия параметров
          */
-        'Agents' => []
+        'Agents' => [],
+
+        /**
+         * Настройки для форумов. Обязательный параметр LANG_CODE с кодом языковой константы, в
+         * которой хранится название форума. Для установки описания форума нужно использовать
+         * DESCRIPTION_LANG_CODE с кодом языковой константы.
+         * Для установки прав доступа пользовательским группам нужно использовать параметр PERMISSIONS.
+         * По-умолчанию, выставляются права на "чтение" в группе "Все пользователи", "Ответ" для
+         * зарегистрированных пользователей и "Полный доступ" для администраторов.
+         * Текущие значения доступных прав доступа к форуму
+         *      A - нет доступа
+         *      E - чтение
+         *      I - ответ
+         *      M - новая тема
+         *      Q - модерирование
+         *      U - редактирование
+         *      Y - полный доступ
+         *
+         * Остальные параметры для создания форума такие же, что принимает метод CForumNew::Add.
+         * Значения для параметра ORDER_BY
+         *      P - дата последнего сообщения
+         *      T - тема сообщения
+         *      N - количество ответов
+         *      V - количество просмотров
+         *      D - дата начала темы
+         *      A - автор темы
+         *
+         * Значения для параметра ALLOW_UPLOAD
+         *      N - нет
+         *      Y - изображений
+         *      F - файлов с указанными расширениями
+         *      A - любых файлов
+         */
+        'Forums' => []
     ];
 
     // Правила обработки адресов
@@ -773,6 +807,76 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Создание форумов в системе
+     * 
+     * @param string $constName - название константы
+     * @param array $optionValue - значение опции
+     * @return integer
+     * @throws
+     */
+    public function initForumsOptions(string $constName, array $optionValue)
+    {
+
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_FORUM_UNIT', ['FORUM' => $constName]);
+
+        Loader::includeModule('forum');
+
+        $data = [
+                    'NAME' => $title,
+                    'ACTIVE' => 'Y',
+                ]
+              + array_filter($optionValue, function($key) {
+                    return !in_array($key, [
+                                'LANG_CODE', 'DESCRIPTION', 'DESCRIPTION_LANG_CODE',
+                                'PERMISSIONS'
+                            ]);
+                }, ARRAY_FILTER_USE_KEY)
+              + [
+                    'DESCRIPTION' => empty($optionValue['DESCRIPTION_LANG_CODE']) ? ''
+                                   : Loc::getMessage($optionValue['DESCRIPTION_LANG_CODE']),
+                    'FORUM_GROUP_ID' => 0,
+                    'SITES' => [$this->defaultSiteID => '/'],
+                    'ORDER_BY' => 'P',
+                    'MODERATION' => 'N',
+                    'INDEXATION' => 'Y',
+                    'DEDUPLICATION' => 'Y',
+                    'USE_CAPTCHA' => 'N',
+                    'ALLOW_HTML' => 'N',
+                    'ALLOW_ANCHOR' => 'Y',
+                    'ALLOW_BIU' => 'Y',
+                    'ALLOW_IMG' => 'Y',
+                    'ALLOW_VIDEO' => 'Y',
+                    'ALLOW_TABLE' => 'Y',
+                    'ALLOW_LIST' => 'Y',
+                    'ALLOW_QUOTE' => 'Y',
+                    'ALLOW_CODE' => 'Y',
+                    'ALLOW_ALIGN' => 'Y',
+                    'ALLOW_FONT' => 'Y',
+                    'ALLOW_SMILES' => 'Y',
+                    'ALLOW_UPLOAD' => 'Y',
+                    'ALLOW_UPLOAD_EXT' => 'N',
+                    'ALLOW_TOPIC_TITLED' => 'N',
+                    'ALLOW_NL2BR' => 'N',
+                    'ALLOW_MOVE_TOPIC' => 'N',
+                    'ALLOW_SIGNATURE' => 'N',
+                ];
+
+        $forumId = \CForumNew::Add($data);
+        if (!$forumId)
+            throw new Exception(Loc::getMessage('ERROR_FORUM_UNIT_CREATING', ['FORUM' => $constName]));
+
+        \CForumNew::SetAccessPermissions(
+            $forumId,
+            ($optionValue['PERMISSIONS'] ?: []) + [
+                self::ADMIN_GROUP_ID => 'Y',
+                self::ALL_USER_GROUP_ID => 'E',
+                self::SIMPLE_USER_GROUP_ID => 'I',
+            ]
+        );
+        return $forumId;
+    }
+
+    /**
      * Создание всех опций
      *
      * @return  void
@@ -1268,6 +1372,22 @@ class infoservice_rusvinyl extends CModule
         if (!$agentId) return;
 
         \CAgent::Delete($agentId);
+    }
+
+    /**
+     * Удаление форумов
+     * 
+     * @param $constName - название константы
+     * @return void
+     */
+    public function removeForumsOptions(string $constName)
+    {
+        $forumId = intval($this->optionUnits['Forums'][constant($constName)]);
+        if (!$forumId) return;
+
+        Loader::includeModule('forum');
+
+        \CForumNew::Delete($forumId);
     }
 
     /**
