@@ -1,14 +1,17 @@
-.rusv-main-page + .rusv-main-page {
-    margin-top: 35px;
+.rusv-main-page {
+    margin-bottom: 50px;
+    text-align: center;
 }
 
 .rusv-main-page-unit {
     display: inline-block;
     position: relative;
+    width: 45%;
+    text-align: left;
 }
 
 .rusv-main-page-unit + .rusv-main-page-unit {
-    margin-left: 6%;
+    margin-left: 5%;
 }
 
 .rusv-main-page-unit-title {
@@ -28,7 +31,6 @@
 
 .rusv-news-list {
     display: inline-block;
-    width: 435px;
     vertical-align: top;
     position: relative;
     background-color: #ffffff;
@@ -49,10 +51,11 @@
     overflow: hidden;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    text-align: center;
 }
 
 .rusv-news-item-image img {
-    width: 100%;
+    max-width: 100%;
 }
 
 .rusv-news-item-title {
@@ -76,6 +79,14 @@
     max-height: 70px;
     overflow: hidden;
     padding: 0 25px;
+}
+
+.rusv-news-item-preview-bottom {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    bottom: 38px;
+    background-image: linear-gradient(to bottom, transparent, #ffffff);
 }
 
 .rusv-news-list-pages {
@@ -106,3 +117,37 @@
 .rusv-news-list-page + .rusv-news-list-page {
     margin-left: 10px;
 }
+
+@media screen and (max-width: 1550px) {
+    .rusv-news-list {
+        height: 350px;
+    }
+
+    .rusv-main-page-unit {
+        max-width: 300px;
+        min-width: 270px;
+    }
+
+    .rusv-news-item-image {
+        height: 175px;
+    }
+
+    .rusv-main-page-unit-title {
+        font-size: 20px;
+        line-height: 42px;
+        top: 175px;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .rusv-main-page-unit + .rusv-main-page-unit {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 1205px) {
+    .rusv-main-page-unit + .rusv-main-page-unit {
+        margin-top: 50px;
+    }
+}
+
