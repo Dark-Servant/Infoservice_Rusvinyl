@@ -30,7 +30,9 @@ class IBlockShowblock extends \CBitrixComponent
                      ? 0 : $this->arParams['IBLOCK_ROW_COUNT'];
         $rowNumber = $rowCount = 0;
         foreach ($iblockIds as $iblockId) {
-            $this->arResult['IBLOCK_ROWS'][$rowNumber][] = $iblockId;
+            if (CIBlockElement::GetList([], ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'])->Fetch())
+                $this->arResult['IBLOCK_ROWS'][$rowNumber][] = $iblockId;
+
             if (++$rowCount >= $maxRowCount) {
                 $rowCount = 0;
                 ++$rowNumber;

@@ -4,12 +4,13 @@
 
 .rusv-search-form-title {
     display: inline-block;
-    padding-right: 15px;
+    padding-right: 10px;
 }
 
 .rusv-search-form-input {
     padding: 2px;
     width: 200px;
+    margin-right: 5px;
 }
 
 .rusv-search-form-title:not(.rusv-hidden) ~ input {
@@ -18,6 +19,8 @@
 
 .rusv-search-form-button {
     cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .rusv-search-form-button > img {

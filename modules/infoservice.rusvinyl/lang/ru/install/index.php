@@ -28,7 +28,11 @@ $MESS['ERROR_AGENT_EMPTY_NAME'] = 'Не указано имя агента AGENT
 $MESS['ERROR_LINK_CREATING'] = 'Не удалось создать символьную ссылку в local для LINK';
 $MESS['ERROR_MAIN_LINK_CREATING'] = 'Не удалось создать символьную ссылку в корне сайта для LINK';
 $MESS['ERROR_USER_LANG_RESULT'] = 'FILE не является папкой';
+$MESS['ERROR_FORUM_UNIT_LANG'] = 'Отсутствует параметр LANG_CODE для форума FORUM';
+$MESS['ERROR_FORUM_UNIT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для форума FORUM';
+$MESS['ERROR_FORUM_UNIT_CREATING'] = 'Не удалось создать форум FORUM';
 
+// ----------------------------------------------------------------------
 $MESS['IBLOCK_TYPE_TITLE'] = 'РусВинил';
 $MESS['IBLOCK_NEWS_TITLE'] = 'Новости';
 $MESS['IBLOCK_ANNOUNCEMENT_TITLE'] = 'Анонсы';
