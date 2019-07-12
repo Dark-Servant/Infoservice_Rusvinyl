@@ -249,7 +249,11 @@ class infoservice_rusvinyl extends CModule
          *      F - файлов с указанными расширениями
          *      A - любых файлов
          */
-        'Forums' => []
+        'Forums' => [
+            'INFS_DETAIL_PAGE_FORUM' => [
+                'LANG_CODE' => 'DETAIL_PAGE_FORUM_TITLE',
+            ]
+        ]
     ];
 
     // Правила обработки адресов
@@ -308,7 +312,7 @@ class infoservice_rusvinyl extends CModule
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
     const FILE_LINKS = [
-        'components/infoservice/iblock.showblock',
+        'components/infoservice/iblock.showblock', 'components/infoservice/iblock.detail',
         'templates/rusvinyl', 'public/media/news'
     ];
 

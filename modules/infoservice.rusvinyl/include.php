@@ -25,6 +25,7 @@ define('INFS_RUSVINYL_IBLOCK_POLL', INFS_RUSVINYL_IBLOCK_PREFIX . 'poll');
 define('INFS_RUSVINYL_IBLOCK_LEADER', INFS_RUSVINYL_IBLOCK_PREFIX . 'leader');
 // Символьный код инфоблока "Влог ген. директора"
 define('INFS_RUSVINYL_IBLOCK_MASTERBLOG', INFS_RUSVINYL_IBLOCK_PREFIX . 'masterblog');
+
 define('INFS_RUSVINYL_MAIN_PAGE_IBLOCKS', [
     INFS_RUSVINYL_IBLOCK_NEWS,
     INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT,
@@ -48,6 +49,12 @@ define('INFS_RUSVINYL_NEW_LIST_FIRST_COUNT', 3);
 define('INFS_IBLOCK_NEWS_ELEMENT1', 'NEWS_ELEMENT1');
 define('INFS_IBLOCK_NEWS_ELEMENT2', 'NEWS_ELEMENT2');
 define('INFS_IBLOCK_NEWS_ELEMENT3', 'NEWS_ELEMENT3');
+
+// Данные форумов
+
+define('INFS_FORUM_PREFIX', 'RUSVINYL_');
+// Форум для комментариев на детальной странице просмотра
+define('INFS_DETAIL_PAGE_FORUM', 'DETAIL_PAGE');
 
 // Вспомогательные константы
 define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/man.svg');
