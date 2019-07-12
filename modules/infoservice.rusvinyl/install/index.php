@@ -649,12 +649,24 @@ class infoservice_rusvinyl extends CModule
      */
     public function initIBlocksOptions(string $constName, array $optionValue)
     {
+        // Инфоблок может создаваться в другом типе инфоблока
+        Loader::includeModule('iblock');
+
         $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_IBLOCK', ['IBLOCK' => $constName]);
         $data = [
                     'ACTIVE' => 'Y',
                     'NAME' => $title,
                     'CODE' => constant($constName),
-                    'IBLOCK_TYPE_ID' => constant($optionValue['IBLOCK_TYPE_ID'])
+                    'IBLOCK_TYPE_ID' => constant($optionValue['IBLOCK_TYPE_ID']),
+                    /**
+                     * VERSION определяtn способ хранения значений свойств элементов инфоблока
+                     *     1 - в общей таблице
+                     *     2 - в отдельной
+                     * Но выбрано строго 2, так ка при работе с множественными значениями свойств
+                     * инфоблока могут быть проблемы из-за того, что при запросе элементов через
+                     * GetList на каждое значение свойства будет дан столько же раз тот же элемент
+                     */
+                    'VERSION' => 2
                 ]
               + array_filter($optionValue, function($key) {
                     return !in_array($key, ['LANG_CODE', 'IBLOCK_TYPE_ID', 'PERMISSIONS']);

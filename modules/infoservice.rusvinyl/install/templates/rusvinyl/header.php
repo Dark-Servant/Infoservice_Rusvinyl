@@ -10,6 +10,7 @@ use Bitrix\Main\Localization\Loc;
     $APPLICATION->ShowHead(false);
     $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/script.js');
     $APPLICATION->AddHeadScript('/local/node_modules/moment/min/moment-with-locales.min.js');
+    $APPLICATION->SetAdditionalCSS('/local/node_modules/@fortawesome/fontawesome-free/css/all.min.css');
     CUtil::InitJSCore(['ajax' , 'popup', 'jquery']);?>
     <title><?$APPLICATION->ShowTitle()?></title>
 </head>
