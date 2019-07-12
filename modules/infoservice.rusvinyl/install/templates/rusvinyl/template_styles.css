@@ -167,6 +167,7 @@ body {
 
 .rusv-body-content-data {
     overflow: hidden;
+    max-width: 945px;
 }
 
 .rusv-footer-menu {
