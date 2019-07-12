@@ -4,7 +4,8 @@ body {
     font-size: 16px;
 }
 
-*.rusv-hidden {
+*.rusv-hidden,
+input[type="file"] {
     display: none !important;
 }
 
