@@ -363,4 +363,198 @@ input[type="file"] {
         min-width: 315px;
         width: 32%;
     }
+
+}
+
+.rusv-button {
+    display: inline-block;
+    height: 30px;
+    width: 225px;
+    text-align: center;
+    line-height: 28px;
+    background-color: #F3F3F3;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 7px 2px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 1px 7px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 7px 2px rgba(0, 0, 0, 0.5);
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    color: #777676;
+}
+
+.rusv-button:hover {
+    background-color: #f7f7f7;
+    box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
+}
+
+.rusv-button:active {
+    box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+.popup-window.rusv-inited {
+    background: #F3F3F3;
+    padding: 50px 30px 30px 30px;
+}
+
+.popup-window.rusv-inited .popup-window-content {
+    background: #F3F3F3;
+}
+
+.popup-window.rusv-inited .popup-window-close-icon:after {
+    content: "\2716";
+    background-image: none;
+    color: red;
+}
+
+.rusv-modal-area.rusv-error {
+    border: 1px solid red;
+}
+
+.rusv-modal-area + .rusv-modal-area {
+    margin-top: 25px;
+}
+
+.rusv-modal-input {
+    background-color: #F3F3F3;
+    border: 0;
+    border-bottom: 1px solid #C4C4C4;
+    width: 500px;
+    padding: 5px 2px;
+    line-height: 18px;
+}
+
+.rusv-modal-input:focus {
+    outline: none;
+}
+
+.rusv-modal-textarea  {
+    width: calc(100% - 42px);
+    resize: none;
+    padding: 20px 20px;
+    line-height: 18px;
+    background-color: #F3f3f3;
+    height: 100px;
+    outline: none;
+    margin-top: 15px;
+    border: 1px solid #C4C4C4;
+    font-family: "Arial";
+}
+
+.rusv-modal-file-link {
+    color: #7b7979;
+    font-size: 14px;
+    position: relative;
+    padding-left: 30px;
+    -ms-user-select: none; 
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    user-select: none;
+    cursor: pointer;
+}
+
+.rusv-modal-file-link:before {
+    content: '';
+    background-image: url(/local/templates/rusvinyl/images/attachedfile.svg);
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    background-size: contain;
+    position: absolute;
+    top: -7px;
+    left: 0;
+}
+
+.rusv-modal-file-link-name {
+    display: inline-block;
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.rusv-modal-file-link-name:not(:empty) + .rusv-modal-file-link-value {
+    display: none;
+}
+
+.rusv-modal-button.rusv-button {
+    width: 170px;
+    padding: 5px;
+}
+
+.rusv-modal-control-table {
+    display: table;
+    width: 100%;
+}
+
+.rusv-modal-control-table > * {
+    display: table-cell;
+}
+
+.rusv-modal-control-table > *:last-child {
+    text-align: right;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-selector-wrap {
+    background-color: #F3F3F3;
+    border: 0;
+    border-bottom: 1px solid #C4C4C4;
+    padding: 0;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-item {
+    background-color: transparent;
+    padding-left: 0;
+    color: #524d4d !important;
+    font-weight: 100;
+    padding-right: 5px;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-item-remove {
+    background-image: none;
+    position: relative;
+    width: 10px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-item-remove:after {
+    content: '\2717';
+    position: absolute;
+    display: inline-block;
+    height: 10px;
+    line-height: 12px;
+    vertical-align: middle;
+    top: 0;
+    right: 0;
+}
+}
+
+.popup-window.rusv-inited .ui-tile-selector-input {
+    background-color: #F3F3F3;
+    border: 0;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-select {
+    margin: 7px 0;
+    font-family: "Arial";
+    color: #848484;
+    font-weight: 100;
+}
+
+.popup-window.rusv-inited .ui-tile-selector-select:before {
+    height: 0;
+    width: 0;
+    background: none;
 }

@@ -1,0 +1,124 @@
+div.rusv-body-content-data {
+    overflow: inherit;
+}
+
+.rusv-iblock-list {
+    margin-top: 60px;
+}
+
+.rusv-list-unit {
+    width: 70%;
+}
+
+.rusv-list-unit+ .rusv-list-unit{
+    margin-top: 50px;
+}
+
+.rusv-list-unit:not(.rusv-unit-text-opened) .rusv-unit-text-image,
+.rusv-list-unit.rusv-unit-text-opened .rusv-unit-text-more {
+    display: none;
+}
+
+.rusv-unit-title {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.rusv-unit-subtitle {
+    margin-bottom: 10px;
+}
+
+.rusv-unit-text {
+    line-height: 24px;
+}
+
+.rusv-list-unit:not(.rusv-unit-text-opened) .rusv-unit-text {
+    position: relative;
+    max-height: 115px;
+    min-height: 65px;
+    overflow: hidden;
+}
+
+.rusv-unit-text-value {
+    display: block;
+}
+
+.rusv-unit-text-image-src {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.rusv-unit-text-more {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f3f3f3;
+    padding-top: 20px;
+}
+
+.rusv-unit-text-more-value {
+    color: #C4C4C4;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.8);
+}
+
+.rusv-thanks-unit-user-link, .rusv-thanks-unit-user-link:visited {
+    font-size: 20px;
+    line-height: 24px;
+    color: #0091CA;
+    text-decoration: none; 
+}
+
+
+.rusv-thanks-unit-user-link + .rusv-thanks-unit-user-link:before {
+    content: ', ';
+}
+
+.rusv-question-unit + .rusv-question-unit {
+    margin-top: 50px;
+}
+
+.rusv-question-unit-name {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 10px;
+    color: #0091CA;
+}
+
+.rusv-add-new-question-buttons {
+    text-align: right;
+}
+
+.rusv-iblock-pages {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.rusv-iblock-pages[data-many-pages="0"] {
+    display: none;
+}
+
+.rusv-iblock-list-page {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    color: #C3C3C3;
+    -ms-user-select: none; 
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    user-select: none;
+}
+
+.rusv-iblock-list-page + .rusv-iblock-list-page {
+    margin-left: 10px;
+}
+
+.rusv-iblock-list-current-page {
+    color: black;
+    font-size: 18px;
+    cursor: default;
+}
+
+
