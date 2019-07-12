@@ -39,6 +39,8 @@ $MESS['IBLOCK_ANNOUNCEMENT_TITLE'] = 'Анонсы';
 $MESS['IBLOCK_POLL_TITLE'] = 'Опросы';
 $MESS['IBLOCK_LEADER_TITLE'] = 'Лидер месяца';
 $MESS['IBLOCK_MASTERBLOG_TITLE'] = 'Влог ген. директора';
+$MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';
+$MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
 
 // Тестовые элементы "Новости"
 $MESS['IBLOCK_NEWS_ELEMENT1_NAME'] = 'РусВинил принимает заявки на конкурс проектов "Экосознание"';
@@ -167,3 +169,12 @@ $MESS['IBLOCK_NEWS_ELEMENT3_DETAIL'] = 'В 2018 году два кстовски
                                      . 'безопасную работу завода с увеличением объемов производства.';
 
 $MESS['DETAIL_PAGE_FORUM_TITLE'] = 'Комментарии в детальных страницах "РусВинила"';
+
+// Свойства инфоблока "Сказать "Спасибо"
+$MESS['IBLOCK_THANKS_PROPERTY_RECIPIENT'] = 'Кого поздравляют';
+
+// Свойства инфоблока "Задать вопрос"
+$MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_VALUE'] = 'Ответ';
+$MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_AUTHOR'] = 'Автор ответа';
+$MESS['IBLOCK_QUESTION_PROPERTY_THEME'] = 'Тема вопроса';
+$MESS['IBLOCK_QUESTION_PROPERTY_QUESTION_VALUE'] = 'Текст вопроса';

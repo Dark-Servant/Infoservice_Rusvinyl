@@ -165,6 +165,20 @@ class infoservice_rusvinyl extends CModule
                 'DETAIL_PAGE_URL' => '/media/masterblog/#ID#/',
                 'LIST_PAGE_URL' => '/media/masterblog/',
             ],
+            // инфоблок "Сказать "Спасибо"
+            'INFS_RUSVINYL_IBLOCK_THANKS' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_THANKS_TITLE',
+                'DETAIL_PAGE_URL' => '/thanks/#ID#/',
+                'LIST_PAGE_URL' => '/thanks/',
+            ],
+            // инфоблок "Задать вопрос"
+            'INFS_RUSVINYL_IBLOCK_QUESTION' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_QUESTION_TITLE',
+                'DETAIL_PAGE_URL' => '/question/#ID#/',
+                'LIST_PAGE_URL' => '/question/',
+            ],
         ],
 
         /**
@@ -172,7 +186,52 @@ class infoservice_rusvinyl extends CModule
          * Обязательно нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_ID с именем константы,
          * в которой указано значение кода, под которым хранится ID инфоблока в настройках модуля
          */
-        'IBlockProperties' => [],
+        'IBlockProperties' => [
+            // свойство "Кого поздравляют" для инфоблока "Сказать "Спасибо"
+            'INFS_IB_THANKS_PR_RECIPIENT' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_THANKS',
+                'LANG_CODE' => 'IBLOCK_THANKS_PROPERTY_RECIPIENT',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'Y',
+                'USER_TYPE' => 'UserID',
+            ],
+            // свойство "Ответ" для инфоблока "Задать вопрос"
+            'INFS_IB_QUESTION_PR_ANSWER_VALUE' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_QUESTION',
+                'LANG_CODE' => 'IBLOCK_QUESTION_PROPERTY_ANSWER_VALUE',
+                'DEFAULT_VALUE' => [
+                    'TEXT' => '',
+                    'TYPE' => 'HTML',
+                ],
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'HTML',
+            ],
+            // свойство "Автор ответа" для инфоблока "Задать вопрос"
+            'INFS_IB_QUESTION_PR_ANSWER_AUTHOR' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_QUESTION',
+                'LANG_CODE' => 'IBLOCK_QUESTION_PROPERTY_ANSWER_AUTHOR',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'UserID',
+            ],
+            // свойство "Тема вопроса" для инфоблока "Задать вопрос"
+            'INFS_IB_QUESTION_PR_THEME' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_QUESTION',
+                'LANG_CODE' => 'IBLOCK_QUESTION_PROPERTY_THEME',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Текст вопроса" для инфоблока "Задать вопрос"
+            'INFS_IB_QUESTION_PR_QUESTION_VALUE' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_QUESTION',
+                'LANG_CODE' => 'IBLOCK_QUESTION_PROPERTY_QUESTION_VALUE',
+                'DEFAULT_VALUE' => [
+                    'TEXT' => '',
+                    'TYPE' => 'HTML',
+                ],
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'HTML',
+            ],
+        ],
 
         /**
          * Настройки для создания элементов инфоблоков. В "значении" указываются параметры для элементов инфоблоков.
@@ -282,6 +341,10 @@ class infoservice_rusvinyl extends CModule
             'FILE' => '/local/public/media/news/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
         ],
+        '#^/(thanks|question)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/thanks/index.php',
+            'PARAMS' => 'ELEMENT_TYPE_CODE=$1&$2'
+        ],
     ];
 
     /**
@@ -312,8 +375,9 @@ class infoservice_rusvinyl extends CModule
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
     const FILE_LINKS = [
-        'components/infoservice/iblock.showblock', 'components/infoservice/iblock.detail',
-        'templates/rusvinyl', 'public/media/news'
+        'components/infoservice/iblock.showblock', 'components/infoservice/iblock.list',
+        'components/infoservice/iblock.detail', 'templates/rusvinyl', 'public/media/news',
+        'public/thanks'
     ];
 
     /**
