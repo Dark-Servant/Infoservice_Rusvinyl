@@ -130,30 +130,35 @@ class infoservice_rusvinyl extends CModule
          *     X - полный доступ (запись + назначение прав доступа на данный инфоблок).
          */
         'IBlocks' => [
+            // инфоблок "Новости"
             'INFS_RUSVINYL_IBLOCK_NEWS' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_NEWS_TITLE',
                 'DETAIL_PAGE_URL' => '/media/news/#ID#/',
                 'LIST_PAGE_URL' => '/media/news/',
             ],
+            // инфоблок "Анонсы"
             'INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_ANNOUNCEMENT_TITLE',
                 'DETAIL_PAGE_URL' => '/announ/#ID#/',
                 'LIST_PAGE_URL' => '/announ/',
             ],
+            // инфоблок "Опросы"
             'INFS_RUSVINYL_IBLOCK_POLL' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_POLL_TITLE',
                 'DETAIL_PAGE_URL' => '/pulse/poll/#ID#/',
                 'LIST_PAGE_URL' => '/pulse/poll/',
             ],
+            // инфоблок "Лидер месяца"
             'INFS_RUSVINYL_IBLOCK_LEADER' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_LEADER_TITLE',
                 'DETAIL_PAGE_URL' => '/leader/#ID#/',
                 'LIST_PAGE_URL' => '/leader/',
             ],
+            // инфоблок "Влог ген. директора"
             'INFS_RUSVINYL_IBLOCK_MASTERBLOG' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_MASTERBLOG_TITLE',
@@ -659,7 +664,7 @@ class infoservice_rusvinyl extends CModule
                     'CODE' => constant($constName),
                     'IBLOCK_TYPE_ID' => constant($optionValue['IBLOCK_TYPE_ID']),
                     /**
-                     * VERSION определяtn способ хранения значений свойств элементов инфоблока
+                     * VERSION определяет способ хранения значений свойств элементов инфоблока
                      *     1 - в общей таблице
                      *     2 - в отдельной
                      * Но выбрано строго 2, так ка при работе с множественными значениями свойств
