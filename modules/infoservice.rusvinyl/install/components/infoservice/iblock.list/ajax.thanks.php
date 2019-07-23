@@ -5,6 +5,9 @@ use \Bitrix\Main\Localization\Loc;
 switch ($action) {
 
     case 'new': // создание нового пожелания
+        if (!$currentUserId)
+            throw new Exception(Loc::getMessage('ERROR_AUTH'));
+            
         $fields = [
             'ACTIVE' => 'N',
             'NAME' => trim($request->getPost('new-thanks-name')),
@@ -82,8 +85,8 @@ switch ($action) {
             }
             if (strlen($unit['DETAIL_TEXT']) > INFS_IB_THANKS_TEXT_LENGHT)
                 $unit['MORE_DETAIL_TEXT'] = true;
-
-            $unit['DETAIL_TEXT'] = nl2br(preg_replace('/([\r\n]{1,2})(\s*?[\r\n]+)?/iu', '$1', strip_tags(trim($unit['DETAIL_TEXT']))));
+            
+            $unit['DETAIL_TEXT'] = nl2br(preg_replace('/([\r\n](?:\s*?[\r\n])?)\s*/iu', '$1', strip_tags(trim($unit['DETAIL_TEXT']))));
 
             if (!empty($unit['DETAIL_PICTURE'])) {
                 $unit['DETAIL_PICTURE'] = CFile::GetPath($unit['DETAIL_PICTURE']);

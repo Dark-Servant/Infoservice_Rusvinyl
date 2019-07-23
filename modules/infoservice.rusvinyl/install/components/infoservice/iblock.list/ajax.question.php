@@ -5,6 +5,9 @@ use \Bitrix\Main\Localization\Loc;
 switch ($action) {
 
     case 'new': // создание нового вопроса
+        if (!$currentUserId)
+            throw new Exception(Loc::getMessage('ERROR_AUTH'));
+        
         $questionText = trim($request->getPost('new-question-text'));
         $fields = [
             'ACTIVE' => 'N',
@@ -89,7 +92,7 @@ switch ($action) {
             if (strlen($unit['DETAIL_TEXT']) > INFS_IB_QUESTION_TEXT_LENGHT)
                 $unit['MORE_DETAIL_TEXT'] = true;
 
-            $unit['DETAIL_TEXT'] = nl2br(preg_replace('/([\r\n]{1,2})(\s*?[\r\n]+)?/iu', '$1', strip_tags(trim($unit['DETAIL_TEXT']))));
+            $unit['DETAIL_TEXT'] = nl2br(preg_replace('/([\r\n](?:\s*?[\r\n])?)\s*/iu', '$1', strip_tags(trim($unit['DETAIL_TEXT']))));
 
             if (!empty($unit['DETAIL_PICTURE'])) {
                 $unit['DETAIL_PICTURE'] = CFile::GetPath($unit['DETAIL_PICTURE']);
