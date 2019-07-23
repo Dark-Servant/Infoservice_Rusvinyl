@@ -174,6 +174,7 @@ class infoservice_rusvinyl extends CModule
                 'LANG_CODE' => 'IBLOCK_THANKS_TITLE',
                 'DETAIL_PAGE_URL' => '/thanks/#ID#/',
                 'LIST_PAGE_URL' => '/thanks/',
+                'BIZPROC' => 'Y'
             ],
             // инфоблок "Задать вопрос"
             'INFS_RUSVINYL_IBLOCK_QUESTION' => [
@@ -181,6 +182,7 @@ class infoservice_rusvinyl extends CModule
                 'LANG_CODE' => 'IBLOCK_QUESTION_TITLE',
                 'DETAIL_PAGE_URL' => '/question/#ID#/',
                 'LIST_PAGE_URL' => '/question/',
+                'BIZPROC' => 'Y'
             ],
         ],
 
@@ -361,11 +363,7 @@ class infoservice_rusvinyl extends CModule
         '#^/(?:media/news|pulse/poll|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
-        ],
-        '#^/(thanks|question)/?(?:\?(\S*))?$#' => [
-            'FILE' => '/local/public/thanks/index.php',
-            'PARAMS' => 'ELEMENT_TYPE_CODE=$1&$2'
-        ],
+        ]
     ];
 
     /**
@@ -384,7 +382,11 @@ class infoservice_rusvinyl extends CModule
      * названий партнера и модуля. Для обработки конкретных событий эти классы должны иметь
      * статические и открытые методы с такими же названиями, что и события
      */
-    const EVENTS_HANDLES = [];
+    const EVENTS_HANDLES = [
+        'iblock' => [
+            'EventHandles\\IBlockElementEventHandle'
+        ]
+    ];
 
     /**
      * Пути к файлам и папкам, что лежат в папке install модуля,  на которые необходимо создать символьные ссылки
@@ -422,7 +424,7 @@ class infoservice_rusvinyl extends CModule
         // разделы
         'brain', 'company', 'competition', 'hr', 'media',
         'participate', 'phonebook', 'pulse', 'question',
-        'services', 'thanks', 'useful',
+        'services', 'useful',
     ];
 
     function __construct()

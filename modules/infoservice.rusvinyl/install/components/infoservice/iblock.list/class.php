@@ -12,6 +12,8 @@ class IBlockList extends \CBitrixComponent
      */
     public function executeComponent()
     {
+        global $USER;
+
         try {
             Loader::includeModule('iblock');
 
@@ -20,19 +22,34 @@ class IBlockList extends \CBitrixComponent
                 || !(
                     $iblock = CIBlock::GetList(
                         [], [
-                            'CODE' => INFS_RUSVINYL_IBLOCK_PREFIX . $this->arParams['ELEMENT_TYPE_CODE']
+                            'CODE' => $this->arParams['ELEMENT_TYPE_CODE']
                         ]
                     )->Fetch()
                 )
+                || ($iblock['IBLOCK_TYPE_ID'] != INFS_RUSVINYL_IBLOCK_TYPE)
             ) throw new Exception(Loc::getMessage('ERROR_EMPTY_ELEMENT_TYPE_CODE'));
 
+            $prefixLength = strlen(INFS_RUSVINYL_IBLOCK_PREFIX);
+            $trueCode = strtolower($this->arParams['ELEMENT_TYPE_CODE']);
+            if (
+                (strlen($trueCode) <= $prefixLength)
+                || (substr($trueCode, 0, $prefixLength) != INFS_RUSVINYL_IBLOCK_PREFIX)
+            ) throw new Exception(Loc::getMessage('ERROR_BAD_IBLOCK_PREFIX'));
+
+            $trueCode = substr($trueCode, $prefixLength);
             $this->arResult['MAINDATA'] = [
-                'IBLOCK' => $iblock + [
-                    'URL_CODE' => strtolower($this->arParams['ELEMENT_TYPE_CODE']),
-                ],
-                'BUTTON_TITLE_CODE' => strtoupper($this->arParams['ELEMENT_TYPE_CODE']) . '_BUTTON_TITLE',
-                'OPTIONS' => json_decode(Option::get(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, SITE_ID), true)
+                'IBLOCK' => $iblock,
+                'CODE' => $trueCode,
+                'BUTTON_TITLE_CODE' => strtoupper($trueCode) . '_BUTTON_TITLE',
+                'OPTIONS' => json_decode(
+                                    Option::get(
+                                        INFS_RUSVINYL_MODULE_ID,
+                                        INFS_RUSVINYL_OPTION_NAME,
+                                        false, SITE_ID
+                                    ), true
+                                )
             ];
+            $this->arResult['CURRENT_USER_ID'] = $USER->GetId();
 
             $this->includeComponentTemplate();
 

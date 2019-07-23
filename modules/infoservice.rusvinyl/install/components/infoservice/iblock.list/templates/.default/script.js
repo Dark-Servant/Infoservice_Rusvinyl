@@ -39,13 +39,13 @@
         $(rusvSelector.contentData).addClass(rusvClass.noReaction);
 
         $.get(ajaxURL + 'list', {
-            code: mainData.IBLOCK.URL_CODE,
+            code: mainData.CODE,
             page: pageNumber
         }, answer => {
             $(rusvSelector.contentData).removeClass(rusvClass.noReaction);
             if (!answer.result) return;
 
-            $(rusvSelector.iblockList).html(handlebarUnits[mainData.IBLOCK.URL_CODE + 'List']({UNITS: answer.data.list}));
+            $(rusvSelector.iblockList).html(handlebarUnits[mainData.CODE + 'List']({UNITS: answer.data.list}));
             $(rusvSelector.iblockList).attr('data-count', answer.data.list.length);
 
             var pages = [...Array(answer.data.pages.count).keys()].map(pageI => {
@@ -66,9 +66,9 @@
      * @return void
      */
     var initPage = function() {
-        mainData = $(rusvSelector.controlButtons).data('main-data');
-        rusvSelector.addNewUnitPopup = rusvSelector.addNewUnitPopup.replace('#CODE#', mainData.IBLOCK.URL_CODE);
-        modalWndIds.addNewUnit = modalWndIds.addNewUnit.replace('#CODE#', mainData.IBLOCK.URL_CODE);
+        mainData = $(rusvSelector.iblockList).data('main-data');
+        rusvSelector.addNewUnitPopup = rusvSelector.addNewUnitPopup.replace('#CODE#', mainData.CODE);
+        modalWndIds.addNewUnit = modalWndIds.addNewUnit.replace('#CODE#', mainData.CODE);
 
         for (var i in handlebarUnits) {
             var html = $(handlebarUnits[i].selector).html();
@@ -103,7 +103,7 @@
         popupWindow.addClass(rusvClass.noReaction);
 
         var data = new FormData;
-        data.append('code', mainData.IBLOCK.URL_CODE);
+        data.append('code', mainData.CODE);
 
         popupWindow.find(rusvSelector.modalArea + ':not(:last)').addClass(rusvClass.error);
         popupWindow.find('*[name]').each((number, unit) => {

@@ -22,9 +22,6 @@ Loader::includeModule('iblock');
 $optionUnits = json_decode(Option::get(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, SITE_ID), true);
 
 try {
-    if (!$currentUserId)
-        throw new Exception(Loc::getMessage('ERROR_AUTH'));
-
     $request = Application::getInstance()->getContext()->getRequest();
     $directionCode = $request->get('code');
     if (empty($directionCode))
