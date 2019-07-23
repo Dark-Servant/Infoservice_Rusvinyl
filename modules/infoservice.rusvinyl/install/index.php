@@ -19,7 +19,8 @@ class infoservice_rusvinyl extends CModule
     const ADMIN_GROUP_ID = 1;
     const ALL_USER_GROUP_ID = 2;
     const SIMPLE_USER_GROUP_ID = 3;
-
+    const USER_ID = 1;
+    
     /**
      * Опции, которые необходимо добавить в проект, сгруппированные по названию методов, которые их
      * добавят. "Ключ" - центральная часть имени метода, который будет вызван для добавления/удаления
@@ -128,6 +129,8 @@ class infoservice_rusvinyl extends CModule
          *     U - редактирование через документооборот; 
          *     W - запись; 
          *     X - полный доступ (запись + назначение прав доступа на данный инфоблок).
+         * Права доступа можно указывать и для групп, созданных модулем, просто указав в "ключе" строковый
+         * идентификатор константы, используемый в UserGroup
          */
         'IBlocks' => [
             // инфоблок "Новости"
@@ -292,6 +295,8 @@ class infoservice_rusvinyl extends CModule
          *      Q - модерирование
          *      U - редактирование
          *      Y - полный доступ
+         * Права доступа можно указывать и для групп, созданных модулем, просто указав в "ключе" строковый
+         * идентификатор константы, используемый в UserGroup
          *
          * Остальные параметры для создания форума такие же, что принимает метод CForumNew::Add.
          * Значения для параметра ORDER_BY
@@ -312,7 +317,23 @@ class infoservice_rusvinyl extends CModule
             'INFS_DETAIL_PAGE_FORUM' => [
                 'LANG_CODE' => 'DETAIL_PAGE_FORUM_TITLE',
             ]
-        ]
+        ],
+
+        /**
+         * Настройки для создания групп опросов. В "значении" обязательно надо указать LANG_CODE
+         * с именем языковой константы, в которой хранится название группы.
+         * За SYMBOLIC_NAME будет браться значение константы, название которой указано в "ключе"
+         * Остальные параметры, кроме TITLE, ACTIVE и SYMBOLIC_NAME, такие же, как и при обычном
+         * создании группы опросов
+         */
+        'VoteChannels' => [],
+
+        /**
+         * Пользовательские поля для групп опроса. Настройки такие же, как и при создании других
+         * пользоательских полей. Важно, чтобы было указано в ['SETTINGS']['CHANNEL_ID'] навазние
+         * "ключа", под которым в настройках для VoteChannels указаны настройки группы опросов
+         */
+        'VoteFields' => [],
     ];
 
     // Правила обработки адресов
@@ -356,13 +377,12 @@ class infoservice_rusvinyl extends CModule
     const BX24_MAIN_LEFT_MENU = [];
 
     /**
-     * Описание обработчиков событий. Под "ключом" ранится название модуля, откуда идет событие, "значение"
-     * хранит настройки для обработчиков событий указанного модуля, где
-     *     "ключ" - название события;
-     *     "значение" - массив, у которого в каждом элементе хранится информация о классе и методе, которые обрабатывают
-     *     событие. Элемент с информаций об обработчике события представляет из себя массив, первый элемент это название
-     *     класса, второй - название метода. Сам класс находится в папке lib модуля. У названия класса не надо указывать
-     *     пространство имен
+     * Описание обработчиков событий. Под "ключом" указывается название другого модуля, события которого
+     * нужно обрабатывать, в "значении" указывается массив с навазниями классов этого модуля, которые
+     * будут отвечать за обработку событий. Сам класс находится в папке lib модуля.
+     * У названия класса не надо указывать пространство имен, кроме той части, что идет после
+     * названий партнера и модуля. Для обработки конкретных событий эти классы должны иметь
+     * статические и открытые методы с такими же названиями, что и события
      */
     const EVENTS_HANDLES = [];
 
@@ -405,8 +425,6 @@ class infoservice_rusvinyl extends CModule
         'services', 'thanks', 'useful',
     ];
 
-    const USER_ID = 1;
-
     function __construct()
     {
         $this->MODULE_NAME = Loc::getMessage('MODULE_NAME');
@@ -429,6 +447,8 @@ class infoservice_rusvinyl extends CModule
      */
     public function initSocNetSubjectsOptions(string $constName, string $optionValue)
     {
+        if (!Loader::includeModule('socialnetwork')) return;
+
         $value = Loc::getMessage($optionValue);
         $socNetUnit = CSocNetGroupSubject::GetList(
                 ['ID' => 'ASC'],
@@ -445,13 +465,12 @@ class infoservice_rusvinyl extends CModule
      * 
      * @param string $constName - название константы
      * @param array $optionValue - значение опции
-     * @return integer
+     * @return void|integer
      * @throws
      */
     public function initHighloadBlockOptions(string $constName, array $optionValue)
     {
-        if (!Loader::includeModule('highloadblock'))
-            return null;
+        if (!Loader::includeModule('highloadblock')) return;
 
         $result = HighloadBlockTable::add($optionValue);
         if (!$result->isSuccess(true))
@@ -662,19 +681,21 @@ class infoservice_rusvinyl extends CModule
      * Проверяет наличие языковой константы и ее значение
      * 
      * @param $langCode - название языковой константы
-     * @param string $prefixErrorCode - префикс к языковым коснтантам для ошибок
+     * @param string $prefixErrorCode - префикс к языковым конcтантам для ошибок без указания ERROR_
+     * в начале, но который должен быть у самой константы
+     * 
      * @param array $errorParams - дополнительные параметры для ошибок
      * @return string
      */
     protected static function checkLangCode($langCode, string $prefixErrorCode, array $errorParams = [])
     {
         if (!isset($langCode))
-            throw new Exception(Loc::getMessage($prefixErrorCode . '_LANG', $errorParams));
+            throw new Exception(Loc::getMessage('ERROR_' . $prefixErrorCode . '_LANG', $errorParams));
         
         $value = Loc::getMessage($langCode);
         if (empty($value))
             throw new Exception(
-                Loc::getMessage($prefixErrorCode . '_EMPTY_LANG', $errorParams + [
+                Loc::getMessage('ERROR_' . $prefixErrorCode . '_EMPTY_LANG', $errorParams + [
                         'LANG_CODE' => $langCode
                     ])
             );
@@ -691,13 +712,13 @@ class infoservice_rusvinyl extends CModule
      */
     public function initIBlockTypesOptions(string $constName, array $optionValue)
     {
-        Loader::includeModule('iblock');
+        if (!Loader::includeModule('iblock')) return;
 
         $iblockTypeID = constant($constName);
         if (CIBlockType::GetList([], ['ID' => $iblockTypeID])->Fetch())
             return;
 
-        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_IBLOCK_TYPE', ['TYPE' => $constName]);
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK_TYPE', ['TYPE' => $constName]);
         $data = ['ID' => $iblockTypeID, 'LANG' => ['RU' => ['NAME' => $title]]]
               + array_filter($optionValue, function($key) {
                     return !in_array($key, ['LANG_CODE']);
@@ -713,6 +734,39 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Возвращает готовый массив с правами доступа с идентификаторами конкретных пользовательских групп.
+     * В правах досупа могут указываться под "ключами" как идентификаторы существующих
+     * в системе групп, так и строковые значения с именем константы для пользовательской группы,
+     * созданной этим модулем
+     * 
+     * @param array $defaultPermissions - права доступа по-умолчанию
+     * @param array $addPermissions - дополнительные права доступа
+     * @return array
+     */
+    protected static function getGroupPermissions(array $defaultPermissions, array $addPermissions = [])
+    {
+        $permissionsDefault = $defaultPermissions;
+        if (!empty($addPermissions))
+            $permissionsDefault = array_merge($permissionsDefault, $addPermissions);
+
+        $permissions = [];
+        foreach ($permissionsDefault as $groupId => $accessValue) {
+            if (is_numeric($groupId)) {
+                $permissions[$groupId] = $accessValue;
+
+            } elseif (
+                is_string($groupId) && !empty($groupId)
+                && defined($groupId) && !empty($groupId = constant($groupId))
+                && !empty($this->optionUnits['UserGroup'][$groupId])
+            ) {
+                $permissions[$this->optionUnits['UserGroup'][$groupId]] = $accessValue;
+            }
+        }
+
+        return $permissions;
+    }
+
+    /**
      * Создание инфоблока
      * 
      * @param string $constName - название константы
@@ -723,9 +777,9 @@ class infoservice_rusvinyl extends CModule
     public function initIBlocksOptions(string $constName, array $optionValue)
     {
         // Инфоблок может создаваться в другом типе инфоблока
-        Loader::includeModule('iblock');
+        if (!Loader::includeModule('iblock')) return;
 
-        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_IBLOCK', ['IBLOCK' => $constName]);
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK', ['IBLOCK' => $constName]);
         $data = [
                     'ACTIVE' => 'Y',
                     'NAME' => $title,
@@ -742,7 +796,7 @@ class infoservice_rusvinyl extends CModule
                     'VERSION' => 2
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE', 'IBLOCK_TYPE_ID', 'PERMISSIONS']);
+                    return !in_array($key, ['LANG_CODE', 'PERMISSIONS']);
                 }, ARRAY_FILTER_USE_KEY)
               + [
                     'DETAIL_PAGE_URL' => '',
@@ -760,11 +814,13 @@ class infoservice_rusvinyl extends CModule
                 . PHP_EOL . $iblock->LAST_ERROR
             );
 
-        $permissions = [self::ADMIN_GROUP_ID => 'X', self::ALL_USER_GROUP_ID => 'R'];
-        if (!empty($optionValue['PERMISSIONS']))
-            $permissions = array_merge($permissions, $optionValue['PERMISSIONS']);
-
-        CIBlock::SetPermission($iblockId, $permissions);
+        CIBlock::SetPermission(
+            $iblockId,
+            self::getGroupPermissions(
+                [self::ADMIN_GROUP_ID => 'X', self::ALL_USER_GROUP_ID => 'R'],
+                $optionValue['PERMISSIONS'] ?: []
+            )
+        );
         return $iblockId;
     }
 
@@ -778,7 +834,7 @@ class infoservice_rusvinyl extends CModule
      */
     public function initIBlockPropertiesOptions(string $constName, array $optionValue)
     {
-        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_IBLOCK_PROPERTY', ['PROPERTY' => $constName]);
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK_PROPERTY', ['PROPERTY' => $constName]);
         $iblockCode = constant($optionValue['IBLOCK_ID']);
         if (empty($iblockCode) || empty($this->optionUnits['IBlocks'][$iblockCode]))
             throw new Exception(Loc::getMessage('ERROR_BAD_PROPERTY_IBLOCK', ['PROPERTY' => $constName]));
@@ -790,7 +846,7 @@ class infoservice_rusvinyl extends CModule
                     'CODE' => constant($constName)
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE', 'IBLOCK_ID']);
+                    return !in_array($key, ['LANG_CODE']);
                 }, ARRAY_FILTER_USE_KEY);
 
         $property = new CIBlockProperty;
@@ -818,7 +874,7 @@ class infoservice_rusvinyl extends CModule
         if (empty($iblockCode) || empty($this->optionUnits['IBlocks'][$iblockCode]))
             throw new Exception(Loc::getMessage('ERROR_BAD_ELEMENT_IBLOCK_ID', ['ELEMENT' => $constName]));
 
-        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_IBLOCK_ELEMENT', ['ELEMENT' => $constName]);
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK_ELEMENT', ['ELEMENT' => $constName]);
         $data = [
                     'ACTIVE' => 'Y',
                     'NAME' => $title,
@@ -826,7 +882,7 @@ class infoservice_rusvinyl extends CModule
                 ]
               + array_filter($optionValue, function($key) {
                     return !in_array($key, [
-                                'LANG_CODE', 'IBLOCK_ID', 'PREVIEW_LANG_CODE',
+                                'LANG_CODE', 'PREVIEW_LANG_CODE',
                                 'DETAIL_LANG_CODE', 'PREVIEW_TEXT', 'DETAIL_TEXT',
                                 'DETAIL_PICTURE', 'PREVIEW_PICTURE'
                             ]);
@@ -901,10 +957,9 @@ class infoservice_rusvinyl extends CModule
      */
     public function initForumsOptions(string $constName, array $optionValue)
     {
+        if (!Loader::includeModule('forum')) return;
 
-        $title = self::checkLangCode($optionValue['LANG_CODE'], 'ERROR_FORUM_UNIT', ['FORUM' => $constName]);
-
-        Loader::includeModule('forum');
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'FORUM_UNIT', ['FORUM' => $constName]);
 
         $data = [
                     'NAME' => $title,
@@ -952,13 +1007,72 @@ class infoservice_rusvinyl extends CModule
 
         \CForumNew::SetAccessPermissions(
             $forumId,
-            ($optionValue['PERMISSIONS'] ?: []) + [
-                self::ADMIN_GROUP_ID => 'Y',
-                self::ALL_USER_GROUP_ID => 'E',
-                self::SIMPLE_USER_GROUP_ID => 'I',
-            ]
+            self::getGroupPermissions(
+                [
+                    self::ADMIN_GROUP_ID => 'Y',
+                    self::ALL_USER_GROUP_ID => 'E',
+                    self::SIMPLE_USER_GROUP_ID => 'I',
+                ],
+                $optionValue['PERMISSIONS'] ?: []
+            )
         );
         return $forumId;
+    }
+
+    /**
+     * Создание групп опросов в системе
+     * 
+     * @param string $constName - название константы
+     * @param array $optionValue - значение опции
+     * @return integer
+     * @throws
+     */
+    public function initVoteChannelsOptions(string $constName, array $optionValue)
+    {
+        if (!Loader::includeModule('vote')) return;
+ 
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'VOTE_GROUP_UNIT', ['VOTE_GROUP' => $constName]);
+        $data = [
+                    'TITLE' => $title,
+                    'ACTIVE' => 'Y',
+                    'SYMBOLIC_NAME' => constant($constName),
+                ]
+              + array_filter($optionValue, function($key) {
+                    return !in_array($key, ['LANG_CODE']);
+                }, ARRAY_FILTER_USE_KEY)
+              + [
+                    'USE_CAPTCHA' => 'N',
+                    'HIDDEN' => 'N',
+                    'SITE' => [$this->defaultSiteID]
+                ];
+
+        $channelId = \CVoteChannel::Add($data);
+        if (!$channelId)
+            throw new Exception(Loc::getMessage('ERROR_VOTE_GROUP_UNIT_CREATING', ['VOTE_GROUP' => $constName]));
+
+        return $channelId;
+    }
+
+    /**
+     * Создание пользовательского поля для опросов
+     * 
+     * @param string $constName - название константы
+     * @param array $optionValue - значение опции
+     * @return mixed
+     */
+    public function initVoteFieldsOptions(string $constName, array $optionValue)
+    {
+        if (
+            empty($optionValue['SETTINGS']['CHANNEL_ID'])
+            || !defined($optionValue['SETTINGS']['CHANNEL_ID'])
+            || empty($channelCode = constant($optionValue['SETTINGS']['CHANNEL_ID']))
+            || empty($channelId = $this->optionUnits['VoteChannels'][$channelCode])
+        ) return;
+
+        $params = $optionValue;
+        $params['SETTINGS']['CHANNEL_ID'] = $channelId;
+
+        return $this->addUserField('BLOG_POST', $constName, $params);
     }
 
     /**
@@ -968,9 +1082,6 @@ class infoservice_rusvinyl extends CModule
      */
     public function initOptions() 
     {
-        if (!Loader::includeModule('socialnetwork'))
-            return;
-
         $this->optionUnits = [];
         foreach (static::OPTIONS as $methodNameBody => $optionList) {
             foreach ($optionList as $constName => $optionValue) {
@@ -1046,14 +1157,19 @@ class infoservice_rusvinyl extends CModule
     public function initEventHandles()
     {
         $eventManager = EventManager::getInstance();
-        foreach (static::EVENTS_HANDLES as $moduleName => $eventList) {
-            foreach ($eventList as $eventName => $handleList) {
-                foreach ($handleList as $handle) {
-                    list($className, $methodName) = $handle;
+        foreach (static::EVENTS_HANDLES as $moduleName => $classNames) {
+            foreach ($classNames as $className) {
+                $classNameValue = $this->nameSpaceValue . '\\' . $className;
+                if (!class_exists($classNameValue)) return;
 
+                $reflectionClass = new ReflectionClass($classNameValue);
+                foreach ($reflectionClass->getMethods() as $method) {
+                    if (!$method->isPublic() || !$method->isStatic()) continue;
+
+                    $eventName = $method->getName();
+                    $this->optionUnits['EVENTS_HANDLES'][$moduleName][$eventName][] = $className;
                     $eventManager->registerEventHandler(
-                        $moduleName, $eventName, $this->MODULE_ID, $this->nameSpaceValue . '\\' . $className,
-                        $methodName
+                        $moduleName, $eventName, $this->MODULE_ID, $classNameValue, $eventName
                     );
                 }
             }
@@ -1301,7 +1417,7 @@ class infoservice_rusvinyl extends CModule
         RegisterModule($this->MODULE_ID);
         $this->initDefinedContants();
 
-        $_SESSION[$this->MODULE_ID]['PROCESS'] = true;
+        Infoservice\RusVinyl\EventHandles\Employment::setBussy();
         try {
             $this->initOptions();
             $this->addAddrRules();
@@ -1313,13 +1429,13 @@ class infoservice_rusvinyl extends CModule
             $this->runSQLFile('install');
             $this->optionUnits['CONSTANTS'] = array_keys($this->definedContants);
             Option::set($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, json_encode($this->optionUnits));
-            $_SESSION[$this->MODULE_ID]['PROCESS'] = false;
+            Infoservice\RusVinyl\EventHandles\Employment::setFree();
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_INSTALLED'), __DIR__ . '/step1.php');
 
         } catch (Exception $error) {
             $this->removeAll();
             $_SESSION['MODULE_ERROR'] = $error->getMessage();
-            $_SESSION[$this->MODULE_ID]['PROCESS'] = false;
+            Infoservice\RusVinyl\EventHandles\Employment::setFree();
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_NOT_INSTALLED'), __DIR__ . '/error.php');
         }
     }
@@ -1382,6 +1498,17 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Удаление пользовательского поля для опросов
+     * 
+     * @param string $constName - название константы
+     * @return void
+     */
+    public function removeVoteFieldsOptions(string $constName) 
+    {
+        $this->removeUserFields('BLOG_POST', $constName);
+    }
+
+    /**
      * Удаление пользовательской группы
      * 
      * @param $constName - название константы
@@ -1412,7 +1539,7 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeIBlockTypesOptions(string $constName)
     {
-        Loader::includeModule('iblock');
+        if (!Loader::includeModule('iblock')) return;
 
         $iblockTypeID = constant($constName);
         $iblocks = CIBlock::GetList([], ['CHECK_PERMISSIONS' => 'N']);
@@ -1435,7 +1562,7 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeIBlocksOptions(string $constName)
     {
-        Loader::includeModule('iblock');
+        if (!Loader::includeModule('iblock')) return;
 
         $iblockCode = constant($constName);
         if (empty($this->optionUnits['IBlocks'][$iblockCode])
@@ -1467,12 +1594,29 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeForumsOptions(string $constName)
     {
+        if (!Loader::includeModule('forum')) return;
+
         $forumId = intval($this->optionUnits['Forums'][constant($constName)]);
         if (!$forumId) return;
 
-        Loader::includeModule('forum');
-
         \CForumNew::Delete($forumId);
+    }
+
+    /**
+     * Удаление групп опросов
+     * 
+     * @param string $constName - название константы
+     * @return integer
+     * @throws
+     */
+    public function removeVoteChannelsOptions(string $constName)
+    {
+        if (!Loader::includeModule('vote')) return;
+
+        $channelId = intval($this->optionUnits['VoteChannels'][constant($constName)]);
+        if (!$channelId) return;
+
+        \CVoteChannel::Delete($channelId);
     }
 
     /**
@@ -1537,15 +1681,18 @@ class infoservice_rusvinyl extends CModule
     public function removeEventHandles()
     {
         $eventManager = EventManager::getInstance();
-        foreach (static::EVENTS_HANDLES as $moduleName => $eventList) {
-            foreach ($eventList as $eventName => $handleList) {
-                foreach ($handleList as $handle) {
-                    list($className, $methodName) = $handle;
+        foreach ($this->optionUnits['EVENTS_HANDLES'] as $moduleName => $eventList) {
+            foreach (array_keys($eventList) as $eventName) {
+                foreach (
+                    $eventManager->findEventHandlers(
+                        strtoupper($moduleName),
+                        strtoupper($eventName),
+                        ['TO_MODULE_ID' => $this->MODULE_ID]
+                    ) as $handle) {
 
-                    $eventManager->unRegisterEventHandler(
-                        $moduleName, $eventName, $this->MODULE_ID, $this->nameSpaceValue . '\\' . $className,
-                        $methodName
-                    );
+                        $eventManager->unRegisterEventHandler(
+                            $moduleName, $eventName, $this->MODULE_ID, $handle['TO_CLASS'], $handle['TO_METHOD']
+                        );
                 }
             }
         }
@@ -1706,14 +1853,14 @@ class infoservice_rusvinyl extends CModule
     {
         global $APPLICATION;
         Loader::IncludeModule($this->MODULE_ID);
-        $_SESSION[$this->MODULE_ID]['PROCESS'] = true;
+        Infoservice\RusVinyl\EventHandles\Employment::setBussy();
         $this->optionUnits = json_decode(Option::get($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, $this->defaultSiteID), true);
         $this->definedContants = array_fill_keys($this->optionUnits['CONSTANTS'], '');
         array_walk($this->definedContants, function(&$value, $key) { $value = constant($key); });
 
         $this->removeAll();
         Option::delete($this->MODULE_ID, ['name' => INFS_RUSVINYL_OPTION_NAME]);
-        $_SESSION[$this->MODULE_ID]['PROCESS'] = false;
+        Infoservice\RusVinyl\EventHandles\Employment::setFree();
         $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_DELETED'), __DIR__ . '/unstep1.php');
     }
 
