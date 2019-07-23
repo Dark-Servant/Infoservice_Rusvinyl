@@ -25,6 +25,7 @@ input[type="file"] {
     display: table;
     width: 100%;
     box-sizing: border-box;
+    min-width: 1100px;
 }
 
 .rusv-head > *,
@@ -60,6 +61,7 @@ input[type="file"] {
 
 .rusv-menu-area {
     height: 47px;
+    min-width: 1100px;
 }
 
 .rusv-menu {
@@ -125,7 +127,7 @@ input[type="file"] {
     -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
 }
 
-.rusv-menu #horizontal-multilevel-menu a.root-item {
+.rusv-menu #horizontal-multilevel-menu .root-item {
     font-family: Arial;
     font-size: 16px;
     line-height: 37px;
@@ -134,13 +136,13 @@ input[type="file"] {
     font-weight: 100;
 }
 
-.rusv-menu #horizontal-multilevel-menu li:hover a.root-item {
+.rusv-menu #horizontal-multilevel-menu li:hover .root-item {
     background: linear-gradient(0deg, #01a6e6 8.74%, #88d6f7 100%);
 }
 
 .rusv-body {
-    min-height: 650px;
-    padding: 35px 11% 35px 11%;
+    min-height: 780px;
+    padding: 40px 11% 35px 11%;
 }
 
 .rusv-body > * {
@@ -355,15 +357,30 @@ input[type="file"] {
     .rusv-body-content {
         padding-left: 55px;
     }
+
+    .rusv-menu #horizontal-multilevel-menu > li {
+        width: 5%;
+    }
 }
 
-@media screen and (max-width: 1550px) {
+@media screen and (max-width: 1650px) {
+    .rusv-menu {
+        padding: 0 105px 0 100px;
+    }
+
+    .rusv-menu #horizontal-multilevel-menu > li {
+        width: 5%;
+    }
+
+    .rusv-menu #horizontal-multilevel-menu .root-item {
+        font-size: 1.09em;
+    }
+
     .rusv-body-left-part {
         max-width: 350px;
         min-width: 315px;
         width: 32%;
     }
-
 }
 
 .rusv-button {
@@ -538,7 +555,6 @@ input[type="file"] {
     vertical-align: middle;
     top: 0;
     right: 0;
-}
 }
 
 .popup-window.rusv-inited .ui-tile-selector-input {

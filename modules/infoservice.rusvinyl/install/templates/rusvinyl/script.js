@@ -2,12 +2,10 @@
     var rusvSelector = {
         headDate: '.rusv-head-date',
         printBtn: '.rusv-footer-menu li:last a',
-        menu: '.rusv-menu',
-        nextEvent: '.rusv-body-next-event',
-        leftMenu: '.rusv-body-left-menu',
         mainUserSelectorRemove: '.ui-tile-selector-item-remove',
         fileInput: '.rusv-modal-file-input',
         fileLinkName: '.rusv-modal-file-link-name',
+        mustBeFixed: '.rusv-must-be-fixed',
     };
     var rusvClass = {
         fixed: 'rusv-fixed',
@@ -16,9 +14,42 @@
         inited: 'rusv-inited',
         popupWindowContent: 'popup-window-content',
     };
-    var savedScrollTop;
-    var savedScrollTopDiff;
     var modalWnd = {};
+    var mustBeFixed;
+
+    /**
+     * Обработчик прокрутки страницы, для помеченных специальным классом "rusv-must-be-fixed",
+     * если они начали выходить за рамки видимой области, добавляет класс "rusv-fixed" и дополнительные
+     * стили, чтобы они стали фиксированными и всегда были в поле зрения. Если область, в которой
+     * находился элемент, становится снова видимой, то у элемента удаляется класс "rusv-fixed" и
+     * дополнительные стили.
+     * 
+     * При использовании этого функционала стоит такие элементы выделять дополнительным слоем с такими
+     * же шириной и высотой, чтобы при получении класса "rusv-fixed" не происходило прыганий других
+     * компонентов страницы влево-вправо и вверх-вниз
+     * 
+     * @return void
+     */
+    var checkDocumentPlace = function() {
+        if (!mustBeFixed) return;
+
+        var unit = $(mustBeFixed.list[mustBeFixed.top[0]].obj);
+        if (unit.hasClass(rusvClass.fixed)) {
+            if (unit.parent().get(0).getBoundingClientRect().y >= 0) {
+                $('.' + rusvClass.fixed).removeAttr('style');
+                $('.' + rusvClass.fixed).removeClass(rusvClass.fixed);
+            }
+
+        } else {
+            var parentUnitY = unit.parent().get(0).getBoundingClientRect().y;
+            if (parentUnitY > 0) return;
+
+            mustBeFixed.list.forEach(unit => {
+                $(unit.obj).addClass(rusvClass.fixed);
+                $(unit.obj).css(unit.cssY);
+            });
+        }
+    }
 
     /**
      * Перемещает модальное окно вместе со скроллом, учитывая так же случай, если
@@ -41,6 +72,7 @@
                 modalWnd[idValue].modal.popupContainer.style['top'] = (window.scrollY + (viewArea - rect.height) / 2) + 'px';
             }
         }
+        checkDocumentPlace();
     }
 
     /**
@@ -123,51 +155,87 @@
     }
 
     /**
+     * Для указанного параметра (x или y) сохранить номер местоположения элемента в специальном
+     * для этого параметра массиве таким образом, чтобы элементы по этому массиву для этого параметра
+     * можно было использовать в порядке возрастания значения этого параметра
+     * 
+     * @param number - номер элемента
+     * @param rect - параметры о координатах, ширине, высоте и других подобных параметров
+     * @param paramList - список, в котором хранятся номера элементов в том порядке, чтобы по нему можно
+     * было работать с элементами по возрастанию значения параметра
+     * 
+     * @param paramName - название параметра
+     * @return void
+     */
+    var addWithSortingFixedByParam = function(number, rect, paramList, paramName) {
+        var index = 0;
+        for (;
+            (index < paramList.length)
+            && (rect[paramName] >= mustBeFixed.list[paramList[index]].rect[paramName])
+            ; ++index
+        );
+        paramList.splice(index, 0, number);
+    }
+
+    /**
+     * Устанавливает для каждого элемента списка разницу между указанным параметром
+     * и таким же параметром родительского элемента первого элемента списка.
+     * Результат сохраняется в css<название параметра>
+     * 
+     * @param paramList -
+     * @param savedParam -
+     * @param paramName -
+     * @return void
+     */
+    var initFixedUnitParamCSS = function(paramList, savedParam, paramName) {
+        var parentRect = $(mustBeFixed.list[paramList[0]].obj).parent().get(0).getBoundingClientRect();
+        var parentParamValue = parentRect[paramName];
+        // Получаем имя параметра, преобразовывая значения вроде "test-te_set" в "testTeSet"
+        var cssParamName = 'css' + paramName.replace(/(?:^|[^a-z\d])(\w)/ig, (result, part) => {
+            return part.toUpperCase();
+        });
+
+        mustBeFixed.list.forEach(unit => {
+            var params = {};
+            params[savedParam] = (unit.rect[paramName] - parentParamValue) + 'px';
+            unit[cssParamName] = Object.assign(unit[cssParamName] || {}, params);
+        });
+    }
+
+    /**
+     * Для элементов с классом "rusv-must-be-fixed" проводит вычисления их сдвигов от верхнего начала
+     * страниы и левого края страницы, а так же устанавливает дополнительные свойства, дабы потом при
+     * прокрутке это использовалось для установки методом checkDocumentPlace вычисленных свойств,
+     * чтобы элементы находились всегда в поле зрения
+     * 
+     * @return void
+     */
+    var initFixedElements = function() {
+        mustBeFixed = {list: [], top: [], left: []};
+
+        $(rusvSelector.mustBeFixed).each((num, unit) => {
+            var rect = unit.getBoundingClientRect();
+            mustBeFixed.list.push({
+                obj: unit,
+                rect: rect,
+                cssY: {width: rect.width + 'px'}
+            });
+
+            addWithSortingFixedByParam(num, rect, mustBeFixed.top, 'y');
+            addWithSortingFixedByParam(num, rect, mustBeFixed.left, 'x');
+        });
+        initFixedUnitParamCSS(mustBeFixed.top, 'top', 'y');
+        initFixedUnitParamCSS(mustBeFixed.left, 'left', 'x');
+    }
+
+    /**
      * Обработчик инициализации страницы при ее полной готовности
      * 
      * @return void
      */
     var initPage = function() {
         nextSecond();
-    }
-
-    /**
-     * Обработчик прокрутки страницы, меняет класс для главного меню и левого, чтобы они
-     * стали зафиксированы и могли быть всегда в поле зрения
-     * 
-     * @return void
-     */
-    var checkDocumentPlace = function() {
-        var menu = $(rusvSelector.menu);
-        if (menu.hasClass(rusvClass.fixed)) {
-            if (savedScrollTopDiff > savedScrollTop - document.body.getBoundingClientRect().y) {
-                $('.' + rusvClass.fixed).removeAttr('style');
-                $('.' + rusvClass.fixed).removeClass(rusvClass.fixed);
-            }
-
-        } else {
-            var menuYValue = menu.get(0).getBoundingClientRect().y;
-            if (menuYValue <= 0) {
-                savedScrollTop = menuYValue;
-                savedScrollTopDiff = savedScrollTop - document.body.getBoundingClientRect().y;
-
-                var cssData = {};
-                [
-                    rusvSelector.menu, rusvSelector.nextEvent,
-                    rusvSelector.leftMenu
-                ].forEach(unitSelector => {
-                    var unit = $(unitSelector).get(0);
-                    cssData[unitSelector] = {
-                        width: unit.clientWidth + 'px',
-                        top: (unit.getBoundingClientRect().y - menuYValue) + 'px'
-                    };
-                });
-                Object.keys(cssData).forEach(selector => {
-                    $(selector).addClass(rusvClass.fixed);
-                    $(selector).css(cssData[selector]);
-                });
-            }
-        }
+        initFixedElements();
     }
 
     /**
@@ -250,7 +318,6 @@
     $(document)
         .on('ready', initPage)
         .on('scroll', scrollHandle)
-        .on('scroll', checkDocumentPlace)
         .on('click', rusvSelector.printBtn, showPrintWnd)
         .on('shommodal', showModal)
         .on('closemodal', closeModal)

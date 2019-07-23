@@ -27,7 +27,7 @@ $aMenuLinks = [
         Loc::getMessage('MENU_HR_TITLE'),
         'hr/',
         [],
-        [],
+        ['IS_LINK' => true],
         ''
     ],
     [

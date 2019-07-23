@@ -11,7 +11,7 @@ $aMenuLinks = [
     ],
     [
         Loc::getMessage('MAIN_MENU_THANKS_TITLE'), 
-        'thanks/', 
+        'pulse/thanks/', 
         [], 
         ['CODE' => 'thanks'], 
         ''
