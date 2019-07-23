@@ -43,7 +43,7 @@ use Bitrix\Main\Localization\Loc;
         </div>
     </div>
     <div class="rusv-menu-area">
-        <div class="rusv-menu"><?
+        <div class="rusv-menu rusv-must-be-fixed"><?
         $APPLICATION->IncludeComponent(
             'bitrix:menu', 'rusviny.horizontal_multilevel', 
             [
@@ -57,7 +57,7 @@ use Bitrix\Main\Localization\Loc;
     </div>
     <div class="rusv-body">
         <div class="rusv-body-left-part">
-            <div class="rusv-body-next-event"><?
+            <div class="rusv-body-next-event rusv-must-be-fixed"><?
                 $APPLICATION->IncludeComponent(
                     'bitrix:calendar.events.list', 'rusvinyl.default',
                     [
@@ -70,7 +70,7 @@ use Bitrix\Main\Localization\Loc;
                     ]
                 );
             ?></div>
-            <div class="rusv-body-left-menu"><?
+            <div class="rusv-body-left-menu rusv-must-be-fixed"><?
                 $APPLICATION->IncludeComponent(
                     'bitrix:menu', 'rusvinyl.default', 
                     [

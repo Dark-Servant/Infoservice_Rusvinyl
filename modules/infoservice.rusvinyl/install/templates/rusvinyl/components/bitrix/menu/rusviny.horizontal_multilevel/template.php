@@ -14,9 +14,14 @@ foreach ($arResult as $arItem):?>
     <?if ($arItem["IS_PARENT"]):?>
 
         <?if ($arItem["DEPTH_LEVEL"] == 1):?>
-            <li>
+            <li><?
+                if ($arItem['PARAMS']['IS_LINK']):?>
                 <a class="root-item<?=$arItem['SELECTED'] ? ' root-item-selected' : ''?>"
-                    href="<?=$arItem['LINK']?>"><?=$arItem['TEXT']?></a>
+                    href="<?=$arItem['LINK']?>"><?=$arItem['TEXT']?></a><?
+                else:?>
+                <span class="root-item<?=$arItem['SELECTED'] ? ' root-item-selected' : ''?>"
+                    href="<?=$arItem['LINK']?>"><?=$arItem['TEXT']?></span><?
+                endif;?>
                 <ul>
         <?else:?>
             <li<?if ($arItem["SELECTED"]):?> class="item-selected"<?endif?>><a href="<?=$arItem["LINK"]?>" class="parent"><?=$arItem["TEXT"]?></a>
