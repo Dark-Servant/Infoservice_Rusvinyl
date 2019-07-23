@@ -31,6 +31,9 @@ $MESS['ERROR_USER_LANG_RESULT'] = 'FILE не является папкой';
 $MESS['ERROR_FORUM_UNIT_LANG'] = 'Отсутствует параметр LANG_CODE для форума FORUM';
 $MESS['ERROR_FORUM_UNIT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для форума FORUM';
 $MESS['ERROR_FORUM_UNIT_CREATING'] = 'Не удалось создать форум FORUM';
+$MESS['ERROR_VOTE_GROUP_UNIT_LANG'] = 'Отсутствует параметр LANG_CODE для группы опросов VOTE_GROUP';
+$MESS['ERROR_VOTE_GROUP_UNIT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для группы опросов VOTE_GROUP';
+$MESS['ERROR_VOTE_GROUP_UNIT_CREATING'] = 'Не удалось создать группу опросов VOTE_GROUP';
 
 // ----------------------------------------------------------------------
 $MESS['IBLOCK_TYPE_TITLE'] = 'РусВинил';
