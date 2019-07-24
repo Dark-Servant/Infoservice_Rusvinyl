@@ -181,3 +181,9 @@ $MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_VALUE'] = 'Ответ';
 $MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_AUTHOR'] = 'Автор ответа';
 $MESS['IBLOCK_QUESTION_PROPERTY_THEME'] = 'Тема вопроса';
 $MESS['IBLOCK_QUESTION_PROPERTY_QUESTION_VALUE'] = 'Текст вопроса';
+
+// Данные опросов, группа опросов "Русвинила"
+$MESS['SIMPLE_VOTE_TITLE'] = 'Опросы';
+$MESS['COMPETITION_VOTE_TITLE'] = 'Конкурсы';
+$MESS['RUSVINYL_VOTE_TITLE'] = 'Пользовательское поле для опросов "Русвинила"';
+$MESS['RUSVINYL_COMPETITION_TITLE'] = 'Пользовательское поле для конкурсов "Русвинила"';

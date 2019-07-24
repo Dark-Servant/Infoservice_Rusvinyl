@@ -105,6 +105,28 @@ define('INFS_FORUM_PREFIX', 'RUSVINYL_');
 // Форум для комментариев на детальной странице просмотра
 define('INFS_DETAIL_PAGE_FORUM', 'DETAIL_PAGE');
 
+// Данные опросов, символьный код группы опросов "Русвинила"
+define('INFS_RUSVINYL_SIMPLE_VOTE_CODE', 'RUSVINYL_SIMPLE_VOTE');
+// символьный код группы конкурсов "Русвинила"
+define('INFS_RUSVINYL_COMPETITION_CODE', 'RUSVINYL_COMPETITION_VOTE');
+
+// Пользовательское поле для обычных опросов "Русвинила"
+define('INFS_RUSVINYL_VOTE_FIELD', 'UF_RUSV_VOTE');
+// Пользовательское поле для конкурсов "Русвинила"
+define('INFS_RUSVINYL_COMPETITION_FIELD', 'UF_RUSV_COMPETITION');
+// Максимальное количество символов для описания любых опросов
+define('INFS_RUSVINYL_VOTE_TEXT_LENGHT', 150);
+// Количество элементов на странице для обычных опросов
+define('INFS_RUSVINYL_SIMPLE_VOTE_GROUP_SIZE', 5);
+// Количество элементов на странице для конкурсов
+define('INFS_RUSVINYL_COMPETITION_GROUP_SIZE', 5);
+
+// Ссылки на страницы со списками опросов
+define('INFS_RUSVINYL_VOTE_LIST_URL', [
+    INFS_RUSVINYL_SIMPLE_VOTE_CODE => '/pulse/poll/',
+    INFS_RUSVINYL_COMPETITION_CODE => '/competition/',
+]);
+
 // Вспомогательные константы
 define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/man.svg');
 define('INFS_CURRENT_TIMESTAMP', time());
