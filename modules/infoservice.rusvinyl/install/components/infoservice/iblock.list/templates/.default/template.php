@@ -8,17 +8,11 @@ if ($arResult['CURRENT_USER_ID'] && !empty($buttonTitle)):?>
 </div><?
 endif;?>
 <div
-	class="rusv-iblock-list"
+	class="rusv-iblock-list rusv-unit-list"
 	data-iblock-code="<?=$arResult['MAINDATA']['CODE']?>"
 	data-main-data="<?=htmlspecialchars(json_encode($arResult['MAINDATA']))?>"></div>
-<div class="rusv-iblock-pages"></div><?
+<div class="rusv-iblock-pages rusv-unit-pages"></div><?
 
-require $arResult['IBLOCK_TEMPLATE_FILE'];?>
-
-<script id="rusv-iblock-list-pages-template" type="text/x-handlebars-template">
-    {{#each PAGES}}
-    --><span
-            class="rusv-iblock-list-page{{#if CURRENT}} rusv-iblock-list-current-page{{/if}}"
-            data-number="{{NUMBER}}">{{NUMBER}}</span><!--
-    {{/each}}
-</script>
+require $arResult['IBLOCK_TEMPLATE_FILE'];
+require $_SERVER['DOCUMENT_ROOT'] . '/local/templates/rusvinyl/helpers/list+pages/templates.php';
+?>

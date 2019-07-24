@@ -328,14 +328,52 @@ class infoservice_rusvinyl extends CModule
          * Остальные параметры, кроме TITLE, ACTIVE и SYMBOLIC_NAME, такие же, как и при обычном
          * создании группы опросов
          */
-        'VoteChannels' => [],
+        'VoteChannels' => [
+            'INFS_RUSVINYL_SIMPLE_VOTE_CODE' => [
+                'LANG_CODE' => 'SIMPLE_VOTE_TITLE'
+            ],
+            'INFS_RUSVINYL_COMPETITION_CODE' => [
+                'LANG_CODE' => 'COMPETITION_VOTE_TITLE'
+            ]
+        ],
 
         /**
          * Пользовательские поля для групп опроса. Настройки такие же, как и при создании других
          * пользоательских полей. Важно, чтобы было указано в ['SETTINGS']['CHANNEL_ID'] навазние
          * "ключа", под которым в настройках для VoteChannels указаны настройки группы опросов
          */
-        'VoteFields' => [],
+        'VoteFields' => [
+            'INFS_RUSVINYL_VOTE_FIELD' => [
+                'LANG_CODE' => 'RUSVINYL_VOTE_TITLE',
+                'TYPE' => 'vote',
+                'SHOW_IN_LIST' => 'Y',
+                'EDIT_IN_LIST' => 'Y',
+                'SETTINGS' => [
+                    'CHANNEL_ID' => 'INFS_RUSVINYL_SIMPLE_VOTE_CODE',
+                    'UNIQUE' => '8',
+                    'UNIQUE_IP_DELAY' => [
+                        'DELAY' => '10',
+                        'DELAY_TYPE' => 'D',
+                    ],
+                    'NOTIFY' => 'I'
+                ]
+            ],
+            'INFS_RUSVINYL_COMPETITION_FIELD' => [
+                'LANG_CODE' => 'RUSVINYL_COMPETITION_TITLE',
+                'TYPE' => 'vote',
+                'SHOW_IN_LIST' => 'Y',
+                'EDIT_IN_LIST' => 'Y',
+                'SETTINGS' => [
+                    'CHANNEL_ID' => 'INFS_RUSVINYL_COMPETITION_CODE',
+                    'UNIQUE' => '8',
+                    'UNIQUE_IP_DELAY' => [
+                        'DELAY' => '10',
+                        'DELAY_TYPE' => 'D',
+                    ],
+                    'NOTIFY' => 'I'
+                ]
+            ]
+        ],
     ];
 
     // Правила обработки адресов
@@ -352,15 +390,11 @@ class infoservice_rusvinyl extends CModule
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
-        '#^/pulse/poll/?(?:\?(\S*))?$#' => [
-            'FILE' => '/local/public/media/news/index.php',
-            'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_POLL&$1'
-        ],
         '#^/(announ|leader)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
-        '#^/(?:media/news|pulse/poll|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
+        '#^/(?:media/news|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
         ]
@@ -399,7 +433,7 @@ class infoservice_rusvinyl extends CModule
     const FILE_LINKS = [
         'components/infoservice/iblock.showblock', 'components/infoservice/iblock.list',
         'components/infoservice/iblock.detail', 'templates/rusvinyl', 'public/media/news',
-        'public/thanks'
+        'components/infoservice/vote.list'
     ];
 
     /**
