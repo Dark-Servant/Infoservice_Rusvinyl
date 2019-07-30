@@ -1,0 +1,9 @@
+.rusv-participate-button.rusv-button {
+    width: 115px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.rusv-participate-add-button + .rusv-participate-status {
+	display: none;
+}

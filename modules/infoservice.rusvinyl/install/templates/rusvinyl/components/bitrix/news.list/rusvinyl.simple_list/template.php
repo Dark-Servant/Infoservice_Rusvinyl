@@ -2,8 +2,7 @@
 use Bitrix\Main\{Localization\Loc, Type\DateTime};
 
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();?>
-<div class="rusv-news-simple-list"> <?
-
+<div class="rusv-news-simple-list"><?
 foreach ($arResult['ITEMS'] as $arItem):?>
     <div class="rusv-news-simple-list-item">
         <div class="rusv-news-simple-list-area"><?

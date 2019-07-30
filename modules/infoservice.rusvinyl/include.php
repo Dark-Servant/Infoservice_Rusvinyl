@@ -29,6 +29,9 @@ define('INFS_RUSVINYL_IBLOCK_MASTERBLOG', INFS_RUSVINYL_IBLOCK_PREFIX . 'masterb
 define('INFS_RUSVINYL_IBLOCK_THANKS', INFS_RUSVINYL_IBLOCK_PREFIX . 'thanks');
 // Символьный код инфоблока "Задать вопрос"
 define('INFS_RUSVINYL_IBLOCK_QUESTION', INFS_RUSVINYL_IBLOCK_PREFIX . 'question');
+// Символьный код инфоблока "Участвовать"
+define('INFS_RUSVINYL_IBLOCK_PARTICIPATE', INFS_RUSVINYL_IBLOCK_PREFIX . 'participate');
+
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
  * странице просмотра списка новостей
@@ -78,6 +81,38 @@ define('INFS_IB_QUESTION_PAGE_SIZE', 5);
  * из инфоблока "Задать вопрос"
  */
 define('INFS_IB_QUESTION_TEXT_LENGHT', 150);
+
+// Свойства инфоблока "Участвовать"
+// "ID бизнес процесса при нажатии кнопки "Участвовать"
+define('INFS_IB_PARTICIPATE_PR_SEND_DESIRE', 'BP_SEND_DESIRE');
+// "ID бизнес процесса на ответ пользователю"
+define('INFS_IB_PARTICIPATE_PR_SEND_ANSWER', 'BP_SEND_ANSWER');
+
+// Константы для Highload-блоков
+
+// Highload-блок для хранения участников к элементам инфоблока "Участвовать"
+define('INFS_HL_PARTICIPATE_USERS', 'PARTICIPATE_USERS');
+/**
+ * Поле "Участник" для HighloadBlock, где хранятся участники для
+ * элементов инфоблока "Участвовать"
+ */
+define('INFS_HL_PARTICIPATE_USER_FIELD', 'UF_USER');
+/**
+ * Поле "В чем участвовать" для HighloadBlock, где хранятся участники для
+ * элементов инфоблока "Участвовать"
+ */
+define('INFS_HL_PARTICIPATE_ELEMENT_FIELD', 'UF_ELEMENT');
+/**
+ * Поле "Дата подачи" для HighloadBlock, где хранятся участники для
+ * элементов инфоблока "Участвовать"
+ */
+define('INFS_HL_PARTICIPATE_DATE_FIELD', 'UF_DATE');
+/**
+ * Поле "Подтверждение" для HighloadBlock, где хранятся участники для
+ * элементов инфоблока "Участвовать"
+ */
+define('INFS_HL_PARTICIPATE_CONFIRMATION_FIELD', 'UF_CONFIRMATION');
+
 
 // Данные форумов
 

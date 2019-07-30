@@ -48,6 +48,7 @@ $MESS['IBLOCK_LEADER_TITLE'] = 'Лидер месяца';
 $MESS['IBLOCK_MASTERBLOG_TITLE'] = 'Влог ген. директора';
 $MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';
 $MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
+$MESS['IBLOCK_PARTICIPATE_TITLE'] = 'Участвовать';
 
 // Тестовые элементы "Новости"
 $MESS['IBLOCK_NEWS_ELEMENT1_NAME'] = 'РусВинил принимает заявки на конкурс проектов "Экосознание"';
@@ -186,6 +187,18 @@ $MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_AUTHOR'] = 'Автор ответа';
 $MESS['IBLOCK_QUESTION_PROPERTY_THEME'] = 'Тема вопроса';
 $MESS['IBLOCK_QUESTION_PROPERTY_QUESTION_VALUE'] = 'Текст вопроса';
 
+// Свойства инфоблока "Участвовать"
+$MESS['IBLOCK_PARTICIPATE_PROPERTY_SEND_DESIRE'] = 'ID бизнес процесса при нажатии кнопки "Участвовать"';
+$MESS['IBLOCK_PARTICIPATE_PROPERTY_SEND_ANSWER'] = 'ID бизнес процесса на ответ пользователю';
+
 // Данные опросов, группа опросов "Русвинила"
 $MESS['SIMPLE_VOTE_TITLE'] = 'Опросы';
 $MESS['COMPETITION_VOTE_TITLE'] = 'Конкурсы';
+
+$MESS['HL_PARTICIPATE_USERS_TITLE'] = 'Участники инфоблока "Участвовать"';
+$MESS['HL_PARTICIPATE_USER_FIELD'] = 'Участник';
+$MESS['HL_PARTICIPATE_ELEMENT_FIELD'] = 'В чем участвовать';
+$MESS['HL_PARTICIPATE_DATE_FIELD'] = 'Дата подачи';
+$MESS['HL_PARTICIPATE_CONFIRMATION_FIELD'] = 'Подтверждение';
+$MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_YES'] = 'Подтверждено';
+$MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_NO'] = 'Отказано';
