@@ -372,6 +372,10 @@ input[type="file"] {
         width: 5%;
     }
 
+    .rusv-menu #horizontal-multilevel-menu li li a {
+        font-size: 0.85em;
+    }
+
     .rusv-menu #horizontal-multilevel-menu .root-item {
         font-size: 1.09em;
     }
@@ -381,9 +385,20 @@ input[type="file"] {
         min-width: 315px;
         width: 32%;
     }
+
 }
 
-.rusv-button {
+.rusv-back-url-link, .rusv-back-url-link:visited {
+    color: #777676;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(119, 118, 118, 0.25);
+}
+
+/* Настройки для всех кнопок */
+
+*.rusv-button,
+*.rusv-button.feed-add-button-load
+ {
     display: inline-block;
     height: 30px;
     width: 225px;
@@ -402,20 +417,41 @@ input[type="file"] {
     -webkit-user-select: none;
     user-select: none;
     color: #777676;
+    text-decoration: none;
 }
 
-.rusv-button:hover {
+*.rusv-button.feed-add-button-load {
+    color: transparent;
+}
+
+*.rusv-button.feed-add-button-load:before {
+    border: 1px solid #c1bdbd;
+    color: #c1bdbd;
+}
+
+*.rusv-button.feed-add-button-load:after {
+    background-color: #c1bdbd;
+}
+
+*.rusv-button + .rusv-button {
+    margin-left: 10px;
+}
+
+*.rusv-button:hover,
+*.rusv-button.feed-add-button-load:hover {
     background-color: #f7f7f7;
     box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
 }
 
-.rusv-button:active {
+*.rusv-button:active {
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
 }
+
+/* Настройки для модальных окон и полей ввода (input, textarea) */
 
 .popup-window.rusv-inited {
     background: #F3F3F3;
@@ -519,6 +555,8 @@ input[type="file"] {
 .rusv-modal-control-table > *:last-child {
     text-align: right;
 }
+
+/* Настройки для выбора пользователей в компоненте main.user.selector внутри модальных окон */
 
 .popup-window.rusv-inited .ui-tile-selector-selector-wrap {
     background-color: #F3F3F3;

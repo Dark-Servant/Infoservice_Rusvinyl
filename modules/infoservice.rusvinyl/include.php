@@ -105,7 +105,10 @@ define('INFS_FORUM_PREFIX', 'RUSVINYL_');
 // Форум для комментариев на детальной странице просмотра
 define('INFS_DETAIL_PAGE_FORUM', 'DETAIL_PAGE');
 
-// Данные опросов, символьный код группы опросов "Русвинила"
+
+// Данные опросов
+
+// символьный код группы опросов "Русвинила"
 define('INFS_RUSVINYL_SIMPLE_VOTE_CODE', 'RUSVINYL_SIMPLE_VOTE');
 // символьный код группы конкурсов "Русвинила"
 define('INFS_RUSVINYL_COMPETITION_CODE', 'RUSVINYL_COMPETITION_VOTE');

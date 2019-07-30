@@ -1,7 +1,8 @@
 <?php
 use Bitrix\Main\{Localization\Loc, Loader, EventManager, Config\Option};
-use Bitrix\Highloadblock\HighloadBlockTable;
+use Bitrix\Highloadblock\{HighloadBlockTable, HighloadBlockLangTable};
 use Bitrix\Iblock\PropertyTable;
+use Infoservice\RusVinyl\Helpers\Options;
 
 class infoservice_rusvinyl extends CModule
 {
@@ -11,7 +12,6 @@ class infoservice_rusvinyl extends CModule
     public $MODULE_VERSION_DATE;
     public $MODULE_DESCRIPTION;
 
-    protected $optionUnits = [];
     protected $nameSpaceValue;
     protected $defaultSiteID;
     protected $definedContants;
@@ -41,68 +41,33 @@ class infoservice_rusvinyl extends CModule
 
         /**
          * настройки для создания HighloadBlock. В значении массив с ключами
-         *     NAME - кодовое имя HighloadBlock
-         *     TABLE_NAME - название таблицы
+         *     LANG_CODE - название языковой константы, под значением которой будет находиться
+         *     название HighloadBlock, чтобы не видеть в списке значение из NAME.
+         * Параметр LANG_CODE необязателен, поэтому в настройках может быть посто пустой массив.
+         * NAME и TABLE_NAME будут получены из значения константы, название которой указано как "ключ"
          * В опциях модуля сохранятся в группе HighloadBlock как массив, где ключ
          * значение константы, указанной как "ключ", а значение ID highloadblock
          */
-        'HighloadBlock' => [],
+        'HighloadBlock' => [
+            // HighloadBlock для хранения изъявивших желание участвовать
+            // в элементах инфоблока "Участвовать"
+        ],
 
         /**
-         * настройки для создания пользовательских полей у созданных модулем HighloadBlock.
-         * В значении массив с ключами
-         *     HLBLOCK_ID - название константы, под значением которой сохранено в опциях модуля ID HighloadBlock
-         *     в группе HighloadBlock
-         *     DATA - настройки пользовательского поля. ENTITY_ID и FIELD_NAME не указывать. Значение FIELD_NAME
-         *     должно быть объявлено в include.php как константа с именем, указанным в HighloadFields как "ключ".
-         *     В DATA можно указать LANG_CODE, который используется для указания кода языковой опции, где
-         *     хранится название пользовательского поля.
-         *     Указывать тип надо не в USER_TYPE_ID, в TYPE, это более сокращено. Остальные настройки такие же,
-         *     какие надо передавать в Битриксе.
-         *     Если указан тип enumeration, то в параметрах можно указать параметр LIST_VALUES как массив, каждый
-         *     элемент которого представляет отдельное значения для списка, для каждого значения списка обязательно
-         *     должен быть указан LANG_CODE с именем языковой константы, в которой хранится название значения,
-         *     указаные элементы списка с одинаковыми значения будут созданы один раз. При наличии LANG_CODE у
-         *     пользовательского поля этот параметр для значений списка надо писать в сокращенном виде, так как
-         *     значение параметра у пользовательского поля будет использоваться как префикс, т.е. языковые константы
-         *     для значений списка должны иметь названия, начинающиеся с названия языковой константы у их
-         *     пользовательского поля. После создания пользовательского поля его ID записан в опциях модуля в группе,
-         *     в которой он был объявлен, под именем, которое указано в константе, что испльзуется тут в группе
-         *     как "ключ", ID значений пользовательского поля типа "Список" так же будут сохранены в опциях 
-         *     в данных своего пользовательского поля
-         *     Значения для SHOW_FILTER:
-         *      N - не показывать
-         *      I - точное совпадение
-         *      E - маска
-         *      S - подстрока
+         * Настройки для создания групп опросов. В "значении" обязательно надо указать LANG_CODE
+         * с именем языковой константы, в которой хранится название группы.
+         * За SYMBOLIC_NAME будет браться значение константы, название которой указано в "ключе"
+         * Остальные параметры, кроме TITLE, ACTIVE и SYMBOLIC_NAME, такие же, как и при обычном
+         * создании группы опросов
          */
-        'HighloadFields' => [],
-
-        /**
-         * Пользовательские поля для групп соц. сети. Значения хранят настройки пользовательского поля.
-         * Для них действуют те же правила, как и для настроек в DATA для пользовательских полей в HighloadFields.
-         * Значение FIELD_NAME должно быть объявлено в include.php как константа с именем, указанным в SocNetFields
-         * как "ключ".
-         */
-        'SocNetFields' => [],
-
-        /**
-         * Пользовательские поля для пользователей. Значения хранят настройки пользовательского поля.
-         * Для них действуют те же правила, как и для настроек в DATA для пользовательских полей в HighloadFields.
-         * Значение FIELD_NAME должно быть объявлено в include.php как константа с именем, указанным в UserFields
-         * как "ключ".
-         */
-        'UserFields' => [],
-
-        /**
-         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должна
-         * быть объявлена в файле include.php, а "значение" хранит параметры группы, важным из которых является
-         * параметр LANG_CODE с наванием языковой константы, в которой хранится название группы. При отсутсвии
-         * LANG_CODE параметр будет восприниматсья как группировка нескольких групп, которые уже должны быть созданы
-         * до обработки это параметра, при группироваке надо указывать только "ключи", под которыми находятся настройки
-         * для создания групп
-         */
-        'UserGroup' => [],
+        'VoteChannels' => [
+            'INFS_RUSVINYL_SIMPLE_VOTE_CODE' => [
+                'LANG_CODE' => 'SIMPLE_VOTE_TITLE'
+            ],
+            'INFS_RUSVINYL_COMPETITION_CODE' => [
+                'LANG_CODE' => 'COMPETITION_VOTE_TITLE'
+            ]
+        ],
 
         /**
          * Настройки для создания типов инфоблока. В "значении" указываются параметры для создания типа инфоблока.
@@ -172,24 +137,84 @@ class infoservice_rusvinyl extends CModule
             'INFS_RUSVINYL_IBLOCK_THANKS' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_THANKS_TITLE',
-                'DETAIL_PAGE_URL' => '/thanks/#ID#/',
-                'LIST_PAGE_URL' => '/thanks/',
+                'LIST_PAGE_URL' => '/pulse/thanks/',
                 'BIZPROC' => 'Y'
             ],
             // инфоблок "Задать вопрос"
             'INFS_RUSVINYL_IBLOCK_QUESTION' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_QUESTION_TITLE',
-                'DETAIL_PAGE_URL' => '/question/#ID#/',
                 'LIST_PAGE_URL' => '/question/',
                 'BIZPROC' => 'Y'
             ],
         ],
 
         /**
+         * настройки для создания пользовательских полей у созданных модулем HighloadBlock.
+         * В значении массив с ключами
+         *     HBLOCK_ID - название константы, под значением которой сохранено в опциях модуля ID HighloadBlock
+         *     в группе HighloadBlock
+         *     DATA - настройки пользовательского поля. ENTITY_ID и FIELD_NAME не указывать. Значение FIELD_NAME
+         *     должно быть объявлено в include.php как константа с именем, указанным в HighloadFields как "ключ".
+         *     В DATA можно указать LANG_CODE, который используется для указания кода языковой опции, где
+         *     хранится название пользовательского поля.
+         *     Указывать тип надо не в USER_TYPE_ID, в TYPE, это более сокращено. Остальные настройки такие же,
+         *     какие надо передавать в Битриксе.
+         *     Если указан тип vote, то важно, чтобы было указано в ['SETTINGS']['CHANNEL_ID'] навазние "ключа", под которым
+         *     в настройках для VoteChannels указаны настройки группы опросов.
+         *     Если указан тип iblock_element, то важно, чтобы было указано в ['SETTINGS']['IBLOCK_ID'] навазние "ключа", под которым
+         *     в настройках для IBlocks указаны настройки инфоблока.
+         *     Если указан тип enumeration, то в параметрах можно указать параметр LIST_VALUES как массив, каждый
+         *     элемент которого представляет отдельное значения для списка, для каждого значения списка обязательно
+         *     должен быть указан LANG_CODE с именем языковой константы, в которой хранится название значения,
+         *     указаные элементы списка с одинаковыми значения будут созданы один раз. При наличии LANG_CODE у
+         *     пользовательского поля параметр LANG_CODE для значений списка надо писать в ином виде, так как
+         *     значение параметра у пользовательского поля будет использоваться как префикс, т.е. языковые константы
+         *     для значений списка должны иметь названия, начинающиеся с названия языковой константы у их
+         *     пользовательского поля, если такое имеется у него, и знаком подчеркивания после.
+         *     После создания пользовательского поля его ID будет записан в опциях модуля в группе, в которой он был
+         *     объявлен, т.е. для HighloadFields ID будет записан в опциях модуля в группе HighloadFields, в массиве
+         *     под "ключом" ID.
+         *     ID значений пользовательского поля типа "Список" так же будут сохранены в опциях модуля в данных своего
+         *     пользовательского поля.
+         *     Значения для SHOW_FILTER:
+         *      N - не показывать
+         *      I - точное совпадение
+         *      E - маска
+         *      S - подстрока
+         */
+        'HighloadFields' => [],
+
+        /**
+         * Пользовательские поля для групп соц. сети. Значения хранят настройки пользовательского поля.
+         * Для них действуют те же правила, как и для настроек в DATA для пользовательских полей в HighloadFields.
+         * Значение FIELD_NAME должно быть объявлено в include.php как константа с именем, указанным в SocNetFields
+         * как "ключ".
+         */
+        'SocNetFields' => [],
+
+        /**
+         * Пользовательские поля для пользователей. Значения хранят настройки пользовательского поля.
+         * Для них действуют те же правила, как и для настроек в DATA для пользовательских полей в HighloadFields.
+         * Значение FIELD_NAME должно быть объявлено в include.php как константа с именем, указанным в UserFields
+         * как "ключ".
+         */
+        'UserFields' => [],
+
+        /**
+         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должна
+         * быть объявлена в файле include.php, а "значение" хранит параметры группы, важным из которых является
+         * параметр LANG_CODE с наванием языковой константы, в которой хранится название группы. При отсутсвии
+         * LANG_CODE параметр будет восприниматсья как группировка нескольких групп, которые уже должны быть созданы
+         * до обработки это параметра, при группироваке надо указывать только "ключи", под которыми находятся настройки
+         * для создания групп
+         */
+        'UserGroup' => [],
+
+        /**
          * Настройки для создания свойств инфоблоков. В "значении" указываются параметры для создания свойств инфоблоков.
          * Обязательно нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_ID с именем константы,
-         * в которой указано значение кода, под которым хранится ID инфоблока в настройках модуля
+         * которая использоалась в IBlocks как "ключ", под которым хранятся настройки инфоблока
          */
         'IBlockProperties' => [
             // свойство "Кого поздравляют" для инфоблока "Сказать "Спасибо"
@@ -235,19 +260,18 @@ class infoservice_rusvinyl extends CModule
                 ],
                 'PROPERTY_TYPE' => 'S',
                 'USER_TYPE' => 'HTML',
-            ],
+            ]
         ],
 
         /**
          * Настройки для создания элементов инфоблоков. В "значении" указываются параметры для элементов инфоблоков.
          * Обязательно нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_ID с именем константы,
-         * в которой указано значение кода, под которым хранится ID инфоблока в настройках модуля.
+         * которая использоалась в IBlocks как "ключ", под которым хранятся настройки инфоблока
          * Для указания подробного описания или краткого можно использовать DETAIL_LANG_CODE и PREVIEW_LANG_CODE
          * соответственно, в них указываются языковые константы, под которыми хранятся значения.
          * Для картинки к анонсу или детальной картинки можно использовать PREVIEW_PICTURE и DETAIL_PICTURE, в
          * которых указывается путь относительно папки install в модуле. Остальные параметры для создания элементов
          * такие же, как и в описании метода CIBlockElement::Add.
-         * "Ключ" необходимо указать, так как всё специально созданное модулем должно запоминаться в его опциях.
          */
         'IBlockElements' => [
             'INFS_IBLOCK_NEWS_ELEMENT1' => [
@@ -322,58 +346,10 @@ class infoservice_rusvinyl extends CModule
         ],
 
         /**
-         * Настройки для создания групп опросов. В "значении" обязательно надо указать LANG_CODE
-         * с именем языковой константы, в которой хранится название группы.
-         * За SYMBOLIC_NAME будет браться значение константы, название которой указано в "ключе"
-         * Остальные параметры, кроме TITLE, ACTIVE и SYMBOLIC_NAME, такие же, как и при обычном
-         * создании группы опросов
+         * Пользовательские поля для блогов. Настройки такие же, как и при создании других
+         * пользоательских полей.
          */
-        'VoteChannels' => [
-            'INFS_RUSVINYL_SIMPLE_VOTE_CODE' => [
-                'LANG_CODE' => 'SIMPLE_VOTE_TITLE'
-            ],
-            'INFS_RUSVINYL_COMPETITION_CODE' => [
-                'LANG_CODE' => 'COMPETITION_VOTE_TITLE'
-            ]
-        ],
-
-        /**
-         * Пользовательские поля для групп опроса. Настройки такие же, как и при создании других
-         * пользоательских полей. Важно, чтобы было указано в ['SETTINGS']['CHANNEL_ID'] навазние
-         * "ключа", под которым в настройках для VoteChannels указаны настройки группы опросов
-         */
-        'VoteFields' => [
-            'INFS_RUSVINYL_VOTE_FIELD' => [
-                'LANG_CODE' => 'RUSVINYL_VOTE_TITLE',
-                'TYPE' => 'vote',
-                'SHOW_IN_LIST' => 'Y',
-                'EDIT_IN_LIST' => 'Y',
-                'SETTINGS' => [
-                    'CHANNEL_ID' => 'INFS_RUSVINYL_SIMPLE_VOTE_CODE',
-                    'UNIQUE' => '8',
-                    'UNIQUE_IP_DELAY' => [
-                        'DELAY' => '10',
-                        'DELAY_TYPE' => 'D',
-                    ],
-                    'NOTIFY' => 'I'
-                ]
-            ],
-            'INFS_RUSVINYL_COMPETITION_FIELD' => [
-                'LANG_CODE' => 'RUSVINYL_COMPETITION_TITLE',
-                'TYPE' => 'vote',
-                'SHOW_IN_LIST' => 'Y',
-                'EDIT_IN_LIST' => 'Y',
-                'SETTINGS' => [
-                    'CHANNEL_ID' => 'INFS_RUSVINYL_COMPETITION_CODE',
-                    'UNIQUE' => '8',
-                    'UNIQUE_IP_DELAY' => [
-                        'DELAY' => '10',
-                        'DELAY_TYPE' => 'D',
-                    ],
-                    'NOTIFY' => 'I'
-                ]
-            ]
-        ],
+        'BlogFields' => [],
     ];
 
     // Правила обработки адресов
@@ -415,6 +391,9 @@ class infoservice_rusvinyl extends CModule
      * У названия класса не надо указывать пространство имен, кроме той части, что идет после
      * названий партнера и модуля. Для обработки конкретных событий эти классы должны иметь
      * статические и открытые методы с такими же названиями, что и события
+     * Для создания обработчиков к конкретному highloadblock-у необходимо писать их названия
+     * как <символьное имя highloadblock><название события>, например, для события OnAdd
+     * у highloadblock с символьным именем Test такой обработчик должен называться TestOnAdd
      */
     const EVENTS_HANDLES = [
         'iblock' => [
@@ -508,14 +487,32 @@ class infoservice_rusvinyl extends CModule
     {
         if (!Loader::includeModule('highloadblock')) return;
 
-        $result = HighloadBlockTable::add($optionValue);
+        $codeName = strtolower(constant($constName));
+        $name = preg_replace_callback(
+            '/(?:^|_)(\w)/',
+            function($part) {
+                return strtoupper($part[1]);
+            },
+            $codeName
+        );
+        $result = HighloadBlockTable::add(
+            [
+                'NAME' => $name,
+                'TABLE_NAME' => preg_replace('/[^a-z\d]+/i', '', $codeName)
+            ]
+        );
         if (!$result->isSuccess(true))
             throw new Exception(
                 Loc::getMessage('ERROR_HIGHLOAD_CREATING', ['NAME' => $optionName])
                 . PHP_EOL . implode(PHP_EOL, $result->getErrorMessages())
             );
+        $hlId = $result->GetId();
+        if (
+            !empty($optionValue['LANG_CODE'])
+            && !empty($title = Loc::getMessage($optionValue['LANG_CODE']))
+        ) HighloadBlockLangTable::add(['ID' => $hlId, 'LID' => LANGUAGE_ID, 'NAME' => $title]);
 
-        return $result->GetId();
+        return $hlId;
     }
 
     /**
@@ -603,7 +600,25 @@ class infoservice_rusvinyl extends CModule
                 $fields[$labelUnit] = ['ru' => $langValue, 'en' => ''];
             }
         }
-        if (!in_array($fields['TYPE'], ['crm']))
+        if ($fieldData['TYPE'] == 'vote') {
+            if (
+                empty($fields['SETTINGS']['CHANNEL_ID'])
+                || !defined($fields['SETTINGS']['CHANNEL_ID'])
+                || empty($channelCode = constant($fields['SETTINGS']['CHANNEL_ID']))
+                || empty($channelId = Options::getVoteChannels($channelCode))
+            ) throw new Exception(Loc::getMessage('ERROR_BAD_USER_FIELD_VOTE_CHANNEL', ['NAME' => $constName]));
+            $fields['SETTINGS']['CHANNEL_ID'] = $channelId;
+
+        } elseif ($fieldData['TYPE'] == 'iblock_element') {
+            if (
+                empty($fields['SETTINGS']['IBLOCK_ID'])
+                || !defined($fields['SETTINGS']['IBLOCK_ID'])
+                || empty($iblockICode= constant($fields['SETTINGS']['IBLOCK_ID']))
+                || empty($iblockId = Options::getIBlocks($iblockICode))
+            ) throw new Exception(Loc::getMessage('ERROR_BAD_USER_FIELD_IBLOCK', ['NAME' => $constName]));
+            $fields['SETTINGS']['IBLOCK_ID'] = $iblockId;
+
+        } elseif (!in_array($fieldData['TYPE'], ['crm'])) {
             $fields['SETTINGS'] += [
                 'DEFAULT_VALUE' => '',
                 'SIZE' => '20',
@@ -612,6 +627,7 @@ class infoservice_rusvinyl extends CModule
                 'MAX_LENGTH' => '0',
                 'REGEXP' => ''
             ];
+        }
 
         $fieldEntity = new CUserTypeEntity();
         $fieldId = $fieldEntity->Add($fields);
@@ -640,10 +656,10 @@ class infoservice_rusvinyl extends CModule
         if (!defined($optionValue['HBLOCK_ID'])) return;
 
         $hlName = constant($optionValue['HBLOCK_ID']);
-        if (empty($this->optionUnits['HighloadBlock'][$hlName]))
+        if (empty($entityId = Options::getHighloadBlock($hlName)))
             return;
 
-        $entityId = 'HLBLOCK_' . $this->optionUnits['HighloadBlock'][$hlName];
+        $entityId = 'HLBLOCK_' . $entityId;
         return $this->addUserField($entityId, $constName, $optionValue['DATA']);
     }
 
@@ -690,11 +706,10 @@ class infoservice_rusvinyl extends CModule
                     || !isset(static::OPTIONS['UserGroup'][$constName]))
                     continue;
                 $constValue = constant($constName);
-                if (!is_numeric($this->optionUnits['UserGroup'][$constValue])
-                    || empty($this->optionUnits['UserGroup'][$constValue]))
+                if (!is_numeric($userGroupId = Options::getUserGroup($constValue)) || empty($userGroupId))
                     continue;
 
-                $groupIds[] = $this->optionUnits['UserGroup'][$constValue];
+                $groupIds[] = $userGroupId;
             }
             return $groupIds;
         }
@@ -793,9 +808,9 @@ class infoservice_rusvinyl extends CModule
             } elseif (
                 is_string($groupId) && !empty($groupId)
                 && defined($groupId) && !empty($groupId = constant($groupId))
-                && !empty($this->optionUnits['UserGroup'][$groupId])
+                && !empty($groupId = Options::getUserGroup($groupId))
             ) {
-                $permissions[$this->optionUnits['UserGroup'][$groupId]] = $accessValue;
+                $permissions[$groupId] = $accessValue;
             }
         }
 
@@ -872,12 +887,12 @@ class infoservice_rusvinyl extends CModule
     {
         $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK_PROPERTY', ['PROPERTY' => $constName]);
         $iblockCode = constant($optionValue['IBLOCK_ID']);
-        if (empty($iblockCode) || empty($this->optionUnits['IBlocks'][$iblockCode]))
+        if (empty($iblockCode) || empty($iblockId = Options::getIBlocks($iblockCode)))
             throw new Exception(Loc::getMessage('ERROR_BAD_PROPERTY_IBLOCK', ['PROPERTY' => $constName]));
 
         $data = [
                     'ACTIVE' => 'Y',
-                    'IBLOCK_ID' => $this->optionUnits['IBlocks'][$iblockCode],
+                    'IBLOCK_ID' => $iblockId,
                     'NAME' => $title,
                     'CODE' => constant($constName)
                 ]
@@ -907,14 +922,14 @@ class infoservice_rusvinyl extends CModule
     public function initIBlockElementsOptions(string $constName, array $optionValue)
     {
         $iblockCode = constant($optionValue['IBLOCK_ID']);
-        if (empty($iblockCode) || empty($this->optionUnits['IBlocks'][$iblockCode]))
+        if (empty($iblockCode) || empty($iblockId = Options::getIBlocks($iblockCode)))
             throw new Exception(Loc::getMessage('ERROR_BAD_ELEMENT_IBLOCK_ID', ['ELEMENT' => $constName]));
 
         $title = self::checkLangCode($optionValue['LANG_CODE'], 'IBLOCK_ELEMENT', ['ELEMENT' => $constName]);
         $data = [
                     'ACTIVE' => 'Y',
                     'NAME' => $title,
-                    'IBLOCK_ID' => $this->optionUnits['IBlocks'][$iblockCode]
+                    'IBLOCK_ID' => $iblockId
                 ]
               + array_filter($optionValue, function($key) {
                     return !in_array($key, [
@@ -1090,25 +1105,15 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
-     * Создание пользовательского поля для опросов
+     * Создание пользовательского поля для блогов
      * 
      * @param string $constName - название константы
      * @param array $optionValue - значение опции
      * @return mixed
      */
-    public function initVoteFieldsOptions(string $constName, array $optionValue)
+    public function initBlogFieldsOptions(string $constName, array $optionValue)
     {
-        if (
-            empty($optionValue['SETTINGS']['CHANNEL_ID'])
-            || !defined($optionValue['SETTINGS']['CHANNEL_ID'])
-            || empty($channelCode = constant($optionValue['SETTINGS']['CHANNEL_ID']))
-            || empty($channelId = $this->optionUnits['VoteChannels'][$channelCode])
-        ) return;
-
-        $params = $optionValue;
-        $params['SETTINGS']['CHANNEL_ID'] = $channelId;
-
-        return $this->addUserField('BLOG_POST', $constName, $params);
+        return $this->addUserField('BLOG_POST', $constName, $optionValue);
     }
 
     /**
@@ -1118,17 +1123,17 @@ class infoservice_rusvinyl extends CModule
      */
     public function initOptions() 
     {
-        $this->optionUnits = [];
         foreach (static::OPTIONS as $methodNameBody => $optionList) {
+            $methodName = 'init' . $methodNameBody . 'Options';
+            if (!method_exists($this, $methodName)) continue;
+
             foreach ($optionList as $constName => $optionValue) {
                 if (!defined($constName)) return;
 
-                $methodName = 'init' . $methodNameBody . 'Options';
-                if (!method_exists($this, $methodName)) continue;
-
                 $value = $this->$methodName($constName, $optionValue);
                 if (!isset($value)) continue;
-                $this->optionUnits[$methodNameBody][constant($constName)] = $value;
+                $optionMethod = 'set' . $methodNameBody;
+                Options::$optionMethod(constant($constName), $value);
             }
         }
     }
@@ -1193,23 +1198,26 @@ class infoservice_rusvinyl extends CModule
     public function initEventHandles()
     {
         $eventManager = EventManager::getInstance();
+        $eventsHandles = [];
         foreach (static::EVENTS_HANDLES as $moduleName => $classNames) {
             foreach ($classNames as $className) {
                 $classNameValue = $this->nameSpaceValue . '\\' . $className;
                 if (!class_exists($classNameValue)) return;
 
+                $registerModuleName = $moduleName == 'highloadblock' ? '' : $moduleName;
                 $reflectionClass = new ReflectionClass($classNameValue);
                 foreach ($reflectionClass->getMethods() as $method) {
                     if (!$method->isPublic() || !$method->isStatic()) continue;
 
                     $eventName = $method->getName();
-                    $this->optionUnits['EVENTS_HANDLES'][$moduleName][$eventName][] = $className;
+                    $eventsHandles[$moduleName][$eventName][] = $className;
                     $eventManager->registerEventHandler(
-                        $moduleName, $eventName, $this->MODULE_ID, $classNameValue, $eventName
+                        $registerModuleName, $eventName, $this->MODULE_ID, $classNameValue, $eventName
                     );
                 }
             }
         }
+        Options::setEventsHandles($eventsHandles);
     }
 
     /**
@@ -1298,7 +1306,7 @@ class infoservice_rusvinyl extends CModule
                     if (file_exists($fullPath)) {
                         $savingFile = $newResult . '.' . date('YmdHis');
                         rename($fullPath, $_SERVER['DOCUMENT_ROOT'] . $savingFile);
-                        $this->optionUnits['WWW_FILES'][$moduleFile['target']] = $savingFile;
+                        Options::setWWWFiles($moduleFile['target'], $savingFile);
                     }
                     $fullTagerPath = __DIR__ . '/www/' . $moduleFile['target'];
                     if (file_exists($fullTagerPath)) symlink($fullTagerPath, $fullPath);
@@ -1374,7 +1382,8 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
-     * Устанавливает значения для языковых констант, которые используются в разных местах портала
+     * Устанавливает значения для языковых констант, которые используются
+     * в разных местах портала
      *
      * @return void
      */
@@ -1463,8 +1472,8 @@ class infoservice_rusvinyl extends CModule
             $this->initWWWFiles();
             $this->addUserLangValues();
             $this->runSQLFile('install');
-            $this->optionUnits['CONSTANTS'] = array_keys($this->definedContants);
-            Option::set($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, json_encode($this->optionUnits));
+            Options::setConstants(array_keys($this->definedContants));
+            Options::save();
             Infoservice\RusVinyl\EventHandles\Employment::setFree();
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_INSTALLED'), __DIR__ . '/step1.php');
 
@@ -1505,7 +1514,15 @@ class infoservice_rusvinyl extends CModule
     {
         if (!Loader::includeModule('highloadblock')) return;
 
-        $hlUnt = HighloadBlockTable::GetList(['filter' => ['NAME' => $optionValue['NAME']]])->Fetch();
+        $codeName = strtolower(constant($constName));
+        $name = preg_replace_callback(
+            '/(?:^|_)(\w)/',
+            function($part) {
+                return strtoupper($part[1]);
+            },
+            $codeName
+        );
+        $hlUnt = HighloadBlockTable::GetList(['filter' => ['NAME' => $name]])->Fetch();
         if (!$hlUnt) return;
 
         HighloadBlockTable::delete($hlUnt['ID']);
@@ -1534,12 +1551,12 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
-     * Удаление пользовательского поля для опросов
+     * Удаление пользовательского поля для блогов
      * 
      * @param string $constName - название константы
      * @return void
      */
-    public function removeVoteFieldsOptions(string $constName) 
+    public function removeBlogFieldsOptions(string $constName) 
     {
         $this->removeUserFields('BLOG_POST', $constName);
     }
@@ -1555,9 +1572,8 @@ class infoservice_rusvinyl extends CModule
         if (!defined($constName) || empty(static::OPTIONS['UserGroup'][$constName]))
             return;
 
-        $groupIds = $this->optionUnits['UserGroup'][constant($constName)];
-        if (!is_array($groupIds))
-            $groupIds = [$groupIds];
+        $groupIds = Options::getUserGroup(constant($constName));
+        if (!is_array($groupIds)) $groupIds = [$groupIds];
 
         foreach ($groupIds as $groupId) {
             if (!$groupId || !CGroup::GetByID($groupId)->Fetch())
@@ -1601,11 +1617,10 @@ class infoservice_rusvinyl extends CModule
         if (!Loader::includeModule('iblock')) return;
 
         $iblockCode = constant($constName);
-        if (empty($this->optionUnits['IBlocks'][$iblockCode])
-            || !is_numeric($this->optionUnits['IBlocks'][$iblockCode]))
+        if (empty($iblockId = Options::getIBlocks($iblockCode)) || !is_numeric($iblockId))
             return;
 
-        CIBlock::Delete($this->optionUnits['IBlocks'][$iblockCode]);
+        CIBlock::Delete($iblockId);
     }
 
     /**
@@ -1616,7 +1631,7 @@ class infoservice_rusvinyl extends CModule
      */
     public function removeAgentsOptions(string $constName)
     {
-        $agentId = intval($this->optionUnits['Agents'][constant($constName)]);
+        $agentId = intval(Options::getAgents(constant($constName)));
         if (!$agentId) return;
 
         \CAgent::Delete($agentId);
@@ -1632,7 +1647,7 @@ class infoservice_rusvinyl extends CModule
     {
         if (!Loader::includeModule('forum')) return;
 
-        $forumId = intval($this->optionUnits['Forums'][constant($constName)]);
+        $forumId = intval(Options::getForums(constant($constName)));
         if (!$forumId) return;
 
         \CForumNew::Delete($forumId);
@@ -1649,7 +1664,7 @@ class infoservice_rusvinyl extends CModule
     {
         if (!Loader::includeModule('vote')) return;
 
-        $channelId = intval($this->optionUnits['VoteChannels'][constant($constName)]);
+        $channelId = intval(Options::getVoteChannels(constant($constName)));
         if (!$channelId) return;
 
         \CVoteChannel::Delete($channelId);
@@ -1717,7 +1732,7 @@ class infoservice_rusvinyl extends CModule
     public function removeEventHandles()
     {
         $eventManager = EventManager::getInstance();
-        foreach ($this->optionUnits['EVENTS_HANDLES'] as $moduleName => $eventList) {
+        foreach (Options::getEventsHandles() as $moduleName => $eventList) {
             foreach (array_keys($eventList) as $eventName) {
                 foreach (
                     $eventManager->findEventHandlers(
@@ -1808,9 +1823,9 @@ class infoservice_rusvinyl extends CModule
     public function removeWWWFiles()
     {
         self::removeFiles(static::WWW_FILES, 'www', '', function($moduleFile) {
-            if (empty($this->optionUnits['WWW_FILES'][$moduleFile])) return;
+            if (empty($savedFile = Options::getWWWFiles($moduleFile))) return;
 
-            $oldFileName = $_SERVER['DOCUMENT_ROOT'] . $this->optionUnits['WWW_FILES'][$moduleFile];
+            $oldFileName = $_SERVER['DOCUMENT_ROOT'] . $savedFile;
             if (!file_exists($oldFileName)) return;
 
             rename($oldFileName, $_SERVER['DOCUMENT_ROOT'] . '/' . $moduleFile);
@@ -1890,8 +1905,7 @@ class infoservice_rusvinyl extends CModule
         global $APPLICATION;
         Loader::IncludeModule($this->MODULE_ID);
         Infoservice\RusVinyl\EventHandles\Employment::setBussy();
-        $this->optionUnits = json_decode(Option::get($this->MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, $this->defaultSiteID), true);
-        $this->definedContants = array_fill_keys($this->optionUnits['CONSTANTS'], '');
+        $this->definedContants = array_fill_keys(Options::getConstants(), '');
         array_walk($this->definedContants, function(&$value, $key) { $value = constant($key); });
 
         $this->removeAll();

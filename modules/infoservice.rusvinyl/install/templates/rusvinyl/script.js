@@ -58,16 +58,18 @@
      * 
      * @return void
      */
-    var scrollHandle = function() {        
+    var scrollHandle = function() {
         for (var idValue in modalWnd) {
             var rect = modalWnd[idValue].modal.popupContainer.getBoundingClientRect();
-            var viewArea = document.body.clientHeight;
+            var viewArea = screen.height;
             if (rect.height >= viewArea) {
                 if (rect.y > 0) {
                     modalWnd[idValue].modal.popupContainer.style['top'] = window.scrollY + 'px';
+
                 } else if ((rect.y < 0) && (rect.y + rect.height < viewArea)) {
                     modalWnd[idValue].modal.popupContainer.style['top'] = (window.scrollY - rect.height + viewArea) + 'px';
                 }
+
             } else {
                 modalWnd[idValue].modal.popupContainer.style['top'] = (window.scrollY + (viewArea - rect.height) / 2) + 'px';
             }
