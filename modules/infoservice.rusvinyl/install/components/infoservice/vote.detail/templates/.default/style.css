@@ -1,0 +1,36 @@
+.rusv-vote-unit {
+    margin-top: 25px;
+}
+
+div.bx-vote-block {
+    background-color: #F3F3F3;
+}
+
+.rusv-vote-unit .bx-vote-question-image img {
+    max-height: 250px;
+    max-width: 250px;
+}
+
+.rusv-vote-unit .bx-vote-question-title {
+    border: 0;
+}
+
+.rusv-vote-unit .bx-vote-bottom-block {
+    padding: 0 0 0 7px;
+    border: 0;
+}
+
+.rusv-vote-unit .rusv-button,
+.rusv-vote-unit .rusv-button.feed-add-button-load {
+    width: 115px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.rusv-vote-unit .rusv-button.feed-add-button-load:before {
+    top: 9px;
+}
+
+.rusv-vote-unit .rusv-button.feed-add-button-load:after {
+    top: 13px;
+}

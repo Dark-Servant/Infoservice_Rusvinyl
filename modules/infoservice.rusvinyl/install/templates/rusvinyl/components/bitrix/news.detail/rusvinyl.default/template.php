@@ -3,9 +3,9 @@ use Bitrix\Main\{Localization\Loc, Type\DateTime};
 
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();?>
 <div class="rusv-news-detail">
-    <div class="rusv-news-list-back">
+    <div class="rusv-back-url">
         <a
-            class="rusv-news-list-back-link"
+            class="rusv-back-url-link"
             href="<?=$arResult['LIST_PAGE_URL']?>"><?=
                 Loc::getMessage('RETURN_TO_LIST_LINK_TITLE', ['#NAME#' => $arResult['IBLOCK']['NAME']])
         ?></a>
