@@ -112,13 +112,6 @@ class infoservice_rusvinyl extends CModule
                 'DETAIL_PAGE_URL' => '/announ/#ID#/',
                 'LIST_PAGE_URL' => '/announ/',
             ],
-            // инфоблок "Опросы"
-            'INFS_RUSVINYL_IBLOCK_POLL' => [
-                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
-                'LANG_CODE' => 'IBLOCK_POLL_TITLE',
-                'DETAIL_PAGE_URL' => '/pulse/poll/#ID#/',
-                'LIST_PAGE_URL' => '/pulse/poll/',
-            ],
             // инфоблок "Лидер месяца"
             'INFS_RUSVINYL_IBLOCK_LEADER' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
@@ -373,6 +366,10 @@ class infoservice_rusvinyl extends CModule
         '#^/(?:media/news|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
+        ],
+        '#^/(?:pulse/poll|competition)/(\d+)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/pulse/poll/unit.php',
+            'PARAMS' => 'VOTE_ID=$1&$2'
         ]
     ];
 
@@ -411,8 +408,8 @@ class infoservice_rusvinyl extends CModule
      */
     const FILE_LINKS = [
         'components/infoservice/iblock.showblock', 'components/infoservice/iblock.list',
-        'components/infoservice/iblock.detail', 'templates/rusvinyl', 'public/media/news',
-        'components/infoservice/vote.list'
+        'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
+        'components/infoservice/vote.detail', 'templates/rusvinyl', 'public/media/news'
     ];
 
     /**

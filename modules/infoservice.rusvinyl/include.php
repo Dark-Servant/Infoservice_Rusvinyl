@@ -59,9 +59,15 @@ define('INFS_IBLOCK_NEWS_ELEMENT3', 'NEWS_ELEMENT3');
 // Свойства инфоблока "Сказать "Спасибо"
 // "Кого поздравляют"
 define('INFS_IB_THANKS_PR_RECIPIENT', 'RECIPIENT');
-
 // Все свойства инфоблока "Сказать "Спасибо"
 define('INFS_IB_THANKS_ALL_PROPERTIES', [INFS_IB_THANKS_PR_RECIPIENT]);
+// Количество элементов на странице из инфоблока "Сказать "Спасибо"
+define('INFS_IB_THANKS_PAGE_SIZE', 5);
+/**
+ * Максимальное количество символов для описания элементов
+ * из инфоблока "Сказать "Спасибо"
+ */
+define('INFS_IB_THANKS_TEXT_LENGHT', 150);
 
 // Свойства инфоблока "Задать вопрос"
 // "Ответ"
@@ -72,7 +78,6 @@ define('INFS_IB_QUESTION_PR_ANSWER_AUTHOR', 'ANSWER_AUTHOR');
 define('INFS_IB_QUESTION_PR_THEME', 'THEME');
 // "Текст вопроса"
 define('INFS_IB_QUESTION_PR_QUESTION_VALUE', 'QUESTION_VALUE');
-
 // Все свойства инфоблока "Задать вопрос"
 define('INFS_IB_QUESTION_ALL_PROPERTIES', [
     INFS_IB_QUESTION_PR_ANSWER_VALUE,
@@ -80,19 +85,8 @@ define('INFS_IB_QUESTION_ALL_PROPERTIES', [
     INFS_IB_QUESTION_PR_THEME,
     INFS_IB_QUESTION_PR_QUESTION_VALUE,
 ]);
-
-// Количество элементов на странице из инфоблока "Сказать "Спасибо"
-define('INFS_IB_THANKS_PAGE_SIZE', 5);
-
-/**
- * Максимальное количество символов для описания элементов
- * из инфоблока "Сказать "Спасибо"
- */
-define('INFS_IB_THANKS_TEXT_LENGHT', 150);
-
 // Количество элементов на странице из инфоблока "Задать вопрос"
 define('INFS_IB_QUESTION_PAGE_SIZE', 5);
-
 /**
  * Максимальное количество символов для описания элементов
  * из инфоблока "Задать вопрос"
@@ -113,10 +107,6 @@ define('INFS_RUSVINYL_SIMPLE_VOTE_CODE', 'RUSVINYL_SIMPLE_VOTE');
 // символьный код группы конкурсов "Русвинила"
 define('INFS_RUSVINYL_COMPETITION_CODE', 'RUSVINYL_COMPETITION_VOTE');
 
-// Пользовательское поле для обычных опросов "Русвинила"
-define('INFS_RUSVINYL_VOTE_FIELD', 'UF_RUSV_VOTE');
-// Пользовательское поле для конкурсов "Русвинила"
-define('INFS_RUSVINYL_COMPETITION_FIELD', 'UF_RUSV_COMPETITION');
 // Максимальное количество символов для описания любых опросов
 define('INFS_RUSVINYL_VOTE_TEXT_LENGHT', 150);
 // Количество элементов на странице для обычных опросов

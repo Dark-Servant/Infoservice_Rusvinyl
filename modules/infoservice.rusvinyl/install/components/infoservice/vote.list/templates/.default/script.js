@@ -29,7 +29,6 @@
                 Handlebars.registerPartial(handlebarUnits[i].registerName, html);
             handlebarUnits[i] = Handlebars.compile(html);
         }
-        // loadUnits(0);
         $(document).trigger(
             'list+pages:init',
             {
