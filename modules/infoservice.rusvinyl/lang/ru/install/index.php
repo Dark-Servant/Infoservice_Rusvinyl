@@ -44,7 +44,6 @@ $MESS['ERROR_VOTE_GROUP_UNIT_CREATING'] = 'Не удалось создать г
 $MESS['IBLOCK_TYPE_TITLE'] = 'РусВинил';
 $MESS['IBLOCK_NEWS_TITLE'] = 'Новости';
 $MESS['IBLOCK_ANNOUNCEMENT_TITLE'] = 'Анонсы';
-$MESS['IBLOCK_POLL_TITLE'] = 'Опросы';
 $MESS['IBLOCK_LEADER_TITLE'] = 'Лидер месяца';
 $MESS['IBLOCK_MASTERBLOG_TITLE'] = 'Влог ген. директора';
 $MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';

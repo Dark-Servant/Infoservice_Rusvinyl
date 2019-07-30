@@ -407,7 +407,7 @@ class infoservice_rusvinyl extends CModule
      * находится папа, или одна из непоследних частей пути не является папкой, то произойдет ошибка
      */
     const FILE_LINKS = [
-        'components/infoservice/iblock.showblock', 'components/infoservice/iblock.list',
+        'components/infoservice/entity.frames', 'components/infoservice/iblock.list',
         'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
         'components/infoservice/vote.detail', 'templates/rusvinyl', 'public/media/news'
     ];

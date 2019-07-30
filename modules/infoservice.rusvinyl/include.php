@@ -29,20 +29,6 @@ define('INFS_RUSVINYL_IBLOCK_MASTERBLOG', INFS_RUSVINYL_IBLOCK_PREFIX . 'masterb
 define('INFS_RUSVINYL_IBLOCK_THANKS', INFS_RUSVINYL_IBLOCK_PREFIX . 'thanks');
 // Символьный код инфоблока "Задать вопрос"
 define('INFS_RUSVINYL_IBLOCK_QUESTION', INFS_RUSVINYL_IBLOCK_PREFIX . 'question');
-
-define('INFS_RUSVINYL_MAIN_PAGE_IBLOCKS', [
-    INFS_RUSVINYL_IBLOCK_NEWS,
-    INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT,
-    INFS_RUSVINYL_IBLOCK_POLL,
-    INFS_RUSVINYL_IBLOCK_LEADER
-]);
-
-// Максимальное количество записей из инфоблока в блоках на главной странице
-define('INFS_RUSVINYL_MAIN_PAGE_UNIT_MAX_COUNT', 3);
-
-// Максимальное количество в строке блоков записей из инфоблока на главной странице
-define('INFS_RUSVINYL_MAIN_PAGE_ROW_MAX_COUNT', 2);
-
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
  * странице просмотра списка новостей
@@ -119,6 +105,23 @@ define('INFS_RUSVINYL_VOTE_LIST_URL', [
     INFS_RUSVINYL_SIMPLE_VOTE_CODE => '/pulse/poll/',
     INFS_RUSVINYL_COMPETITION_CODE => '/competition/',
 ]);
+
+
+// Другие константы
+
+// какие элементы выводятся на главной странице
+define('INFS_RUSVINYL_MAIN_PAGE_FRAMES', [
+    ['iblock', INFS_RUSVINYL_IBLOCK_NEWS],
+    ['iblock', INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT],
+    ['votechannel', INFS_RUSVINYL_SIMPLE_VOTE_CODE],
+    ['iblock', INFS_RUSVINYL_IBLOCK_LEADER]
+]);
+
+// Максимальное количество записей в блоках на главной странице
+define('INFS_RUSVINYL_MAIN_PAGE_UNIT_MAX_COUNT', 3);
+
+// Максимальное количество в строке блоков записей на главной странице
+define('INFS_RUSVINYL_MAIN_PAGE_ROW_MAX_COUNT', 2);
 
 // Вспомогательные константы
 define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/man.svg');
