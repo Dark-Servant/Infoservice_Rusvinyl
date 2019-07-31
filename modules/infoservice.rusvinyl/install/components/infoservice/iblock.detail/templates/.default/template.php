@@ -1,4 +1,16 @@
 <?
+if (!empty($arParams['BUTTON_COMPONENT'])):?>
+<div class="rusv-news-detail-buttons"><?
+$APPLICATION->IncludeComponent(
+    $arParams['BUTTON_COMPONENT'], '',
+    [
+        'ELEMENT_ID' => $arResult['ELEMENT']['ID'],
+        'IBLOCK_TYPE' => $arResult['ELEMENT']['IBLOCK_TYPE_ID'],
+    ]
+);?>
+</div><?
+endif;
+
 $APPLICATION->IncludeComponent(
     'bitrix:news.detail', 'rusvinyl.default',
     [

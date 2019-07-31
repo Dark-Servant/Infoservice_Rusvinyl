@@ -51,6 +51,9 @@ class infoservice_rusvinyl extends CModule
         'HighloadBlock' => [
             // HighloadBlock для хранения изъявивших желание участвовать
             // в элементах инфоблока "Участвовать"
+            'INFS_HL_PARTICIPATE_USERS' => [
+                'LANG_CODE' => 'HL_PARTICIPATE_USERS_TITLE'
+            ],
         ],
 
         /**
@@ -140,6 +143,14 @@ class infoservice_rusvinyl extends CModule
                 'LIST_PAGE_URL' => '/question/',
                 'BIZPROC' => 'Y'
             ],
+            // инфоблок "Участвовать"
+            'INFS_RUSVINYL_IBLOCK_PARTICIPATE' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_PARTICIPATE_TITLE',
+                'DETAIL_PAGE_URL' => '/participate/#ID#/',
+                'LIST_PAGE_URL' => '/participate/',
+                'BIZPROC' => 'Y'
+            ],
         ],
 
         /**
@@ -176,7 +187,72 @@ class infoservice_rusvinyl extends CModule
          *      E - маска
          *      S - подстрока
          */
-        'HighloadFields' => [],
+        'HighloadFields' => [
+            /**
+             * Поле "Участник" для HighloadBlock, где хранятся участники для
+             * элементов инфоблока "Участвовать"
+             */
+            'INFS_HL_PARTICIPATE_USER_FIELD' => [
+                'HBLOCK_ID' => 'INFS_HL_PARTICIPATE_USERS',
+                'DATA' => [
+                    'LANG_CODE' => 'HL_PARTICIPATE_USER_FIELD',
+                    'TYPE' => 'employee',
+                    'MANDATORY' => 'Y',
+                    'SHOW_IN_LIST' => 'Y',
+                    'EDIT_IN_LIST' => 'Y',
+                    'SETTINGS' => []
+                ]
+            ],
+            /**
+             * Поле "В чем участвовать" для HighloadBlock, где хранятся участники для
+             * элементов инфоблока "Участвовать"
+             */
+            'INFS_HL_PARTICIPATE_ELEMENT_FIELD' => [
+                'HBLOCK_ID' => 'INFS_HL_PARTICIPATE_USERS',
+                'DATA' => [
+                    'LANG_CODE' => 'HL_PARTICIPATE_ELEMENT_FIELD',
+                    'TYPE' => 'iblock_element',
+                    'MANDATORY' => 'Y',
+                    'SHOW_IN_LIST' => 'Y',
+                    'EDIT_IN_LIST' => 'Y',
+                    'SETTINGS' => [
+                        'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PARTICIPATE'
+                    ]
+                ]
+            ],
+            /**
+             * Поле "Дата подачи" для HighloadBlock, где хранятся участники для
+             * элементов инфоблока "Участвовать"
+             */
+            'INFS_HL_PARTICIPATE_DATE_FIELD' => [
+                'HBLOCK_ID' => 'INFS_HL_PARTICIPATE_USERS',
+                'DATA' => [
+                    'LANG_CODE' => 'HL_PARTICIPATE_DATE_FIELD',
+                    'TYPE' => 'datetime',
+                    'MANDATORY' => 'Y',
+                    'SHOW_IN_LIST' => 'Y',
+                    'EDIT_IN_LIST' => 'Y',
+                    'SETTINGS' => []
+                ]
+            ],
+            /**
+             * Поле "Подтверждение" для HighloadBlock, где хранятся участники для
+             * элементов инфоблока "Участвовать"
+             */
+            'INFS_HL_PARTICIPATE_CONFIRMATION_FIELD' => [
+                'HBLOCK_ID' => 'INFS_HL_PARTICIPATE_USERS',
+                'DATA' => [
+                    'LANG_CODE' => 'HL_PARTICIPATE_CONFIRMATION_FIELD',
+                    'TYPE' => 'enumeration',
+                    'SHOW_IN_LIST' => 'Y',
+                    'EDIT_IN_LIST' => 'Y',
+                    'LIST_VALUES' => [
+                        ['LANG_CODE' => 'YES'],
+                        ['LANG_CODE' => 'NO'],
+                    ]
+                ]
+            ],
+        ],
 
         /**
          * Пользовательские поля для групп соц. сети. Значения хранят настройки пользовательского поля.
@@ -253,7 +329,21 @@ class infoservice_rusvinyl extends CModule
                 ],
                 'PROPERTY_TYPE' => 'S',
                 'USER_TYPE' => 'HTML',
-            ]
+            ],
+            // свойство "ID бизнес процесса при нажатии кнопки "Участвовать"
+            // для инфоблока "Участвовать"
+            'INFS_IB_PARTICIPATE_PR_SEND_DESIRE' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PARTICIPATE',
+                'LANG_CODE' => 'IBLOCK_PARTICIPATE_PROPERTY_SEND_DESIRE',
+                'PROPERTY_TYPE' => 'N'
+            ],
+            // свойство "ID бизнес процесса на ответ пользователю"
+            // для инфоблока "Участвовать"
+            'INFS_IB_PARTICIPATE_PR_SEND_ANSWER' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PARTICIPATE',
+                'LANG_CODE' => 'IBLOCK_PARTICIPATE_PROPERTY_SEND_ANSWER',
+                'PROPERTY_TYPE' => 'N'
+            ],
         ],
 
         /**
@@ -359,7 +449,7 @@ class infoservice_rusvinyl extends CModule
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
-        '#^/(announ|leader)/?(?:\?(\S*))?$#' => [
+        '#^/(announ|leader|participate)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
@@ -370,7 +460,11 @@ class infoservice_rusvinyl extends CModule
         '#^/(?:pulse/poll|competition)/(\d+)/?(?:\?(\S*))?$#' => [
             'FILE' => '/pulse/poll/unit.php',
             'PARAMS' => 'VOTE_ID=$1&$2'
-        ]
+        ],
+        '#^/participate/(\d+)/?(?:\?(\S*))?$#' => [
+            'FILE' => '/local/public/participate/unit.php',
+            'PARAMS' => 'ELEMENT_ID=$1&$2'
+        ],
     ];
 
     /**
@@ -395,6 +489,9 @@ class infoservice_rusvinyl extends CModule
     const EVENTS_HANDLES = [
         'iblock' => [
             'EventHandles\\IBlockElementEventHandle'
+        ],
+        'highloadblock' => [
+            'EventHandles\\HighloadBlockEventHandle'
         ]
     ];
 
@@ -409,7 +506,8 @@ class infoservice_rusvinyl extends CModule
     const FILE_LINKS = [
         'components/infoservice/entity.frames', 'components/infoservice/iblock.list',
         'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
-        'components/infoservice/vote.detail', 'templates/rusvinyl', 'public/media/news'
+        'components/infoservice/vote.detail',  'components/infoservice/participate.buttons',
+        'templates/rusvinyl', 'public/media/news', 'public/participate', 
     ];
 
     /**
