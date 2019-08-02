@@ -1,5 +1,6 @@
 <?
-use Bitrix\Main\{Localization\Loc, Loader, Config\Option};
+use Bitrix\Main\{Localization\Loc, Loader};
+use Infoservice\RusVinyl\Helpers\Options;
 
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
@@ -41,13 +42,7 @@ class IBlockList extends \CBitrixComponent
                 'IBLOCK' => $iblock,
                 'CODE' => $trueCode,
                 'BUTTON_TITLE_CODE' => strtoupper($trueCode) . '_BUTTON_TITLE',
-                'OPTIONS' => json_decode(
-                                    Option::get(
-                                        INFS_RUSVINYL_MODULE_ID,
-                                        INFS_RUSVINYL_OPTION_NAME,
-                                        false, SITE_ID
-                                    ), true
-                                )
+                'OPTIONS' => Options::getParams()
             ];
             $this->arResult['CURRENT_USER_ID'] = $USER->GetId();
 

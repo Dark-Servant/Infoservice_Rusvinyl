@@ -48,6 +48,7 @@ $MESS['IBLOCK_LEADER_TITLE'] = 'Лидер месяца';
 $MESS['IBLOCK_MASTERBLOG_TITLE'] = 'Влог ген. директора';
 $MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';
 $MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
+$MESS['IBLOCK_EMPLOYEE_ANNOUNCE_TITLE'] = 'Объявления сотрудников';
 $MESS['IBLOCK_PARTICIPATE_TITLE'] = 'Участвовать';
 
 // Тестовые элементы "Новости"
@@ -186,6 +187,9 @@ $MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_VALUE'] = 'Ответ';
 $MESS['IBLOCK_QUESTION_PROPERTY_ANSWER_AUTHOR'] = 'Автор ответа';
 $MESS['IBLOCK_QUESTION_PROPERTY_THEME'] = 'Тема вопроса';
 $MESS['IBLOCK_QUESTION_PROPERTY_QUESTION_VALUE'] = 'Текст вопроса';
+
+// Свойства инфоблока "Объявления сотрудников"
+$MESS['IBLOCK_EMPLOYEE_ANNOUNCE_PROPERTY_THEME'] = 'Тема';
 
 // Свойства инфоблока "Участвовать"
 $MESS['IBLOCK_PARTICIPATE_PROPERTY_SEND_DESIRE'] = 'ID бизнес процесса при нажатии кнопки "Участвовать"';
