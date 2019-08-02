@@ -29,6 +29,8 @@ define('INFS_RUSVINYL_IBLOCK_MASTERBLOG', INFS_RUSVINYL_IBLOCK_PREFIX . 'masterb
 define('INFS_RUSVINYL_IBLOCK_THANKS', INFS_RUSVINYL_IBLOCK_PREFIX . 'thanks');
 // Символьный код инфоблока "Задать вопрос"
 define('INFS_RUSVINYL_IBLOCK_QUESTION', INFS_RUSVINYL_IBLOCK_PREFIX . 'question');
+// Символьный код инфоблока "Объявления сотрудников"
+define('INFS_RUSVINYL_IBLOCK_EMPLOYEE_ANNOUNCE', INFS_RUSVINYL_IBLOCK_PREFIX . 'employee_announce');
 // Символьный код инфоблока "Участвовать"
 define('INFS_RUSVINYL_IBLOCK_PARTICIPATE', INFS_RUSVINYL_IBLOCK_PREFIX . 'participate');
 
@@ -81,6 +83,19 @@ define('INFS_IB_QUESTION_PAGE_SIZE', 5);
  * из инфоблока "Задать вопрос"
  */
 define('INFS_IB_QUESTION_TEXT_LENGHT', 150);
+
+// Свойства инфоблока "Объявления сотрудников"
+// "Тема"
+define('INFS_IB_EMPLOYEE_ANNOUNCE_PR_THEME', 'THEME');
+// Все свойства инфоблока "Объявления сотрудников"
+define('INFS_IB_EMPLOYEE_ANNOUNCE_ALL_PROPERTIES', [INFS_IB_EMPLOYEE_ANNOUNCE_PR_THEME]);
+// Количество элементов на странице из инфоблока "Объявления сотрудников"
+define('INFS_IB_EMPLOYEE_ANNOUNCE_PAGE_SIZE', 5);
+/**
+ * Максимальное количество символов для описания элементов
+ * из инфоблока "Объявления сотрудников"
+ */
+define('INFS_IB_EMPLOYEE_ANNOUNCE_TEXT_LENGHT', 150);
 
 // Свойства инфоблока "Участвовать"
 // "ID бизнес процесса при нажатии кнопки "Участвовать"

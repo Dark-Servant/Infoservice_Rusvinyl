@@ -388,6 +388,8 @@ input[type="file"] {
 
 }
 
+/* Настройки для всех "Перейти к списку ..." */
+
 .rusv-back-url-link, .rusv-back-url-link:visited {
     color: #777676;
     text-decoration: none;

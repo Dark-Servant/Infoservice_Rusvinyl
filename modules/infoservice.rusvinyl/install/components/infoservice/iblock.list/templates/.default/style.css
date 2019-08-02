@@ -24,7 +24,21 @@ div.rusv-body-content-data {
     color: #0091CA;
 }
 
-.rusv-add-new-question-buttons {
-    text-align: right;
+.rusv-employee-announce-unit-name-value {
+    font-size: 22px;
+    line-height: 24px;
+    margin-bottom: 20px;
 }
 
+.rusv-employee-announce-unit-full-name-link,
+.rusv-employee-announce-unit-full-name-link:visited {
+    font-size: 20px;
+    line-height: 24px;
+    color: #0091CA;
+    text-decoration: none;
+}
+
+.rusv-add-new-question-buttons,
+.rusv-add-new-employee-announce-buttons {
+    text-align: right;
+}

@@ -143,6 +143,13 @@ class infoservice_rusvinyl extends CModule
                 'LIST_PAGE_URL' => '/question/',
                 'BIZPROC' => 'Y'
             ],
+            // инфоблок "Объявления сотрудников"
+            'INFS_RUSVINYL_IBLOCK_EMPLOYEE_ANNOUNCE' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_EMPLOYEE_ANNOUNCE_TITLE',
+                'LIST_PAGE_URL' => '/useful/announcements/',
+                'BIZPROC' => 'Y'
+            ],
             // инфоблок "Участвовать"
             'INFS_RUSVINYL_IBLOCK_PARTICIPATE' => [
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
@@ -330,6 +337,15 @@ class infoservice_rusvinyl extends CModule
                 'PROPERTY_TYPE' => 'S',
                 'USER_TYPE' => 'HTML',
             ],
+
+            // свойство "Тема" для инфоблока "Объявления сотрудников"
+            'INFS_IB_EMPLOYEE_ANNOUNCE_PR_THEME' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_EMPLOYEE_ANNOUNCE',
+                'LANG_CODE' => 'IBLOCK_EMPLOYEE_ANNOUNCE_PROPERTY_THEME',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+
             // свойство "ID бизнес процесса при нажатии кнопки "Участвовать"
             // для инфоблока "Участвовать"
             'INFS_IB_PARTICIPATE_PR_SEND_DESIRE' => [
