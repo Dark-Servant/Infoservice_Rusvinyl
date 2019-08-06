@@ -1,0 +1,48 @@
+
+#rusv-2-pit {
+    width: 500px;
+}
+
+.rusv-2-pit-title {
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.rusv-2-pit-datetime.rusv-modal-input {
+    width: 178px;
+}
+
+#rusv-visa {
+    width: 500px;
+}
+
+#rusv-servicerecord {
+    width: 300px;
+}
+
+.rusv-add-servicerecord-button.rusv-modal-button.rusv-button {
+    width: 130px;
+}
+
+#rusv-servicedesk {
+    width: 500px;
+}
+
+#rusv-reference {
+    width: 400px;
+}
+
+.rusv-reference-title {
+    display: inline-block;
+    width: 180px;
+}
+
+.rusv-reference-select.rusv-modal-select {
+    width: 150px;
+}
+
+/* ---------------------------------- */
+
+.rusv-service-buttons {
+    text-align: right;
+}

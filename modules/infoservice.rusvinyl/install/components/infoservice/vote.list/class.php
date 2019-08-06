@@ -1,5 +1,5 @@
 <?
-use Bitrix\Main\{Localization\Loc, Loader, Config\Option};
+use Bitrix\Main\{Localization\Loc, Loader};
 
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
@@ -37,13 +37,7 @@ class VoteList extends \CBitrixComponent
                     )
                 );
 
-            $this->arResult['OPTIONS'] = json_decode(
-                    Option::get(
-                        INFS_RUSVINYL_MODULE_ID,
-                        INFS_RUSVINYL_OPTION_NAME,
-                        false, SITE_ID
-                    ), true
-                );
+            $this->arResult['OPTIONS'] = Infoservice\RusVinyl\Helpers\Options::getParams();
             if (!in_array($channelUnit['ID'], $this->arResult['OPTIONS']['VoteChannels']))
                 throw new Exception(Loc::getMessage('ERROR_CHANNEL_ID_EXISTS'));
 

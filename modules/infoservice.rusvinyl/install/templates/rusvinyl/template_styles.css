@@ -478,11 +478,15 @@ input[type="file"] {
     margin-top: 25px;
 }
 
+.rusv-modal-title {
+    color: #848484;
+}
+
 .rusv-modal-input {
     background-color: #F3F3F3;
     border: 0;
     border-bottom: 1px solid #C4C4C4;
-    width: 500px;
+    width: calc(100% - 5px);
     padding: 5px 2px;
     line-height: 18px;
 }
@@ -502,6 +506,18 @@ input[type="file"] {
     margin-top: 15px;
     border: 1px solid #C4C4C4;
     font-family: "Arial";
+}
+
+.rusv-modal-select {
+    width: 100%;
+    padding: 5px 2px;
+    background-color: #f3f3f3;
+    border: none;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.rusv-modal-select:focus {
+    outline: none;
 }
 
 .rusv-modal-file-link {

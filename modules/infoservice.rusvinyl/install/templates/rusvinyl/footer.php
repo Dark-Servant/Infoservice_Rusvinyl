@@ -28,6 +28,6 @@ use Bitrix\Main\Localization\Loc;
                 <img src="<?=SITE_TEMPLATE_PATH?>/images/text.svg">
             </a>
         </div>
-    </div>
+    </div><?$APPLICATION->IncludeComponent('infoservice:services', '');?>
 </body>
 </html>

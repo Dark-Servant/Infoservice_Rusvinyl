@@ -158,6 +158,43 @@ class infoservice_rusvinyl extends CModule
                 'LIST_PAGE_URL' => '/participate/',
                 'BIZPROC' => 'Y'
             ],
+
+            // Инфоблоки для "Сервисов"
+            // инфоблок "Заявка в ServiceDesk"
+            'INFS_IBLOCK_SERVICEDESK' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_SERVICEDESK_TITLE',
+                'LIST_PAGE_URL' => '/services/servicedesk/',
+                'BIZPROC' => 'Y'
+            ],
+            // инфоблок "Справка 2 НДФЛ"
+            'INFS_IBLOCK_2_PIT' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_2_PIT_TITLE',
+                'LIST_PAGE_URL' => '/services/2-pit/',
+                'BIZPROC' => 'Y'
+            ],
+            // инфоблок "Копия трудовой книжки"
+            'INFS_IBLOCK_SERVICERECORD' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_SERVICERECORD_TITLE',
+                'LIST_PAGE_URL' => '/services/servicerecord/',
+                'BIZPROC' => 'Y'
+            ],
+            // инфоблок "Справка на визу"
+            'INFS_IBLOCK_VISA' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_VISA_TITLE',
+                'LIST_PAGE_URL' => '/services/visa/',
+                'BIZPROC' => 'Y'
+            ],
+            // инфоблок "Справка с места работы"
+            'INFS_IBLOCK_REFERENCE' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_REFERENCE_TITLE',
+                'LIST_PAGE_URL' => '/services/reference/',
+                'BIZPROC' => 'Y'
+            ],
         ],
 
         /**
@@ -360,6 +397,92 @@ class infoservice_rusvinyl extends CModule
                 'LANG_CODE' => 'IBLOCK_PARTICIPATE_PROPERTY_SEND_ANSWER',
                 'PROPERTY_TYPE' => 'N'
             ],
+
+            // свойство "Сотрудник" для инфоблока "Справка 2 НДФЛ"
+            'INFS_IB_2_PIT_PR_EMPLOYEE' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
+                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_EMPLOYEE',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'UserID',
+            ],
+            // свойство "От" для инфоблока "Справка 2 НДФЛ"
+            'INFS_IB_2_PIT_PR_FROM' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
+                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_FROM',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'DateTime'
+            ],
+            // свойство "До" для инфоблока "Справка 2 НДФЛ"
+            'INFS_IB_2_PIT_PR_TO' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
+                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_TO',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'DateTime'
+            ],
+
+            // свойство "Количество копий" для инфоблока "Копия трудовой книжки"
+            'INFS_IB_SERVICERECORD_PR_COUNT' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_SERVICERECORD',
+                'LANG_CODE' => 'IBLOCK_SERVICERECORD_PROPERTY_COUNT',
+                'PROPERTY_TYPE' => 'N',
+                'USER_TYPE' => ''
+            ],
+
+            // свойство "Страна" для инфоблока "Справка на визу"
+            'INFS_IB_VISA_PR_COUNTRY' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_VISA',
+                'LANG_CODE' => 'IBLOCK_VISA_PROPERTY_COUNTRY',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Дата первой поездки" для инфоблока "Справка на визу"
+            'INFS_IB_VISA_PR_DATE' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_VISA',
+                'LANG_CODE' => 'IBLOCK_VISA_PROPERTY_DATE',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'DateTime'
+            ],
+            // свойство "Цель" для инфоблока "Справка на визу"
+            'INFS_IB_VISA_PR_PURPOISE' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_VISA',
+                'LANG_CODE' => 'IBLOCK_VISA_PROPERTY_PURPOISE',
+                'PROPERTY_TYPE' => 'L',
+                'USER_TYPE' => '',
+                'LIST_VALUES' => [
+                    ['LANG_CODE' => 'TEST1'],
+                    ['LANG_CODE' => 'TEST2'],
+                ]
+            ],
+            // свойство "Данные паспорта" для инфоблока "Справка на визу"
+            'INFS_IB_VISA_PR_PASSPORT' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_VISA',
+                'LANG_CODE' => 'IBLOCK_VISA_PROPERTY_PASSPORT',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Язык" для инфоблока "Справка на визу"
+            'INFS_IB_VISA_PR_LANGUAGE' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_VISA',
+                'LANG_CODE' => 'IBLOCK_VISA_PROPERTY_LANGUAGE',
+                'PROPERTY_TYPE' => 'L',
+                'USER_TYPE' => '',
+                'LIST_VALUES' => [
+                    ['LANG_CODE' => 'EN'],
+                    ['LANG_CODE' => 'RU'],
+                ]
+            ],
+
+            // свойство "С указанием оклада" для инфоблока "Справка с места работы"
+            'INFS_IB_REFERENCE_PR_SALARY' => [
+                'IBLOCK_ID' => 'INFS_IBLOCK_REFERENCE',
+                'LANG_CODE' => 'IBLOCK_REFERENCE_PROPERTY_SALARY',
+                'PROPERTY_TYPE' => 'L',
+                'USER_TYPE' => '',
+                'LIST_VALUES' => [
+                    ['LANG_CODE' => 'YES'],
+                    ['LANG_CODE' => 'NO'],
+                ]
+            ],
         ],
 
         /**
@@ -522,8 +645,9 @@ class infoservice_rusvinyl extends CModule
     const FILE_LINKS = [
         'components/infoservice/entity.frames', 'components/infoservice/iblock.list',
         'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
-        'components/infoservice/vote.detail',  'components/infoservice/participate.buttons',
-        'templates/rusvinyl', 'public/media/news', 'public/participate', 
+        'components/infoservice/vote.detail', 'components/infoservice/participate.buttons',
+        'components/infoservice/services', 'templates/rusvinyl', 'public/media/news',
+        'public/participate', 
     ];
 
     /**
@@ -630,7 +754,7 @@ class infoservice_rusvinyl extends CModule
      * Создание значений для пользовательского поля типа "Список"
      * 
      * @param int $fieldId - ID пользовательского поля
-     * @param array $fieldValues - значения пользовательского
+     * @param array $fieldValues - значения пользовательского поля
      * @param string $langCode - префикс к языковым константам для названий значений поля
      * @return array
      */
@@ -682,6 +806,8 @@ class infoservice_rusvinyl extends CModule
      */
     public function addUserField(string $entityId, string $constName, array $fieldData) 
     {
+        global $APPLICATION;
+
         $fields = [
                 'ENTITY_ID' => $entityId,
                 'FIELD_NAME' => constant($constName),
@@ -745,7 +871,7 @@ class infoservice_rusvinyl extends CModule
         if (!$fieldId)
             throw new Exception(
                 Loc::getMessage('ERROR_USERFIELD_CREATING', ['NAME' => $constName]) . PHP_EOL .
-                $fieldEntity->LAST_ERROR
+                $APPLICATION->GetException()->GetString()
             );
         
         $result = ['ID' => intval($fieldId)];
@@ -987,6 +1113,31 @@ class infoservice_rusvinyl extends CModule
     }
 
     /**
+     * Создание значений для свойства инфоблока типа "Список"
+     * 
+     * @param int $propertyId - ID свойства инфоблока
+     * @param array $propertyValues - список значений
+     * @param string $langCode - префикс к языковым константам для названий значений
+     * @return array
+     */
+    protected function addIBlockPropertyListValues(int $propertyId, array $propertyValues, string $langCode)
+    {
+        $values = [];
+        $ids = [];
+        $list = new CIBlockPropertyEnum;
+        foreach ($propertyValues as $unit) {
+            $value = Loc::getMessage(($langCode ? $langCode . '_' : '') . $unit['LANG_CODE']);
+            $lowerCaseValue = strtolower($value);
+            if (empty($value) || in_array($lowerCaseValue, $values)) continue;
+
+            $listUnitId = intval($list->Add(['PROPERTY_ID' => $propertyId, 'VALUE' => $value]));
+            $ids['VALUES'][] = $listUnitId;
+            $ids[$unit['LANG_CODE'] . '_ID'] = $listUnitId;
+        }
+        return $ids;
+    }
+
+    /**
      * Создание свойств инфоблока
      * 
      * @param string $constName - название константы
@@ -1008,7 +1159,7 @@ class infoservice_rusvinyl extends CModule
                     'CODE' => constant($constName)
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE']);
+                    return !in_array($key, ['LANG_CODE', 'LIST_VALUES']);
                 }, ARRAY_FILTER_USE_KEY);
 
         $property = new CIBlockProperty;
@@ -1019,7 +1170,16 @@ class infoservice_rusvinyl extends CModule
                 . PHP_EOL . $property->LAST_ERROR
             );
 
-        return $propertyId;
+        $result = ['ID' => $propertyId];
+        if (
+            ($optionValue['PROPERTY_TYPE'] == 'L') && !$optionValue['USER_TYPE']
+            && !empty($optionValue['LIST_VALUES'])
+        ) $result += $this->addIBlockPropertyListValues(
+                                    $result['ID'],
+                                    $optionValue['LIST_VALUES'],
+                                    $optionValue['LANG_CODE'] ?: ''
+                                );
+        return $result;
     }
 
     /**
