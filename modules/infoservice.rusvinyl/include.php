@@ -34,6 +34,26 @@ define('INFS_RUSVINYL_IBLOCK_EMPLOYEE_ANNOUNCE', INFS_RUSVINYL_IBLOCK_PREFIX . '
 // Символьный код инфоблока "Участвовать"
 define('INFS_RUSVINYL_IBLOCK_PARTICIPATE', INFS_RUSVINYL_IBLOCK_PREFIX . 'participate');
 
+// Символьные коды для инфоблоков в "Сервисах"
+// Символьный код инфоблока "Заявка в ServiceDesk"
+define('INFS_IBLOCK_SERVICEDESK', INFS_RUSVINYL_IBLOCK_PREFIX . 'servicedesk');
+// Символьный код инфоблока "Справка 2 НДФЛ"
+define('INFS_IBLOCK_2_PIT', INFS_RUSVINYL_IBLOCK_PREFIX . '2_pit');
+// Символьный код инфоблока "Копия трудовой книжки"
+define('INFS_IBLOCK_SERVICERECORD', INFS_RUSVINYL_IBLOCK_PREFIX . 'servicerecord');
+// Символьный код инфоблока "Справка на визу"
+define('INFS_IBLOCK_VISA', INFS_RUSVINYL_IBLOCK_PREFIX . 'visa');
+// Символьный код инфоблока "Справка с места работы"
+define('INFS_IBLOCK_REFERENCE', INFS_RUSVINYL_IBLOCK_PREFIX . 'reference');
+// Список всех символьных кодов тех инфоблоков, которые определены для списка "Сервисы"
+define('INFS_IBLOCK_ALL_SERVICE_LIST', [
+    INFS_IBLOCK_SERVICEDESK,
+    INFS_IBLOCK_2_PIT,
+    INFS_IBLOCK_SERVICERECORD,
+    INFS_IBLOCK_VISA,
+    INFS_IBLOCK_REFERENCE
+]);
+
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
  * странице просмотра списка новостей
@@ -102,6 +122,34 @@ define('INFS_IB_EMPLOYEE_ANNOUNCE_TEXT_LENGHT', 150);
 define('INFS_IB_PARTICIPATE_PR_SEND_DESIRE', 'BP_SEND_DESIRE');
 // "ID бизнес процесса на ответ пользователю"
 define('INFS_IB_PARTICIPATE_PR_SEND_ANSWER', 'BP_SEND_ANSWER');
+
+// Свойства инфоблока "Справка 2 НДФЛ"
+// "Сотрудник"
+define('INFS_IB_2_PIT_PR_EMPLOYEE', 'EMPLOYEE');
+// "От"
+define('INFS_IB_2_PIT_PR_FROM', 'FROM');
+// "До"
+define('INFS_IB_2_PIT_PR_TO', 'TO');
+
+// Свойства инфоблока "Копия трудовой книжки"
+// "Количество копий"
+define('INFS_IB_SERVICERECORD_PR_COUNT', 'COUNT');
+
+// Свойства инфоблока "Справка на визу"
+// "Страна"
+define('INFS_IB_VISA_PR_COUNTRY', 'COUNTRY');
+// "Дата первой поездки"
+define('INFS_IB_VISA_PR_DATE', 'DATE');
+// "Цель"
+define('INFS_IB_VISA_PR_PURPOISE', 'PURPOISE');
+// "Данные паспорта"
+define('INFS_IB_VISA_PR_PASSPORT', 'PASSPORT');
+// "Язык"
+define('INFS_IB_VISA_PR_LANGUAGE', 'LANGUAGE');
+
+// Свойства инфоблока "Справка с места работы"
+// "С указанием оклада"
+define('INFS_IB_REFERENCE_PR_SALARY', 'SALARY');
 
 // Константы для Highload-блоков
 

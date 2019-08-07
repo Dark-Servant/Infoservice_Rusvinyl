@@ -2,8 +2,7 @@
 use \Bitrix\Main\{
     Application,
     Localization\Loc,
-    Loader,
-    Config\Option
+    Loader
 };
 
 define("NOT_CHECK_PERMISSIONS", true);
@@ -19,7 +18,7 @@ set_time_limit(0);
 
 Loader::includeModule('iblock');
 
-$optionUnits = json_decode(Option::get(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_NAME, false, SITE_ID), true);
+$optionUnits = Infoservice\RusVinyl\Helpers\Options::getParams();
 
 try {
     $request = Application::getInstance()->getContext()->getRequest();

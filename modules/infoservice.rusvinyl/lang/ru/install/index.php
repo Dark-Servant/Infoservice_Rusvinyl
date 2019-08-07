@@ -50,6 +50,12 @@ $MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';
 $MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
 $MESS['IBLOCK_EMPLOYEE_ANNOUNCE_TITLE'] = 'Объявления сотрудников';
 $MESS['IBLOCK_PARTICIPATE_TITLE'] = 'Участвовать';
+// Инфоблоки для "Сервисов"
+$MESS['IBLOCK_SERVICEDESK_TITLE'] = 'Заявка в ServiceDesk';
+$MESS['IBLOCK_2_PIT_TITLE'] = 'Справка 2 НДФЛ';
+$MESS['IBLOCK_SERVICERECORD_TITLE'] = 'Копия трудовой книжки';
+$MESS['IBLOCK_VISA_TITLE'] = 'Справка на визу';
+$MESS['IBLOCK_REFERENCE_TITLE'] = 'Справка с места работы';
 
 // Тестовые элементы "Новости"
 $MESS['IBLOCK_NEWS_ELEMENT1_NAME'] = 'РусВинил принимает заявки на конкурс проектов "Экосознание"';
@@ -206,3 +212,27 @@ $MESS['HL_PARTICIPATE_DATE_FIELD'] = 'Дата подачи';
 $MESS['HL_PARTICIPATE_CONFIRMATION_FIELD'] = 'Подтверждение';
 $MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_YES'] = 'Подтверждено';
 $MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_NO'] = 'Отказано';
+
+// Свойства инфоблока "Справка 2 НДФЛ"
+$MESS['IBLOCK_2_PIT_PROPERTY_EMPLOYEE'] = 'Сотрудник';
+$MESS['IBLOCK_2_PIT_PROPERTY_FROM'] = 'От';
+$MESS['IBLOCK_2_PIT_PROPERTY_TO'] = 'До';
+
+// Свойства инфоблока "Копия трудовой книжки"
+$MESS['IBLOCK_SERVICERECORD_PROPERTY_COUNT'] = 'Количество копий';
+
+// Свойства инфоблока "Справка на визу"
+$MESS['IBLOCK_VISA_PROPERTY_COUNTRY'] = 'Страна';
+$MESS['IBLOCK_VISA_PROPERTY_DATE'] = 'Дата первой поездки';
+$MESS['IBLOCK_VISA_PROPERTY_PURPOISE'] = 'Цель';
+$MESS['IBLOCK_VISA_PROPERTY_PURPOISE_TEST1'] = 'Цель 1';
+$MESS['IBLOCK_VISA_PROPERTY_PURPOISE_TEST2'] = 'Цель 2';
+$MESS['IBLOCK_VISA_PROPERTY_PASSPORT'] = 'Данные паспорта';
+$MESS['IBLOCK_VISA_PROPERTY_LANGUAGE'] = 'Язык';
+$MESS['IBLOCK_VISA_PROPERTY_LANGUAGE_EN'] = 'Английский';
+$MESS['IBLOCK_VISA_PROPERTY_LANGUAGE_RU'] = 'Русский';
+
+// Свойства инфоблока "Справка с места работы"
+$MESS['IBLOCK_REFERENCE_PROPERTY_SALARY'] = 'С указанием оклада';
+$MESS['IBLOCK_REFERENCE_PROPERTY_SALARY_YES'] = 'Да';
+$MESS['IBLOCK_REFERENCE_PROPERTY_SALARY_NO'] = 'Нет';

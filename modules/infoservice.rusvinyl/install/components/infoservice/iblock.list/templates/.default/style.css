@@ -17,11 +17,19 @@ div.rusv-body-content-data {
     content: ', ';
 }
 
+#rusv-add-new-thanks {
+    width: 500px;
+}
+
 .rusv-question-unit-name {
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 10px;
     color: #0091CA;
+}
+
+#rusv-add-new-question {
+    width: 500px;
 }
 
 .rusv-employee-announce-unit-name-value {
@@ -38,7 +46,12 @@ div.rusv-body-content-data {
     text-decoration: none;
 }
 
+#rusv-add-new-employee_announce {
+    width: 500px;
+}
+
 .rusv-add-new-question-buttons,
 .rusv-add-new-employee-announce-buttons {
     text-align: right;
 }
+
