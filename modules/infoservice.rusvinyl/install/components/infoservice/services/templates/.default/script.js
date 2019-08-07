@@ -1,7 +1,5 @@
 ;(function() {
     var ajaxURL = document.location.origin + '/local/components/infoservice/services/ajax.php?action=';
-    var handlebarUnits= {
-    };
     var rusvSelector = {
         addServiceButton: '.rusv-add-service-button',
         popupWindow: '.popup-window',
@@ -86,14 +84,6 @@
      * @return void
      */
     var initPage = function() {
-        for (var i in handlebarUnits) {
-            var html = $(handlebarUnits[i].selector).html();
-            if (!html) continue;
-
-            if (typeof(handlebarUnits[i].registerName) == 'string')
-                Handlebars.registerPartial(handlebarUnits[i].registerName, html);
-            handlebarUnits[i] = Handlebars.compile(html);
-        }
         if (typeof(serviceOptions) == 'undefined') return;
 
         options = serviceOptions;
