@@ -6,6 +6,7 @@
         fileInput: '.rusv-modal-file-input',
         fileLinkName: '.rusv-modal-file-link-name',
         mustBeFixed: '.rusv-must-be-fixed',
+        numericInput: '.rusv-numeric-input',
     };
     var rusvClass = {
         fixed: 'rusv-fixed',
@@ -317,6 +318,16 @@
         }
     }
 
+    /**
+     * Устанавливает запрет на ввод нечисловых данных во все поля ввода,
+     * которые имеют класс rusv-numeric-input
+     *
+     * @return void
+     */
+    var setNumericEnterData = function() {
+        $(this).numeric({decimal: '.', decimalPlaces: 0, negative: false});
+    }
+
     $(document)
         .on('ready', initPage)
         .on('scroll', scrollHandle)
@@ -324,5 +335,6 @@
         .on('shommodal', showModal)
         .on('closemodal', closeModal)
         .on('change', rusvSelector.fileInput, choosingFile)
+        .on('click', rusvSelector.numericInput, setNumericEnterData)
     ;
 })();

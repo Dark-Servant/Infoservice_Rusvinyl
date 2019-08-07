@@ -1,6 +1,11 @@
 <?
 use Bitrix\Main\Localization\Loc;?>
 <div class="rusv-2-pit-popup rusv-modal-body rusv-hidden">
+    <div class="rusv-modal-main-title rusv-2-pit-main-title">
+        <span class="rusv-modal-main-title-value rusv-2-pit-main-title-value">
+            <?=Loc::getMessage('2_PIT_MAIN_TITLE')?>
+        </span>
+    </div>
     <div class="rusv-modal-area rusv-2-pit-user"><?
         $APPLICATION->IncludeComponent(
             'bitrix:main.user.selector', '',

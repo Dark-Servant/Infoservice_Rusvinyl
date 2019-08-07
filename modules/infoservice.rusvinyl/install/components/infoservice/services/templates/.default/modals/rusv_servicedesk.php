@@ -2,6 +2,11 @@
 use Bitrix\Main\Localization\Loc;?>
 
 <div class="rusv-servicedesk-popup rusv-modal-body rusv-hidden">
+    <div class="rusv-modal-main-title rusv-servicedesk-main-title">
+        <span class="rusv-modal-main-title-value rusv-servicedesk-main-title-value">
+            <?=Loc::getMessage('SERVICEDESK_MAIN_TITLE')?>
+        </span>
+    </div>
     <div class="rusv-modal-area rusv-servicedesk-text">
         <textarea name="new-servicedesk-text"
             placeholder="<?=Loc::getMessage('SERVICEDESK_TEXT_PLACEHOLDER')?>"

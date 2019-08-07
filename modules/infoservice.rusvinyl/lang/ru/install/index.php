@@ -39,6 +39,9 @@ $MESS['ERROR_FORUM_UNIT_CREATING'] = 'Не удалось создать фор�
 $MESS['ERROR_VOTE_GROUP_UNIT_LANG'] = 'Отсутствует параметр LANG_CODE для группы опросов VOTE_GROUP';
 $MESS['ERROR_VOTE_GROUP_UNIT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для группы опросов VOTE_GROUP';
 $MESS['ERROR_VOTE_GROUP_UNIT_CREATING'] = 'Не удалось создать группу опросов VOTE_GROUP';
+$MESS['ERROR_CALENDAR_TYPE_UNIT_LANG'] = 'Отсутствует параметр LANG_CODE для типа календаря CALENDAR_TYPE';
+$MESS['ERROR_CALENDAR_TYPE_UNIT_EMPTY_LANG'] = 'Значение константы LANG_CODE не заполнено для типа календаря CALENDAR_TYPE';
+$MESS['ERROR_CALENDAR_TYPE_UNIT_CREATING'] = 'Не удалось создать тип календаря CALENDAR_TYPE';
 
 // ----------------------------------------------------------------------
 $MESS['IBLOCK_TYPE_TITLE'] = 'РусВинил';
@@ -236,3 +239,10 @@ $MESS['IBLOCK_VISA_PROPERTY_LANGUAGE_RU'] = 'Русский';
 $MESS['IBLOCK_REFERENCE_PROPERTY_SALARY'] = 'С указанием оклада';
 $MESS['IBLOCK_REFERENCE_PROPERTY_SALARY_YES'] = 'Да';
 $MESS['IBLOCK_REFERENCE_PROPERTY_SALARY_NO'] = 'Нет';
+
+// Свойства инфоблока "Влог ген. директора"
+$MESS['IBLOCK_MASTERBLOG_PROPERTY_VIDEO'] = 'Видео';
+
+// Типы календарей
+$MESS['CALENDAR_TYPE_NEAR_EVENT'] = 'Ближайшие события "Русвинила"';
+$MESS['CALENDAR_TYPE_TRAINING_EVENT'] = 'Календарь учебных мероприятий "Русвинила"';
