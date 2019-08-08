@@ -9,7 +9,7 @@ use Bitrix\Main\Localization\Loc;?>
     </div>
     <div class="rusv-modal-area rusv-servicerecord-count">
         <input type="text"
-            class="rusv-input rusv-numeric-input rusv-modal-input rusv-servicerecord-input rusv-servicerecord-count-input"
+            class="rusv-input rusv-numeric-input rusv-modal-input rusv-modal-numeric rusv-servicerecord-input rusv-servicerecord-count-input"
             name="new-servicerecord-count"
             placeholder="<?=Loc::getMessage('SERVICERECORD_COUNT_PLACEHOLDER')?>">
     </div>

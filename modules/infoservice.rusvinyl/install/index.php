@@ -619,7 +619,7 @@ class infoservice_rusvinyl extends CModule
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
-        '#^/(announ|leader|participate)/?(?:\?(\S*))?$#' => [
+        '#^/(announ|leader)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
@@ -632,7 +632,7 @@ class infoservice_rusvinyl extends CModule
             'PARAMS' => 'VOTE_ID=$1&$2'
         ],
         '#^/participate/(\d+)/?(?:\?(\S*))?$#' => [
-            'FILE' => '/local/public/participate/unit.php',
+            'FILE' => '/participate/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
         ],
     ];

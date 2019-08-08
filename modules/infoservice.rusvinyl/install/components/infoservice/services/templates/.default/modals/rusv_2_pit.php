@@ -18,15 +18,13 @@ use Bitrix\Main\Localization\Loc;?>
     <div class="rusv-modal-area rusv-2-pit-period">
         <span class="rusv-modal-title rusv-2-pit-title"><?=Loc::getMessage('2_PIT_PERIOD_TITLE')?></span>
         <input type="text" readonly
-            class="rusv-input rusv-modal-input rusv-modal-datetime rusv-2-pit-datetime"
+            class="rusv-input rusv-modal-input rusv-datetime-input rusv-modal-datetime rusv-2-pit-datetime"
             name="new-2-pit-from"
-            placeholder="<?=Loc::getMessage('2_PIT_PERIOD_FROM')?>"
-            onclick="BX.calendar({node: this, field: this, bTime: false});">
+            placeholder="<?=Loc::getMessage('2_PIT_PERIOD_FROM')?>">
         <input type="text" readonly
-            class="rusv-input rusv-modal-input rusv-modal-datetime rusv-2-pit-datetime"
+            class="rusv-input rusv-modal-input rusv-datetime-input rusv-modal-datetime rusv-2-pit-datetime"
             name="new-2-pit-to"
-            placeholder="<?=Loc::getMessage('2_PIT_PERIOD_TO')?>"
-            onclick="BX.calendar({node: this, field: this, bTime: false});">
+            placeholder="<?=Loc::getMessage('2_PIT_PERIOD_TO')?>">
     </div>
     <div class="rusv-modal-area rusv-service-buttons rusv-2-pit-buttons">
         <span class="rusv-button rusv-modal-button rusv-add-service-button rusv-add-2-pit-button"

@@ -14,10 +14,9 @@ use Bitrix\Main\Localization\Loc;?>
     </div>
     <div class="rusv-modal-area rusv-visa-date">
         <input type="text" readonly
-            class="rusv-input rusv-modal-input rusv-modal-datetime rusv-visa-date-input"
+            class="rusv-input rusv-modal-input rusv-datetime-input rusv-modal-datetime rusv-visa-date-input"
             name="new-visa-date"
-            placeholder="<?=Loc::getMessage('VISA_DATE_PLACEHOLDER')?>"
-            onclick="BX.calendar({node: this, field: this, bTime: false});">
+            placeholder="<?=Loc::getMessage('VISA_DATE_PLACEHOLDER')?>">
     </div>
     <div class="rusv-modal-area rusv-visa-purpoise">
         <select name="new-visa-purpoise"
