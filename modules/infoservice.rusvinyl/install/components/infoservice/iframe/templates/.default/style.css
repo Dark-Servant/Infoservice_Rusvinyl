@@ -1,0 +1,18 @@
+div.rusv-body-left-part {
+    display: none;
+}
+
+div.rusv-body-content {
+    padding: 0;
+}
+
+div.rusv-body-content-data {
+    max-width: none;
+    text-align: center;
+    height: 780px;
+}
+
+div.rusv-body-content-data > iframe {
+    width: 100%;
+    height: 100%;
+}

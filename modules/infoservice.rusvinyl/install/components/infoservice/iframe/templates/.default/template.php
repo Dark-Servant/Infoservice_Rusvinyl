@@ -1,0 +1,1 @@
+<iframe src="<?=$arParams['URL']?>"></iframe>

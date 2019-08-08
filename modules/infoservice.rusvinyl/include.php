@@ -234,3 +234,13 @@ define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/m
 define('INFS_CURRENT_TIMESTAMP', time());
 define('INFS_INCIDENT_STATIC_EXAMPLE_VALUE', '7 893');
 define('INFS_USER_LINK', '/user/#ID#/');
+
+// Ссылки на сторонние сайты
+define('INFS_IDEAS_FUND_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiNzE3'
+                                   . 'MmE2NzAtYmY5Ny00N2NhLTgzNjMtYTRiNzIyOWNiMGI'
+                                   . '4IiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
+                                   . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
+define('INFS_STATISTICS_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiODIx'
+                                   . 'Njc4YmYtNTVlZS00OTU1LWIxMGUtZmQ2YmFjMzdiMzh'
+                                   . 'mIiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
+                                   . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
