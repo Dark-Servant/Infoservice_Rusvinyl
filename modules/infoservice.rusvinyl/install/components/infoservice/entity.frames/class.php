@@ -149,8 +149,8 @@ class EntityFrames extends \CBitrixComponent
             }
         }
 
-        $maxRowCount = $this->arParams['FRAMES_ELEMENT_COUNT'] < 1
-                     ? 0 : $this->arParams['FRAMES_ELEMENT_COUNT'];
+        $maxRowCount = $this->arParams['FRAMES_ROW_COUNT'] < 1
+                     ? 0 : $this->arParams['FRAMES_ROW_COUNT'];
         $rowNumber = $rowCount = 0;
         foreach ($frames as $frame) {
             if (empty($codeGroups[$frame[0]][$frame[1]])) continue;
@@ -183,6 +183,3 @@ class EntityFrames extends \CBitrixComponent
         }
     }
 };
-
-
-
