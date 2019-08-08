@@ -53,6 +53,7 @@ $MESS['IBLOCK_THANKS_TITLE'] = 'Сказать "Спасибо"';
 $MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
 $MESS['IBLOCK_EMPLOYEE_ANNOUNCE_TITLE'] = 'Объявления сотрудников';
 $MESS['IBLOCK_PARTICIPATE_TITLE'] = 'Участвовать';
+$MESS['IBLOCK_VIDEO_TITLE'] = 'Видео архив';
 // Инфоблоки для "Сервисов"
 $MESS['IBLOCK_SERVICEDESK_TITLE'] = 'Заявка в ServiceDesk';
 $MESS['IBLOCK_2_PIT_TITLE'] = 'Справка 2 НДФЛ';
@@ -242,6 +243,9 @@ $MESS['IBLOCK_REFERENCE_PROPERTY_SALARY_NO'] = 'Нет';
 
 // Свойства инфоблока "Влог ген. директора"
 $MESS['IBLOCK_MASTERBLOG_PROPERTY_VIDEO'] = 'Видео';
+
+// Свойства инфоблока "Видео архив"
+$MESS['IBLOCK_VIDEO_PROPERTY_VIDEO'] = 'Видео';
 
 // Типы календарей
 $MESS['CALENDAR_TYPE_NEAR_EVENT'] = 'Ближайшие события "Русвинила"';

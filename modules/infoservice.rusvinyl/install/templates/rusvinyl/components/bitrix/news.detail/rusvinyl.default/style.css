@@ -10,6 +10,18 @@
     color: #5AB2AA;
 }
 
+.rusv-news-detail-video {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.rusv-news-detail-video-player.video-js {
+    min-height: 450px;
+    max-height: 650px;
+    display: inline-block;
+    min-width: 750px;
+}
+
 .rusv-news-detail-image {
     text-align: center;
     margin: 32px 0;

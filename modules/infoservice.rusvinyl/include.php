@@ -54,6 +54,9 @@ define('INFS_IBLOCK_ALL_SERVICE_LIST', [
     INFS_IBLOCK_REFERENCE
 ]);
 
+// Символьный код инфоблока "Видео архив"
+define('INFS_RUSVINYL_IBLOCK_VIDEO', INFS_RUSVINYL_IBLOCK_PREFIX . 'video');
+
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
  * странице просмотра списка новостей
@@ -150,6 +153,14 @@ define('INFS_IB_VISA_PR_LANGUAGE', 'LANGUAGE');
 // Свойства инфоблока "Справка с места работы"
 // "С указанием оклада"
 define('INFS_IB_REFERENCE_PR_SALARY', 'SALARY');
+
+// Свойства инфоблока "Влог ген. директора"
+// "Видео"
+define('INFS_IB_MASTERBLOG_PR_VIDEO', 'VIDEO');
+
+// Свойства инфоблока "Видео архив"
+// "Видео"
+define('INFS_IB_VIDEO_PR_VIDEO', 'VIDEO');
 
 // Константы для Highload-блоков
 

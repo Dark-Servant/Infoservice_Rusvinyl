@@ -238,8 +238,6 @@
         });
         initFixedUnitParamCSS(mustBeFixed.top, 'top', 'y');
         initFixedUnitParamCSS(mustBeFixed.left, 'left', 'x');
-
-        console.log(mustBeFixed);
     }
 
     /**

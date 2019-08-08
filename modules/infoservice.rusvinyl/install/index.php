@@ -205,6 +205,14 @@ class infoservice_rusvinyl extends CModule
                 'LIST_PAGE_URL' => '/services/reference/',
                 'BIZPROC' => 'Y'
             ],
+
+            // инфоблок "Видео"
+            'INFS_RUSVINYL_IBLOCK_VIDEO' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_VIDEO_TITLE',
+                'DETAIL_PAGE_URL' => '/media/video/#ID#/',
+                'LIST_PAGE_URL' => '/media/video/',
+            ],
         ],
 
         /**
@@ -514,6 +522,56 @@ class infoservice_rusvinyl extends CModule
                     ['LANG_CODE' => 'NO'],
                 ]
             ],
+
+            // свойство "Видео" для инфоблока "Влог ген. директора"
+            'INFS_IB_MASTERBLOG_PR_VIDEO' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_MASTERBLOG',
+                'LANG_CODE' => 'IBLOCK_MASTERBLOG_PROPERTY_VIDEO',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'video',
+                'USER_TYPE_SETTINGS'=> [
+                    'BUFFER_LENGTH' => '10',
+                    'CONTROLBAR' => 'bottom',
+                    'AUTOSTART' => 'N',
+                    'VOLUME' => '90',
+                    'SKIN' => '',
+                    'FLASHVARS' => '',
+                    'WMODE_FLV' => 'transparent',
+                    'BGCOLOR' => 'FFFFFF',
+                    'COLOR' => '000000',
+                    'OVER_COLOR' => '000000',
+                    'SCREEN_COLOR' => '000000',
+                    'SILVERVARS' => '',
+                    'WMODE_WMV' => 'windowless',
+                    'WIDTH' => '400',
+                    'HEIGHT' => '300',
+                ]
+            ],
+
+            // свойство "Видео" для инфоблока "Видео архив"
+            'INFS_IB_VIDEO_PR_VIDEO' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_VIDEO',
+                'LANG_CODE' => 'IBLOCK_VIDEO_PROPERTY_VIDEO',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => 'video',
+                'USER_TYPE_SETTINGS'=> [
+                    'BUFFER_LENGTH' => '10',
+                    'CONTROLBAR' => 'bottom',
+                    'AUTOSTART' => 'N',
+                    'VOLUME' => '90',
+                    'SKIN' => '',
+                    'FLASHVARS' => '',
+                    'WMODE_FLV' => 'transparent',
+                    'BGCOLOR' => 'FFFFFF',
+                    'COLOR' => '000000',
+                    'OVER_COLOR' => '000000',
+                    'SCREEN_COLOR' => '000000',
+                    'SILVERVARS' => '',
+                    'WMODE_WMV' => 'windowless',
+                    'WIDTH' => '400',
+                    'HEIGHT' => '300',
+                ]
+            ],
         ],
 
         /**
@@ -615,7 +673,7 @@ class infoservice_rusvinyl extends CModule
          * В значениях массива можно использовать константы модуля по их названию
          * как часть строки
          */
-        '#^/media/(news|masterblog)/?(?:\?(\S*))?$#' => [
+        '#^/media/(news|masterblog|video)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
@@ -623,7 +681,7 @@ class infoservice_rusvinyl extends CModule
             'FILE' => '/local/public/media/news/index.php',
             'PARAMS' => 'ELEMENT_TYPE_ID=INFS_RUSVINYL_IBLOCK_PREFIX$1&$2'
         ],
-        '#^/(?:media/news|announ|leader|media/masterblog)/(\d+)/?(?:\?(\S*))?$#' => [
+        '#^/(?:media/(?:news|masterblog|video)|announ|leader)/(\d+)/?(?:\?(\S*))?$#' => [
             'FILE' => '/local/public/media/news/unit.php',
             'PARAMS' => 'ELEMENT_ID=$1&$2'
         ],
