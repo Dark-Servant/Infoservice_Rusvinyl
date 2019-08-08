@@ -205,6 +205,14 @@ define('INFS_RUSVINYL_VOTE_LIST_URL', [
 ]);
 
 
+// Типы календарей
+define('INFS_CALENDAR_TYPE_PREFIX', strtoupper(preg_replace('/\W+/', '_', INFS_RUSVINYL_MODULE_ID)));
+// тип календаря "Ближайшие события "Русвинила"
+define('INFS_CALENDAR_TYPE_NEAR_EVENT', INFS_CALENDAR_TYPE_PREFIX . '_NEAR_EVENT');
+// тип календаря "Календарь учебных мероприятий "Русвинила"
+define('INFS_CALENDAR_TYPE_TRAINING_EVENT', INFS_CALENDAR_TYPE_PREFIX . '_TRAINING_EVENT');
+
+
 // Другие константы
 
 // какие элементы выводятся на главной странице

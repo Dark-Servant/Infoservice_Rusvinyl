@@ -2,6 +2,11 @@
 use Bitrix\Main\Localization\Loc;?>
 
 <div class="rusv-visa-popup rusv-modal-body rusv-hidden">
+    <div class="rusv-modal-main-title rusv-visa-main-title">
+        <span class="rusv-modal-main-title-value rusv-visa-main-title-value">
+            <?=Loc::getMessage('VISA_MAIN_TITLE')?>
+        </span>
+    </div>
     <div class="rusv-modal-area rusv-visa-country">
         <input type="text" name="new-visa-country"
             class="rusv-input rusv-modal-input rusv-visa-input rusv-visa-country-input"

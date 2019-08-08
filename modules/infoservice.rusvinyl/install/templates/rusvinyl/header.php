@@ -11,6 +11,7 @@ use Bitrix\Main\Localization\Loc;
     $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/script.js');
     $APPLICATION->AddHeadScript('/local/node_modules/handlebars/dist/handlebars.min.js');
     $APPLICATION->AddHeadScript('/local/node_modules/moment/min/moment-with-locales.min.js');
+    $APPLICATION->AddHeadScript('/local/node_modules/jquery.numeric/jquery.numeric.min.js');
     $APPLICATION->SetAdditionalCSS('/local/node_modules/@fortawesome/fontawesome-free/css/all.min.css');
     CUtil::InitJSCore(['ajax' , 'popup', 'jquery']);?>
     <title><?$APPLICATION->ShowTitle()?></title>
@@ -63,7 +64,7 @@ use Bitrix\Main\Localization\Loc;
                     [
                         'CACHE_TIME' => '3600',
                         'CACHE_TYPE' => 'A',
-                        'CALENDAR_TYPE' => 'events',
+                        'CALENDAR_TYPE' => INFS_CALENDAR_TYPE_NEAR_EVENT,
                         'DETAIL_URL' => '',
                         'EVENTS_COUNT' => '1',
                         'FUTURE_MONTH_COUNT' => '1',

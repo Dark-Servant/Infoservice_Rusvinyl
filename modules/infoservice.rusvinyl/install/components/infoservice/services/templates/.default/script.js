@@ -46,18 +46,22 @@
         var code = $(this).data('service-code');
         var data = new FormData;
 
-        popupWindow.find(rusvSelector.modalArea + ':not(:last)').addClass(rusvClass.error);
-        popupWindow.find('*[name]').each((number, unit) => {
-            if (unit.type != 'file') {
-                var value = unit.value.trim();
-                if (value) {
-                    $(unit).closest(rusvSelector.modalArea).removeClass(rusvClass.error);
-                    data.append(unit.name, unit.value);
-                }
+        popupWindow.find(rusvSelector.modalArea + ':not(:last)').each((areaNum, areaUnit) => {
+            $(areaUnit).addClass(rusvClass.error);
+            var simpleInputCount = $(areaUnit).find('*[name]:not([type="file"])').length;
 
-            } else if (unit.files.length) {
+            $(areaUnit).find('*[name]').each((number, unit) => {
+                if (unit.type != 'file') {
+                    var value = unit.value.trim();
+                    if (value) {
+                        if (!(--simpleInputCount)) $(areaUnit).removeClass(rusvClass.error);
+                        data.append(unit.name, unit.value);
+                    }
+
+                } else if (unit.files.length) {
                     data.append(unit.name, unit.files[0]);
-            }
+                }
+            });
         });
 
         if (popupWindow.find(rusvSelector.modalArea + '.' + rusvClass.error).length)

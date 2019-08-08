@@ -33,6 +33,16 @@ class infoservice_rusvinyl extends CModule
      */
     const OPTIONS = [
         /**
+         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должна
+         * быть объявлена в файле include.php, а "значение" хранит параметры группы, важным из которых является
+         * параметр LANG_CODE с наванием языковой константы, в которой хранится название группы. При отсутсвии
+         * LANG_CODE параметр будет восприниматсья как группировка нескольких групп, которые уже должны быть созданы
+         * до обработки это параметра, при группироваке надо указывать только "ключи", под которыми находятся настройки
+         * для создания групп
+         */
+        'UserGroup' => [],
+
+        /**
          * Данные для тематики групп. "Значение" отвечает за константу языка.
          * В опциях модуля сохранятся в группе SocNetSubjects как массив, где ключ
          * значение константы, указанной как "ключ", а значение ID тематики группы
@@ -106,7 +116,7 @@ class infoservice_rusvinyl extends CModule
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_NEWS_TITLE',
                 'DETAIL_PAGE_URL' => '/media/news/#ID#/',
-                'LIST_PAGE_URL' => '/media/news/',
+                'LIST_PAGE_URL' => '/media/news/'
             ],
             // инфоблок "Анонсы"
             'INFS_RUSVINYL_IBLOCK_ANNOUNCEMENT' => [
@@ -120,7 +130,7 @@ class infoservice_rusvinyl extends CModule
                 'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
                 'LANG_CODE' => 'IBLOCK_LEADER_TITLE',
                 'DETAIL_PAGE_URL' => '/leader/#ID#/',
-                'LIST_PAGE_URL' => '/leader/',
+                'LIST_PAGE_URL' => '/leader/'
             ],
             // инфоблок "Влог ген. директора"
             'INFS_RUSVINYL_IBLOCK_MASTERBLOG' => [
@@ -195,6 +205,32 @@ class infoservice_rusvinyl extends CModule
                 'LIST_PAGE_URL' => '/services/reference/',
                 'BIZPROC' => 'Y'
             ],
+        ],
+
+        /**
+         * Настройки для создания типов календарей. Обязателен параметр LANG_CODE.
+         * Для указания описания к типу,  если оно нужно, надо использовать DESCRIPTION_LANG_CODE.
+         * В параметре ACCESS можно указать доступы пользователей. В "ключе" указывается
+         * код для пользовательской группы (G<ID>) или пользователя (U<ID>) или название
+         * ключа, под которым хранятся настройки пользовательской группы, создаваемой
+         * этим модулем. В "значении" указывается символьный ключ того, какой доступ
+         * предоставить:
+         *    D - доступ закрыт
+         *    R - просмотр
+         *    W - редактирование событий и календарей
+         *    X - полный доступ
+         */
+        'CalendarTypes' => [
+            // тип календаря "Ближайшие события "Русвинила"
+            'INFS_CALENDAR_TYPE_NEAR_EVENT' => [
+                'LANG_CODE' => 'CALENDAR_TYPE_NEAR_EVENT',
+                'ACCESS' => ['G1' => 'X', 'G3' => 'R']
+            ],
+            // тип календаря "Календарь учебных мероприятий "Русвинила"
+            'INFS_CALENDAR_TYPE_TRAINING_EVENT' => [
+                'LANG_CODE' => 'CALENDAR_TYPE_TRAINING_EVENT',
+                'ACCESS' => ['G1' => 'X', 'G3' => 'R']
+            ]
         ],
 
         /**
@@ -315,19 +351,14 @@ class infoservice_rusvinyl extends CModule
         'UserFields' => [],
 
         /**
-         * Настройки для создания пользовательских групп, "ключ" хранит название константы, которая должна
-         * быть объявлена в файле include.php, а "значение" хранит параметры группы, важным из которых является
-         * параметр LANG_CODE с наванием языковой константы, в которой хранится название группы. При отсутсвии
-         * LANG_CODE параметр будет восприниматсья как группировка нескольких групп, которые уже должны быть созданы
-         * до обработки это параметра, при группироваке надо указывать только "ключи", под которыми находятся настройки
-         * для создания групп
-         */
-        'UserGroup' => [],
-
-        /**
          * Настройки для создания свойств инфоблоков. В "значении" указываются параметры для создания свойств инфоблоков.
          * Обязательно нужны параметры LANG_CODE с именем языковой константы для названия и IBLOCK_ID с именем константы,
-         * которая использоалась в IBlocks как "ключ", под которым хранятся настройки инфоблока
+         * которая использоалась в IBlocks как "ключ", под которым хранятся настройки инфоблока.
+         * Если тип свойства список (PROPERTY_TYPE = L), то в параметрах свойств можно указать параметр LIST_VALUES, в
+         * значении которого указан массив, где каждый элемент содержит минимум один параметр с ключом LANG_CODE для
+         * языковой константы, под которой хранится значение парметра, но название константы указывается не полностью,
+         * а лишь ее последняя часть, что должна идти после префикса, который указан как название языковой константы в
+         * LANG_CODE у самого свойства
          */
         'IBlockProperties' => [
             // свойство "Кого поздравляют" для инфоблока "Сказать "Спасибо"
@@ -1035,7 +1066,7 @@ class infoservice_rusvinyl extends CModule
     {
         $permissionsDefault = $defaultPermissions;
         if (!empty($addPermissions))
-            $permissionsDefault = array_merge($permissionsDefault, $addPermissions);
+            $permissionsDefault = array_replace($permissionsDefault, $addPermissions);
 
         $permissions = [];
         foreach ($permissionsDefault as $groupId => $accessValue) {
@@ -1047,10 +1078,13 @@ class infoservice_rusvinyl extends CModule
                 && defined($groupId) && !empty($groupId = constant($groupId))
                 && !empty($groupId = Options::getUserGroup($groupId))
             ) {
-                $permissions[$groupId] = $accessValue;
+                if (!is_array($groupId)) $groupId = [$groupId];
+                
+                foreach ($groupId as $gID) {
+                    $permissions[$gID] = $accessValue;
+                }
             }
         }
-
         return $permissions;
     }
 
@@ -1109,6 +1143,7 @@ class infoservice_rusvinyl extends CModule
                 $optionValue['PERMISSIONS'] ?: []
             )
         );
+
         return $iblockId;
     }
 
@@ -1385,6 +1420,67 @@ class infoservice_rusvinyl extends CModule
     public function initBlogFieldsOptions(string $constName, array $optionValue)
     {
         return $this->addUserField('BLOG_POST', $constName, $optionValue);
+    }
+
+    /**
+     * Создание типа календаря
+     * 
+     * @param string $constName - название константы
+     * @param array $optionValue - значение опции
+     * @return mixed
+     */
+    public function initCalendarTypesOptions(string $constName, array $optionValue)
+    {
+        if (!Loader::includeModule('calendar')) return;
+ 
+        $title = self::checkLangCode($optionValue['LANG_CODE'], 'CALENDAR_TYPE_UNIT', ['CALENDAR_TYPE' => $constName]);
+        $data = [
+            'NEW' => true,
+            'arFields' => [
+                'XML_ID' => constant($constName), 
+                'NAME' => $title, 
+                'DESCRIPTION' => $optionValue['DESCRIPTION_LANG_CODE']
+                               ? Loc::getMessage($optionValue['DESCRIPTION_LANG_CODE'])
+                               : '',
+                'ACTIVE' => 'Y',
+                'ACCESS' => []
+            ]
+        ];
+        $caledarAccess = Bitrix\Main\TaskTable::GetList(['filter' => ['BINDING' => 'calendar_type']]);
+        $accessCodes = [];
+        while ($access = $caledarAccess->Fetch()) {
+            $accessCodes[$access['LETTER']] = $access['ID'];
+        }
+
+        foreach ($optionValue['ACCESS'] as $who => $accessCode) {
+            if (empty($accessCodes[$accessCode]) || empty($who)) continue;
+
+            if (is_string($who) && defined($who)) {
+                if (
+                    empty($who = constant($who))
+                    || empty($group = Options::getUserGroup($who))
+                ) continue;
+
+                if (!is_array($group)) $group = [$group];
+
+                foreach ($group as $groupId) {
+                    $data['arFields']['ACCESS']['G' . $groupId] = $accessCodes[$accessCode];
+                }
+
+            } else {
+                $data['arFields']['ACCESS'][$who] = $accessCodes[$accessCode];
+            }
+        }
+
+        $calendar = \CCalendarType::Edit($data);
+        if ($calendar === false)
+            throw new \Exception(
+                            lOc::getMessage(
+                                'ERROR_CALENDAR_TYPE_UNIT_CREATING',
+                                ['CALENDAR_TYPE' => $constName]
+                            )
+                        );
+        return $calendar;
     }
 
     /**
@@ -1939,6 +2035,23 @@ class infoservice_rusvinyl extends CModule
         if (!$channelId) return;
 
         \CVoteChannel::Delete($channelId);
+    }
+
+    /**
+     * Удаление типов календарей
+     * 
+     * @param string $constName - название константы
+     * @return integer
+     * @throws
+     */
+    public function removeCalendarTypesOptions(string $constName)
+    {
+        if (!Loader::includeModule('calendar')) return;
+
+        $calendar = Options::getCalendarTypes(constant($constName));
+        if (!$calendar) return;
+
+        \CCalendarType::Delete($calendar);
     }
 
     /**

@@ -470,6 +470,13 @@ input[type="file"] {
     color: red;
 }
 
+.rusv-modal-main-title {
+    color: #848484;
+    font-size: 16px;
+    padding: 0 0 10px 0;
+    text-align: center;
+}
+
 .rusv-modal-area.rusv-error {
     border: 1px solid red;
 }

@@ -2,6 +2,11 @@
 use Bitrix\Main\Localization\Loc;?>
 
 <div class="rusv-reference-popup rusv-modal-body rusv-hidden">
+    <div class="rusv-modal-main-title rusv-reference-main-title">
+        <span class="rusv-modal-main-title-value rusv-reference-main-title-value">
+            <?=Loc::getMessage('REFERENCE_MAIN_TITLE')?>
+        </span>
+    </div>
     <div class="rusv-modal-area rusv-reference-salary">
         <span class="rusv-modal-title rusv-reference-title rusv-reference-salary-title">
             <?=Loc::getMessage('REFERENCE_SALARY_TITLE')?>
