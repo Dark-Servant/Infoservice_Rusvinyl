@@ -7,6 +7,34 @@ class IBlockDetail extends \CBitrixComponent
 {
 
     /**
+     * Проверяет параметр для видео, возвращает его данные
+     * или null если параметр не указан
+     * 
+     * @return array|null
+     */
+    protected function getVideoParam()
+    {
+        $fieldName = $this->arParams['DETAIL_PROPERTY_VIDEO'];
+        if (!$fieldName) return;
+
+        return $this->arResult['ELEMENT']['PROPERTIES'][$fieldName]['VALUE'] ?? null;
+    }
+
+    /**
+     * Проверяет указан ли параметр для видео, существует ли для него
+     * файл. Возвращает его значение, если все условия выполнены
+     * 
+     * @return array|null
+     */
+    protected function getVideoData()
+    {
+        $videoData = $this->getVideoParam();
+        if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $videoData['path'])) return;
+
+        return $videoData;
+    }
+
+    /**
      * Проверяет указан ли параметр для показа видео вместо изображения
      * на детальной странице. Проводит инициализацию, если указан и
      * данные параметра по видео действительны
@@ -15,14 +43,8 @@ class IBlockDetail extends \CBitrixComponent
      */
     protected function checkVideoShowing()
     {
-        if (!$this->arParams['DETAIL_PROPERTY_VIDEO']) return;
-
-        $fieldName = $this->arParams['DETAIL_PROPERTY_VIDEO'];
-        if (empty($this->arResult['ELEMENT']['PROPERTIES'][$fieldName]['VALUE']))
-            return;
-
-        $videoData = $this->arResult['ELEMENT']['PROPERTIES'][$fieldName]['VALUE'];
-        if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $videoData['path'])) return;                
+        $videoData = $this->getVideoData();
+        if (!$videoData) return;
 
         $this->arResult['SHOW_VIDEO'] = $videoData;
     }
