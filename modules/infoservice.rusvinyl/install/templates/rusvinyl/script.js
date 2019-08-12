@@ -6,6 +6,7 @@
         fileInput: '.rusv-modal-file-input',
         fileLinkName: '.rusv-modal-file-link-name',
         mustBeFixed: '.rusv-must-be-fixed',
+        datetimeInput: '.rusv-datetime-input',
         numericInput: '.rusv-numeric-input',
     };
     var rusvClass = {
@@ -17,6 +18,16 @@
     };
     var modalWnd = {};
     var mustBeFixed;
+
+    /**
+     * Сбрасывает все настройки для всех элементов с классом rusv-fixed
+     * 
+     * @return void
+     */
+    var cancelFixedStatus = function() {
+        $('.' + rusvClass.fixed).removeAttr('style');
+        $('.' + rusvClass.fixed).removeClass(rusvClass.fixed);
+    }
 
     /**
      * Обработчик прокрутки страницы, для помеченных специальным классом "rusv-must-be-fixed",
@@ -36,10 +47,8 @@
 
         var unit = $(mustBeFixed.list[mustBeFixed.top[0]].obj);
         if (unit.hasClass(rusvClass.fixed)) {
-            if (unit.parent().get(0).getBoundingClientRect().y >= 0) {
-                $('.' + rusvClass.fixed).removeAttr('style');
-                $('.' + rusvClass.fixed).removeClass(rusvClass.fixed);
-            }
+            if (unit.parent().get(0).getBoundingClientRect().y >= 0)
+                cancelFixedStatus();
 
         } else {
             var parentUnitY = unit.parent().get(0).getBoundingClientRect().y;
@@ -153,7 +162,7 @@
      * @return void
      */
     var showDate = function() {
-        $(rusvSelector.headDate).html(moment().locale('ru').format('D MMM HH:mm:ss'));
+        $(rusvSelector.headDate).html(moment().locale('ru').format('D MMMM HH:mm:ss'));
         nextSecond();
     }
 
@@ -216,7 +225,7 @@
     var initFixedElements = function() {
         mustBeFixed = {list: [], top: [], left: []};
 
-        $(rusvSelector.mustBeFixed).each((num, unit) => {
+        $(rusvSelector.mustBeFixed + ':not(:hidden)').each((num, unit) => {
             var rect = unit.getBoundingClientRect();
             mustBeFixed.list.push({
                 obj: unit,
@@ -232,6 +241,17 @@
     }
 
     /**
+     * Обработчик события за изменение размеров браузера
+     * 
+     * @return void
+     */
+    var checkDocumentSize = function() {
+        cancelFixedStatus();
+        initFixedElements();
+        checkDocumentPlace();
+    }
+
+    /**
      * Обработчик инициализации страницы при ее полной готовности
      * 
      * @return void
@@ -239,6 +259,7 @@
     var initPage = function() {
         nextSecond();
         initFixedElements();
+        checkDocumentPlace();
     }
 
     /**
@@ -319,6 +340,15 @@
     }
 
     /**
+     * Вызывает календарь для полей ввода с классом rusv-datetime-input
+     *
+     * @return void
+     */
+    var setDateEnterData = function() {
+        BX.calendar({node: this, field: this, bTime: false});
+    }
+
+    /**
      * Устанавливает запрет на ввод нечисловых данных во все поля ввода,
      * которые имеют класс rusv-numeric-input
      *
@@ -335,6 +365,10 @@
         .on('shommodal', showModal)
         .on('closemodal', closeModal)
         .on('change', rusvSelector.fileInput, choosingFile)
+        .on('click', rusvSelector.datetimeInput, setDateEnterData)
         .on('click', rusvSelector.numericInput, setNumericEnterData)
+    ;
+    $(window)
+        .on('resize', checkDocumentSize)
     ;
 })();

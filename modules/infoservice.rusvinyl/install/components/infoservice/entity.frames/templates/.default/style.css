@@ -1,6 +1,9 @@
+.rusv-main-rows[data-row-count="1"] {
+    text-align: center;
+}
+
 .rusv-main-page {
     margin-bottom: 50px;
-    text-align: center;
 }
 
 .rusv-main-page-unit {

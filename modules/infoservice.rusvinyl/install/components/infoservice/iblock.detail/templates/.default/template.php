@@ -23,9 +23,7 @@ $APPLICATION->IncludeComponent(
         'AJAX_OPTION_JUMP' => 'N',
         'AJAX_OPTION_STYLE' => 'Y',
         'BROWSER_TITLE' => '-',
-        'CACHE_GROUPS' => 'Y',
-        'CACHE_TIME' => '36000000',
-        'CACHE_TYPE' => 'A',
+        'CACHE_TYPE' => 'N',
         'CHECK_DATES' => 'Y',
         'DETAIL_URL' => '',
         'DISPLAY_BOTTOM_PAGER' => 'Y',
@@ -59,7 +57,8 @@ $APPLICATION->IncludeComponent(
         'SHOW_404' => 'N',
         'STRICT_SECTION_CHECK' => 'N',
         'USE_PERMISSIONS' => 'N',
-        'USE_SHARE' => 'N'
+        'USE_SHARE' => 'N',
+        'SHOW_VIDEO' => $arResult['SHOW_VIDEO'] ?: false
     ]
 );?>
 <div class="rusv-news-detail-comments"><?

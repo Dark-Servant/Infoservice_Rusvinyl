@@ -54,6 +54,9 @@ define('INFS_IBLOCK_ALL_SERVICE_LIST', [
     INFS_IBLOCK_REFERENCE
 ]);
 
+// Символьный код инфоблока "Видео архив"
+define('INFS_RUSVINYL_IBLOCK_VIDEO', INFS_RUSVINYL_IBLOCK_PREFIX . 'video');
+
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
  * странице просмотра списка новостей
@@ -151,6 +154,14 @@ define('INFS_IB_VISA_PR_LANGUAGE', 'LANGUAGE');
 // "С указанием оклада"
 define('INFS_IB_REFERENCE_PR_SALARY', 'SALARY');
 
+// Свойства инфоблока "Влог ген. директора"
+// "Видео"
+define('INFS_IB_MASTERBLOG_PR_VIDEO', 'VIDEO');
+
+// Свойства инфоблока "Видео архив"
+// "Видео"
+define('INFS_IB_VIDEO_PR_VIDEO', 'VIDEO');
+
 // Константы для Highload-блоков
 
 // Highload-блок для хранения участников к элементам инфоблока "Участвовать"
@@ -234,3 +245,13 @@ define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/m
 define('INFS_CURRENT_TIMESTAMP', time());
 define('INFS_INCIDENT_STATIC_EXAMPLE_VALUE', '7 893');
 define('INFS_USER_LINK', '/user/#ID#/');
+
+// Ссылки на сторонние сайты
+define('INFS_IDEAS_FUND_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiNzE3'
+                                   . 'MmE2NzAtYmY5Ny00N2NhLTgzNjMtYTRiNzIyOWNiMGI'
+                                   . '4IiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
+                                   . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
+define('INFS_STATISTICS_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiODIx'
+                                   . 'Njc4YmYtNTVlZS00OTU1LWIxMGUtZmQ2YmFjMzdiMzh'
+                                   . 'mIiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
+                                   . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
