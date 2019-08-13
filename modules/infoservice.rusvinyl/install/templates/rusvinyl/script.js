@@ -355,7 +355,7 @@
      * @return void
      */
     var setNumericEnterData = function() {
-        $(this).numeric({decimal: '.', decimalPlaces: 0, negative: false});
+        $(this).numeric({decimal: false, decimalPlaces: 0, negative: false});
     }
 
     $(document)

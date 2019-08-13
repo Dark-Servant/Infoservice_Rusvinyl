@@ -9,12 +9,14 @@ foreach ($arResult['ITEMS'] as $arItem):?>
             $previewImg = is_array($arItem['PREVIEW_PICTURE']) ? $arItem['PREVIEW_PICTURE']['SRC']
                         : SITE_TEMPLATE_PATH . '/images/news-default.svg';?>
             <div class="rusv-news-simple-list-image">
-                <img
-                    class="rusv-news-simple-list-image-object"
-                    border="0"
-                    src="<?=$previewImg?>"
-                    alt="<?=empty($arItem['PREVIEW_PICTURE']['ALT']) ? '' : $arItem['PREVIEW_PICTURE']['ALT']?>"
-                    title="<?=empty($arItem['PREVIEW_PICTURE']['TITLE']) ? '' : $arItem['PREVIEW_PICTURE']['TITLE']?>">
+                <a href="<?=$arItem['DETAIL_PAGE_URL']?>">
+                    <img
+                        class="rusv-news-simple-list-image-object"
+                        border="0"
+                        src="<?=$previewImg?>"
+                        alt="<?=empty($arItem['PREVIEW_PICTURE']['ALT']) ? '' : $arItem['PREVIEW_PICTURE']['ALT']?>"
+                        title="<?=empty($arItem['PREVIEW_PICTURE']['TITLE']) ? '' : $arItem['PREVIEW_PICTURE']['TITLE']?>">
+                </a>
             </div>
             <div class="rusv-news-simple-list-data">
                 <div class="rusv-news-simple-list-date-time"><?

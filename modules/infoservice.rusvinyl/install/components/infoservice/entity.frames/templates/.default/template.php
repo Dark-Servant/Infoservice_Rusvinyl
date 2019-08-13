@@ -10,11 +10,13 @@
                     $previewImg = is_array($arItem['PREVIEW_PICTURE']) ? $arItem['PREVIEW_PICTURE']['SRC']
                                 : SITE_TEMPLATE_PATH . '/images/news-default.svg';?>
                     <div class="rusv-news-item-image">
-                        <img
-                            class="preview_picture"
-                            border="0"
-                            src="<?=$previewImg?>"
-                            title="<?=empty($arItem['PREVIEW_PICTURE']['TITLE']) ? '' : $arItem['PREVIEW_PICTURE']['TITLE']?>">
+                        <a href="<?=$arItem['DETAIL_PAGE_URL']?>">
+                            <img
+                                class="preview_picture"
+                                border="0"
+                                src="<?=$previewImg?>"
+                                title="<?=empty($arItem['PREVIEW_PICTURE']['TITLE']) ? '' : $arItem['PREVIEW_PICTURE']['TITLE']?>">
+                        </a>
                     </div>
                     <div class="rusv-news-item-title">
                         <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?=$arItem['NAME']?></a>

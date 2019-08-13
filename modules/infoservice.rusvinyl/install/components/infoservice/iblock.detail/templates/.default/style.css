@@ -11,3 +11,14 @@
 .rusv-news-detail-buttons + .rusv-news-detail .rusv-news-detail-title {
     margin: 50px 0 25px 0;
 }
+
+.rusv-news-detail ~ .ilike-light {
+    margin-top: 25px;
+    display: block;
+    padding-left: 10px;
+}
+
+.rusv-news-detail ~ .ilike-light a,
+.rusv-news-detail ~ .ilike-light a:visited {
+    color: #777676;
+}
