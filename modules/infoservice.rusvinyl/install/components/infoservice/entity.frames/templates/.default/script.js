@@ -10,7 +10,7 @@
         hidden: 'rusv-hidden',
         selected: 'rusv-selected',
     };
-    const PAGE_WAITING_TIME = 5000;
+    const PAGE_WAITING_TIME = 10000;
     var lastStart = {};
 
     /**

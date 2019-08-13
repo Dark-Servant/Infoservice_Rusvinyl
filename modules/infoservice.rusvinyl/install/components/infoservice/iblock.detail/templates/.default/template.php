@@ -61,6 +61,18 @@ $APPLICATION->IncludeComponent(
         'SHOW_VIDEO' => $arResult['SHOW_VIDEO'] ?: false
     ]
 );?>
+<?$APPLICATION->IncludeComponent('bitrix:rating.vote', '', [
+        'ENTITY_TYPE_ID' => 'IBLOCK_ELEMENT',
+        'ENTITY_ID' => $arResult['ELEMENT']['ID'],
+        'OWNER_ID' => $arResult['ELEMENT']['CREATED_BY'],
+        'USER_HAS_VOTED' => 'Y',
+        'TOTAL_VOTES' => '0',
+        'TOTAL_POSITIVE_VOTES' => '0',
+        'TOTAL_NEGATIVE_VOTES' => '0',
+        'TOTAL_VALUE' => '0'
+    ], null,
+    ['HIDE_ICONS' => 'Y']
+);?>
 <div class="rusv-news-detail-comments"><?
     $APPLICATION->IncludeComponent(
         'bitrix:forum.comments', '', [

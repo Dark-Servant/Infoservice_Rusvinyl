@@ -29,8 +29,8 @@ use Bitrix\Main\Localization\Loc;
             </a>
         </div>
         <div class="rusv-head-date"><?=ltrim(strtolower(FormatDate('d F H:i:s', INFS_CURRENT_TIMESTAMP)), '0')?></div>
-        <div class="rusv-head-incident-static">
-            <span><?=Loc::getMessage('INCIDENT_STATIC_VALUE', ['#VALUE#' => INFS_INCIDENT_STATIC_EXAMPLE_VALUE])?></span>
+        <div class="rusv-head-incident-static"><?
+            $APPLICATION->IncludeComponent('infoservice:incidents.count', '');?>
         </div>
         <div class="rusv-head-search"><?
             $APPLICATION->IncludeComponent(

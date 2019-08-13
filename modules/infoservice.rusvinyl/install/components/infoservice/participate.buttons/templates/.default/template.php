@@ -8,6 +8,10 @@ if ($arResult['currentUserId']):?>
         <?=Loc::getMessage('PARTICIPATE_BUTTON_TITLE')?>
     </span><?
     endif;?>
-    <span class="rusv-participate-status"><?=$arResult['STATUS']?></span>
+    <span
+        class="rusv-participate-status<?=
+            !empty($arResult['STATUS']) ?
+                ' rusv-participate-' . $arResult['STATUS']['CLASS'] . '-status' : ''
+            ?>"><?=$arResult['STATUS']['VALUE']?></span>
 </div><?
 endif;?>

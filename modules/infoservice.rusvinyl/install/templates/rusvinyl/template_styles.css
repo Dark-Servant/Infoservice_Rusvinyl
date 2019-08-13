@@ -238,19 +238,16 @@ input[type="file"] {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-.rusv-main-menu-unit a {
     color: #ffffff;
     text-transform: uppercase;
     font-size: 14px;
 }
 
-.rusv-main-menu-unit a:visited {
+.rusv-main-menu-unit:visited {
     color: #ffffff;
 }
 
-.rusv-main-menu-unit a:after {
+.rusv-main-menu-unit:after {
     content: '';
     position: absolute;
     display: inline-block;
@@ -266,7 +263,7 @@ input[type="file"] {
     background-color: #ffffff;
 }
 
-.rusv-main-menu-brain a:after {
+.rusv-main-menu-brain:after {
     background-image: url(/local/templates/rusvinyl/images/brain.svg);
     right: none;
     left: calc((100% - 100px) / 2);
@@ -279,7 +276,7 @@ input[type="file"] {
     background-color: #1E8BC6;
 }
 
-.rusv-main-menu-thanks a:after {
+.rusv-main-menu-thanks:after {
     background-image: url(/local/templates/rusvinyl/images/star.svg);
     top: calc((100% - 25px) / 2);
     width: 27px;
@@ -290,7 +287,7 @@ input[type="file"] {
     background-color: #4EA89F;
 }
 
-.rusv-main-menu-question a:after {
+.rusv-main-menu-question:after {
     background-image: url(/local/templates/rusvinyl/images/pencil.svg);
     top: calc((100% - 30px) / 2);
     width: 30px;
@@ -301,7 +298,7 @@ input[type="file"] {
     background-color: #F4796A;
 }
 
-.rusv-main-menu-participate a:after {
+.rusv-main-menu-participate:after {
     background-image: url(/local/templates/rusvinyl/images/bag.svg);
     top: calc((100% - 25px) / 2);
     width: 29px;
@@ -312,7 +309,7 @@ input[type="file"] {
     background-color: #1E8BC6;
 }
 
-.rusv-main-menu-competition a:after {
+.rusv-main-menu-competition:after {
     background-image: url(/local/templates/rusvinyl/images/gift.svg);
     top: calc((100% - 28px) / 2);
     width: 22px;
@@ -323,7 +320,7 @@ input[type="file"] {
     background-color: #50A79F;
 }
 
-.rusv-main-menu-phonebook a:after {
+.rusv-main-menu-phonebook:after {
     background-image: url(/local/templates/rusvinyl/images/phone.svg);
     top: calc((100% - 40px) / 2);
     width: 22px;
@@ -398,6 +395,9 @@ input[type="file"] {
 
 /* Настройки для всех кнопок */
 
+button,
+input[type="submit"],
+input[type="button"],
 *.rusv-button,
 *.rusv-button.feed-add-button-load
  {
@@ -426,19 +426,31 @@ input[type="file"] {
     color: transparent;
 }
 
+button:before,
+input[type="submit"]:before,
+input[type="button"]:before,
 *.rusv-button.feed-add-button-load:before {
     border: 1px solid #c1bdbd;
     color: #c1bdbd;
 }
 
+button:after,
+input[type="submit"]:after,
+input[type="button"]:after,
 *.rusv-button.feed-add-button-load:after {
     background-color: #c1bdbd;
 }
 
+button + button,
+input[type="submit"] + input[type="submit"],
+input[type="button"] + input[type="button"],
 *.rusv-button + .rusv-button {
     margin-left: 10px;
 }
 
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
 *.rusv-button:hover,
 *.rusv-button.feed-add-button-load:hover {
     background-color: #f7f7f7;
@@ -447,10 +459,26 @@ input[type="file"] {
     -webkit-box-shadow: 1px 1px 12px 2px rgba(0, 0, 0, 0.5);
 }
 
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active,
 *.rusv-button:active {
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+button:focus,
+input[type="submit"]:focus,
+input[type="button"]:focus {
+    outline: none;
+}
+
+button,
+input[type="submit"],
+input[type="button"] {
+    line-height: unset;
+    padding: 0;
 }
 
 /* Настройки для модальных окон и полей ввода (input, textarea) */
@@ -473,7 +501,7 @@ input[type="file"] {
 .rusv-modal-main-title {
     color: #848484;
     font-size: 16px;
-    padding: 0 0 10px 0;
+    padding: 0px 0 15px 0;
     text-align: center;
 }
 
@@ -489,7 +517,10 @@ input[type="file"] {
     color: #848484;
 }
 
-.rusv-modal-input {
+input[type="text"],
+input[type="password"],
+input[type="number"],
+.rusv-input {
     background-color: #F3F3F3;
     border: 0;
     border-bottom: 1px solid #C4C4C4;
@@ -498,11 +529,14 @@ input[type="file"] {
     line-height: 18px;
 }
 
-.rusv-modal-input:focus {
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+.rusv-input:focus {
     outline: none;
 }
 
-.rusv-modal-textarea  {
+textarea {
     width: calc(100% - 42px);
     resize: none;
     padding: 20px 20px;
@@ -517,13 +551,18 @@ input[type="file"] {
 
 .rusv-modal-select {
     width: 100%;
+}
+
+select,
+.rusv-select {
     padding: 5px 2px;
     background-color: #f3f3f3;
     border: none;
     border-bottom: 1px solid #C4C4C4;
 }
 
-.rusv-modal-select:focus {
+select:focus,
+.rusv-select:focus {
     outline: none;
 }
 

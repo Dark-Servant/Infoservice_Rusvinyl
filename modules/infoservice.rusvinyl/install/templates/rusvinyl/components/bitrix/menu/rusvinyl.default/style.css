@@ -1,4 +1,4 @@
-ul.left-menu
+div.left-menu
 {
     list-style:none;
     margin:0; padding:0;
@@ -6,7 +6,7 @@ ul.left-menu
     position: relative; /*IE bug*/
 }
 
-ul.left-menu li a
+div.left-menu a
 {
     text-decoration:none;
 }

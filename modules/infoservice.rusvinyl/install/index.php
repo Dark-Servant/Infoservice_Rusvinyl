@@ -735,7 +735,8 @@ class infoservice_rusvinyl extends CModule
         'components/infoservice/entity.frames', 'components/infoservice/iblock.list',
         'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
         'components/infoservice/vote.detail', 'components/infoservice/participate.buttons',
-        'components/infoservice/services', 'components/infoservice/iframe', 'templates/rusvinyl',
+        'components/infoservice/services', 'components/infoservice/iframe',
+        'components/infoservice/incidents.count', 'templates/rusvinyl',
         'public/media/news'
     ];
 

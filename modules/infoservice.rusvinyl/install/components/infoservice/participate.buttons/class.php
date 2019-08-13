@@ -38,22 +38,34 @@ class ParticipateButtons extends \CBitrixComponent
             ]])->Fetch();
             if ($this->arResult['STATUS']) {
                 if (!$this->arResult['STATUS'][INFS_HL_PARTICIPATE_CONFIRMATION_FIELD]) {
-                    $this->arResult['STATUS'] = Loc::getMessage('PARTICIPATE_DESIRE_WAS_SENT');
+                    $this->arResult['STATUS'] = [
+                        'VALUE' => Loc::getMessage('PARTICIPATE_DESIRE_WAS_SENT'),
+                        'CLASS' => ''
+                    ];
 
                 } elseif (
                     $this->arResult['STATUS'][INFS_HL_PARTICIPATE_CONFIRMATION_FIELD] ==
                         $this->arResult['OPTIONS']['HighloadFields'][INFS_HL_PARTICIPATE_CONFIRMATION_FIELD]['YES_ID']
                 ) {
-                    $this->arResult['STATUS'] = Loc::getMessage('PARTICIPATE_DESIRE_WAS_CONFIRMED');
+                    $this->arResult['STATUS'] = [
+                        'VALUE' => Loc::getMessage('PARTICIPATE_DESIRE_WAS_CONFIRMED'),
+                        'CLASS' => 'confirmed'
+                    ];
 
                 } elseif (
                     $this->arResult['STATUS'][INFS_HL_PARTICIPATE_CONFIRMATION_FIELD] ==
                         $this->arResult['OPTIONS']['HighloadFields'][INFS_HL_PARTICIPATE_CONFIRMATION_FIELD]['NO_ID']
                 ) {
-                    $this->arResult['STATUS'] = Loc::getMessage('PARTICIPATE_DESIRE_WAS_REFUSED');
+                    $this->arResult['STATUS'] = [
+                        'VALUE' => Loc::getMessage('PARTICIPATE_DESIRE_WAS_REFUSED'),
+                        'CLASS' => 'refused'
+                    ];
 
                 } else {
-                    $this->arResult['STATUS'] = Loc::getMessage('PARTICIPATE_DESIRE_SOME_STATUS');
+                    $this->arResult['STATUS'] = [
+                        'VALUE' => Loc::getMessage('PARTICIPATE_DESIRE_SOME_STATUS'),
+                        'CLASS' => 'unknown'
+                    ];
                 }
             }
             $this->includeComponentTemplate();

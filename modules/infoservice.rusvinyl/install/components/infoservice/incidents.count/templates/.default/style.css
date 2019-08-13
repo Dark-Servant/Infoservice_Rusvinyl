@@ -1,0 +1,11 @@
+.rusv-editable {
+    cursor: pointer;
+}
+
+.rusv-editable:hover {
+    color: #6f6c6c;
+}
+
+.rusv-save-incidents-buttons {
+    text-align: right;
+}
