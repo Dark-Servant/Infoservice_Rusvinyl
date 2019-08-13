@@ -1,5 +1,11 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<?
+use Bitrix\Main\Localization\Loc;
 
+if (!defined('B_PROLOG_INCLUDED') || (B_PROLOG_INCLUDED !== true)) die();
+?>
+<div class="rusv-back-url">
+    <a class="rusv-back-url-link" href="<?=$arParams['LIST_PAGE_URL']?>"><?=Loc::getMessage('BACK_TO_LIST')?></a>
+</div>
 <div class="photo-page-section">
 <?$result = $APPLICATION->IncludeComponent(
     "bitrix:photogallery.section",

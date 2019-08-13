@@ -213,6 +213,14 @@ class infoservice_rusvinyl extends CModule
                 'DETAIL_PAGE_URL' => '/media/video/#ID#/',
                 'LIST_PAGE_URL' => '/media/video/',
             ],
+
+            // инфоблок "Фотогалерея"
+            'INFS_RUSVINYL_IBLOCK_PHOTO' => [
+                'IBLOCK_TYPE_ID' => 'INFS_RUSVINYL_IBLOCK_TYPE',
+                'LANG_CODE' => 'IBLOCK_PHOTO_TITLE',
+                'DETAIL_PAGE_URL' => '/media/photo/#ID#/',
+                'LIST_PAGE_URL' => '/media/photo/',
+            ],
         ],
 
         /**
@@ -571,6 +579,49 @@ class infoservice_rusvinyl extends CModule
                     'WIDTH' => '400',
                     'HEIGHT' => '300',
                 ]
+            ],
+
+            // свойство "Оригинал" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_REAL_PICTURE' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_REAL_PICTURE',
+                'PROPERTY_TYPE' => 'F',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Элемент опубликован" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_PUBLIC_ELEMENT' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_PUBLIC_ELEMENT',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Элемент одобрен" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_APPROVE_ELEMENT' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_APPROVE_ELEMENT',
+                'PROPERTY_TYPE' => 'S',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Количество голосов" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_VOTE_COUNT' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_VOTE_COUNT',
+                'PROPERTY_TYPE' => 'N',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Сумма голосов" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_VOTE_SUM' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_VOTE_SUM',
+                'PROPERTY_TYPE' => 'N',
+                'USER_TYPE' => ''
+            ],
+            // свойство "Рейтинг" для инфоблока "Фотогалерея"
+            'INFS_IB_PHOTO_PR_RATING' => [
+                'IBLOCK_ID' => 'INFS_RUSVINYL_IBLOCK_PHOTO',
+                'LANG_CODE' => 'IBLOCK_PHOTO_PROPERTY_RATING',
+                'PROPERTY_TYPE' => 'N',
+                'USER_TYPE' => ''
             ],
         ],
 

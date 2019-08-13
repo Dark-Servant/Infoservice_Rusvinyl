@@ -6,7 +6,6 @@ function debug_info(text)
     {
         div = document.body.appendChild(document.createElement("DIV"));
         div.id = container_id;
-//      div.className = "forum-debug";
         div.style.position = "absolute";
         div.style.width = "170px";
         div.style.padding = "5px";
