@@ -54,6 +54,8 @@ $MESS['IBLOCK_QUESTION_TITLE'] = 'Задать вопрос';
 $MESS['IBLOCK_EMPLOYEE_ANNOUNCE_TITLE'] = 'Объявления сотрудников';
 $MESS['IBLOCK_PARTICIPATE_TITLE'] = 'Участвовать';
 $MESS['IBLOCK_VIDEO_TITLE'] = 'Видео архив';
+$MESS['IBLOCK_PHOTO_TITLE'] = 'Фотогалерея';
+
 // Инфоблоки для "Сервисов"
 $MESS['IBLOCK_SERVICEDESK_TITLE'] = 'Заявка в ServiceDesk';
 $MESS['IBLOCK_2_PIT_TITLE'] = 'Справка 2 НДФЛ';
@@ -246,6 +248,14 @@ $MESS['IBLOCK_MASTERBLOG_PROPERTY_VIDEO'] = 'Видео';
 
 // Свойства инфоблока "Видео архив"
 $MESS['IBLOCK_VIDEO_PROPERTY_VIDEO'] = 'Видео';
+
+// Свойства инфоблока "Фотогалерея"
+$MESS['IBLOCK_PHOTO_PROPERTY_REAL_PICTURE'] = 'Оригинал';
+$MESS['IBLOCK_PHOTO_PROPERTY_PUBLIC_ELEMENT'] = 'Элемент опубликован';
+$MESS['IBLOCK_PHOTO_PROPERTY_APPROVE_ELEMENT'] = 'Элемент одобрен';
+$MESS['IBLOCK_PHOTO_PROPERTY_VOTE_COUNT'] = 'Количество голосов';
+$MESS['IBLOCK_PHOTO_PROPERTY_VOTE_SUM'] = 'Сумма голосов';
+$MESS['IBLOCK_PHOTO_PROPERTY_RATING'] = 'Рейтинг';
 
 // Типы календарей
 $MESS['CALENDAR_TYPE_NEAR_EVENT'] = 'Ближайшие события "Русвинила"';

@@ -56,6 +56,8 @@ define('INFS_IBLOCK_ALL_SERVICE_LIST', [
 
 // Символьный код инфоблока "Видео архив"
 define('INFS_RUSVINYL_IBLOCK_VIDEO', INFS_RUSVINYL_IBLOCK_PREFIX . 'video');
+// Символьный код инфоблока "Фотогалерея"
+define('INFS_RUSVINYL_IBLOCK_PHOTO', INFS_RUSVINYL_IBLOCK_PREFIX . 'photo');
 
 /**
  * Максимальное количество элементов на одной странице при выводе их на общей
@@ -161,6 +163,20 @@ define('INFS_IB_MASTERBLOG_PR_VIDEO', 'VIDEO');
 // Свойства инфоблока "Видео архив"
 // "Видео"
 define('INFS_IB_VIDEO_PR_VIDEO', 'VIDEO');
+
+// Свойства инфоблока "Фотогалерея"
+// "Оригинал"
+define('INFS_IB_PHOTO_PR_REAL_PICTURE', 'REAL_PICTURE');
+// "Элемент опубликован"
+define('INFS_IB_PHOTO_PR_PUBLIC_ELEMENT', 'PUBLIC_ELEMENT');
+// "Элемент одобрен"
+define('INFS_IB_PHOTO_PR_APPROVE_ELEMENT', 'APPROVE_ELEMENT');
+// "Количество голосов"
+define('INFS_IB_PHOTO_PR_VOTE_COUNT', 'vote_count');
+// "Сумма голосов"
+define('INFS_IB_PHOTO_PR_VOTE_SUM', 'vote_sum');
+// "Рейтинг"
+define('INFS_IB_PHOTO_PR_RATING', 'rating');
 
 // Константы для Highload-блоков
 
