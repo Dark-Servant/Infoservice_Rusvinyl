@@ -184,7 +184,6 @@ div.photo-popup form {
     background-color: white;
     padding: 0;
     margin: 0;
-    /*font-size: 12px;*/
 }
 
 div.photo-popup {
@@ -384,11 +383,6 @@ form.photo-form {
     margin: 0;
 }
 
-table.photo-table,
-table.photo-table td {
-    /*font-size: 100%;*/
-}
-
 div#photo_waitwindow {
     width: 170px!important;
     padding: 10px!important;
@@ -415,20 +409,17 @@ div.photo-header-middle div.photo-header-inner {
 div.photo-header-big {
     border-bottom: 1px solid;
     font-weight: bold;
-    /*font-size: 110%;*/
     margin-bottom: 0.78em;
 }
 
 div.photo-header-component {
     font-weight: bold;
-    /*font-size: 110%;*/
     margin-right: 1em;
     margin-bottom: 0.78em;
 }
 
 span.photo-header-link {
     font-weight: normal;
-    /*font-size: 100%;*/
 }
 
 div.reviews-navigation-top {
@@ -514,11 +505,6 @@ div.photo-item-cover {
 
 div.photo-album-name a {
     line-height: 1.2em;
-}
-
-div.photo-album-date,
-div.photo-album-photos {
-    /*font-size: 11px;*/
 }
 
 /************** Album controls on cover ****************************/
@@ -626,24 +612,20 @@ ul.photo-album-list-first-photos  li.photo-album-item {
 
 ul.photo-album-list-first-photos  .album-name {
     text-decoration: none;
-    /*font-size: 1.2em;*/
     font-weight: bold;
     color: #373737;
-    /*font-family: Verdana;*/
     font-family: "Arial";
 }
 
 ul.photo-album-list-first-photos  .album-date,
 ul.photo-album-list-first-photos  .album-photos {
     text-decoration: none;
-    /*font-size: 1.1em;*/
     color: #7F7F7F;
     margin: 0 0 0 7px;
 }
 
 ul.photo-album-list-first-photos  .album-passworded {
     text-decoration: none;
-    /*font-size: 1.1em;*/
     color: #7F7F7F;
 }
 
@@ -666,7 +648,6 @@ ul.photo-album-list-first-photos .album-separator-line {
     background-color: #DBDBDB;
     width: 100%;
     line-height: 1px !important;
-    /*font-size: 1px !important;*/
 }
 
 ul.photo-album-list-first-photos .album-list-action-cont {
@@ -674,7 +655,6 @@ ul.photo-album-list-first-photos .album-list-action-cont {
 }
 
 ul.photo-album-list-first-photos .album-list-action-cont a {
-    /*font-size: 90%;*/
     display: inline-block;
     margin: 0 5px 0 0;
 }
@@ -711,9 +691,7 @@ div.photo-album-item div.photo-album-info {
 
 .photo-album-edit-cont label {
     color: #666666!important;
-    /*font-size: 11px!important;*/
     font-weight: normal!important;
-    /*font-family: Verdana;*/
     font-family: "Arial";
     margin: 8px 4px 0 5px!important;
     float: left;
@@ -743,8 +721,6 @@ div.photo-album-item div.photo-album-info {
 
 tr.photo-album-edit-heading td {
     color: #000000!important;
-    /*font-size: 14px!important;*/
-    /*font-family: Verdana!important;*/
     font-family: "Arial";
     font-weight: bold!important;
     padding: 10px 5px 5px 10px!important;
@@ -817,9 +793,7 @@ div.photo-ed-al-item-params a.photo-al-ed-tags-link {
     text-decoration: none;
     border-bottom: 1px dotted #666666;
     cursor: pointer;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 11px !important;*/
     font-weight: normal !important;
     margin: 5px 0 4px;
     display: block;
@@ -835,9 +809,7 @@ a.photo-al-ed-action {
     text-decoration: none;
     border-bottom: 1px dashed #567FDD;
     cursor: pointer;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 11px !important;*/
     font-weight: normal !important;
     margin: 2px;
     white-space: nowrap!important;
@@ -873,9 +845,7 @@ div.photo-ed-al-show-more span {
     color: #567FDD;
     text-decoration: none;
     white-space: nowrap!important;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 13px !important;*/
     font-weight: bold !important;
     cursor: pointer;
     display: block;
@@ -966,9 +936,7 @@ div.photo-ed-al-group-actions {
 .photo-ed-al-sel-all {
     color: #666666;
     cursor: pointer;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 11px !important;*/
     text-decoration: underline;
 }
 
@@ -988,9 +956,7 @@ div.photo-ed-al-group-actions {
 .photo-ed-al-gract-move {
     color: #567FDD;
     cursor: pointer;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 11px !important;*/
     text-decoration: none;
     border-bottom: 1px dotted #567FDD;
     margin: 0 5px;
@@ -1040,9 +1006,7 @@ div.photo-al-ed-add-set span.photo-al-ed-add-link span {
     color: #666666;
     text-decoration: underline;
     cursor: pointer;
-    /*font-family: Verdana;*/
     font-family: "Arial";
-    /*font-size: 12px !important;*/
     font-weight: normal !important;
     float: left;
 }
@@ -1193,7 +1157,6 @@ table.photo-photo-item-default td.photo-photo-info div.photo-photo-comments {
     line-height: 1em;
     height: 1.2em;
     overflow: hidden;
-    /*font-size: 11px;*/
     padding-left: 3px;
 }
 
@@ -1303,12 +1266,6 @@ div.photo-detail-image {
     padding-right: 1em;
 }
 
-div.photo-photo-date,
-div.photo-photo-tags,
-div.photo-photo-tags a {
-    /*font-size: 11px;*/
-}
-
 div.photo-photo-info #photo_vote td.vote-result {
     width: 100px;
     overflow: hidden;
@@ -1379,16 +1336,10 @@ div.photo-gallery-empty a {
 /************** Gallery Edit ***************************************/
 div.photo-edit-fields-gallery i {
     display: block;
-    /*font-size: 90%;*/
     width: 80%;
     color: gray;
 }
 
-div.photo-edit-fields-gallery div.photo-edit-field-avatar {
-    /*display: none;
-*/
-
-}
 
 div.photo-edit-fields-gallery div.photo-edit-field-code input {
     width: 50%;
@@ -1465,11 +1416,6 @@ div.photo-page-section div.photo-info-box-photo-list {
 ********************************************************************/
 
 /************** Index & Search Page ********************************/
-/* Main Table on index page */
-div.photo-page-main div.photo-header-component {
-/*float: left;
-*/
-}
 
 div.photo-page-main table.photo-table td.photo-td-left,
 div.photo-page-search table.photo-table td.photo-td-left {
