@@ -260,6 +260,7 @@ define('INFS_RUSVINYL_MAIN_PAGE_ROW_MAX_COUNT', 2);
 define('INFS_RUSVINYL_HEADER_USER_LOGO_SCR', '/local/templates/rusvinyl/images/man.svg');
 define('INFS_CURRENT_TIMESTAMP', time());
 define('INFS_RUSVINYL_OPTION_INCIDENT_NAME', 'incident');
+define('INFS_RUSVINYL_OPTION_BRAINBOX_IMAGE', 'brainbox_image');
 define('INFS_USER_LINK', '/user/#ID#/');
 
 // Ссылки на сторонние сайты

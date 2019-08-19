@@ -787,8 +787,8 @@ class infoservice_rusvinyl extends CModule
         'components/infoservice/iblock.detail', 'components/infoservice/vote.list',
         'components/infoservice/vote.detail', 'components/infoservice/participate.buttons',
         'components/infoservice/services', 'components/infoservice/iframe',
-        'components/infoservice/incidents.count', 'templates/rusvinyl',
-        'public/media/news'
+        'components/infoservice/incidents.count', 'components/infoservice/brainbox',
+        'templates/rusvinyl', 'public/media/news'
     ];
 
     /**

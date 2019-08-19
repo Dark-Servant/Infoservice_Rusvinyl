@@ -169,7 +169,6 @@ input[type="file"] {
 }
 
 .rusv-body-content-data {
-    overflow: hidden;
     max-width: 945px;
 }
 
