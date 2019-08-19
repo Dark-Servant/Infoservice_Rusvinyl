@@ -2,8 +2,8 @@
 use \Bitrix\Main\{
     Application,
     Localization\Loc,
-    Config\Option,
-    Type\DateTime
+    Loader,
+    Config\Option
 };
 
 define("NOT_CHECK_PERMISSIONS", true);
@@ -22,21 +22,22 @@ try {
         throw new Exception(Loc::getMessage('ERROR_AUTH'));
 
     $request = Application::getInstance()->getContext()->getRequest();
+    $action = $request->get('action');
+
     switch ($action) {
         case 'new':
             if (!$USER->isAdmin())
                 throw new Exception(Loc::getMessage('ERROR_ADMIN_RIGHTS'));
-
-            $lastTime = (new DateTime(date('Y-m-d'), 'Y-m-d'))->getTimestamp()
-                      - intval($request->getPost('count')) * 86400;
-
-            Option::set(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_INCIDENT_NAME, $lastTime, SITE_ID);
-            $answer['data'] = $lastTime;
+            
+            $fileId = CFile::SaveFile($request->getFile('image'), INFS_RUSVINYL_MODULE_ID . '/' . INFS_RUSVINYL_OPTION_BRAINBOX_IMAGE);
+            Option::set(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_BRAINBOX_IMAGE, $fileId, SITE_ID);
+            $answer['data'] = CFile::GetPath($fileId);
             break;
 
         default:
             throw new Exception(Loc::getMessage('ERROR_BAD_ACTION'));
     }
+
 } catch (Exception $error) {
     $answer = array_merge($answer, ['result' => false, 'message' => $error->GetMessage()]);
 }

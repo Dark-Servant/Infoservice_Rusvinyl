@@ -55,7 +55,7 @@
         if (!selector.get(number)) return;
         
         setTimeout(() => nextNewsUnit($(selector.get(number))), PAGE_WAITING_TIME);
-        setTimeout(() => initPageChoosing(selector, number + 1), PAGE_WAITING_TIME);
+        setTimeout(() => initPageChoosing(selector, number + 1), Math.floor(PAGE_WAITING_TIME / 2));
     }
 
     /**
