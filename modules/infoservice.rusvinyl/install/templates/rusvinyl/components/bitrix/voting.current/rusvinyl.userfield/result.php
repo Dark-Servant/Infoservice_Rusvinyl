@@ -21,23 +21,23 @@ $params = $APPLICATION->IncludeComponent(
 );
 $this->__component->params = $params + ['uid' => $arParams['UID']];
 ob_start();?>
-<!--<?
+<?
 if (
     ($arResult['VOTE']['LAMP'] == 'green')
     && ($arParams['CAN_REVOTE'] == 'Y')
     || ($arParams['CAN_VOTE'] == 'Y')
 ) {?>
-    --><a
+    <a
         href="<?=$APPLICATION->GetCurPageParam('', $arParams['GET_KILL'])?>"
         id="vote-<?=$arParams['UID']?>-revote"
         class="rusv-button"><?=
         $arParams['CAN_REVOTE'] == 'Y'
                 ? Loc::getMessage('VOTE_RESUBMIT_BUTTON')
                 : Loc::getMessage('VOTE_SUBMIT_BUTTON')
-    ?></a><!--<?
+    ?></a><?
 }
 if ($arParams['PERMISSION'] >= 4) {?>
-    --><a
+    <a
         href="<?=
             $APPLICATION->GetCurPageParam(
                     $arResult['VOTE']['LAMP'] == 'green' ? 'stopVoting' : 'resumeVoting'

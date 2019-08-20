@@ -3,7 +3,7 @@ if ($arResult['isAdmin']):?>
 <label>
     <input type="file" class="rusv-branbox-main-file-input"><?
 endif;?>
-    <div class="rusv-branbox-main<?=$arResult['isAdmin'] ? ' rusv-is-editabled' : ''?>">
+    <div class="rusv-branbox-main<?=$arResult['isAdmin'] ? ' rusv-is-editabled' : ''?><?=$arResult['MAIN_IMAGE'] ? ' rusv-full-area' : ''?>">
         <img<?if ($arResult['MAIN_IMAGE']):?> src="<?=$arResult['MAIN_IMAGE'] . '?' . time()?>"<?endif;?>>
     </div><?
 if ($arResult['isAdmin']):?>
@@ -22,6 +22,7 @@ endif;?>
 <?$APPLICATION->IncludeComponent(
     'infoservice:entity.frames', '',
     [
+        'SHOW_PREVIEW_TEXT' => 'Y',
         'FRAMES_CODES' => [['iblock', INFS_RUSVINYL_IBLOCK_LEADER]],
         'FRAMES_ELEMENT_COUNT' => INFS_RUSVINYL_MAIN_PAGE_UNIT_MAX_COUNT,
         'FRAMES_ROW_COUNT' => INFS_RUSVINYL_MAIN_PAGE_ROW_MAX_COUNT

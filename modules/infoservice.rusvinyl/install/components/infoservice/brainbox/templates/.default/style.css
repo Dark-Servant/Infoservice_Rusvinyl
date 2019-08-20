@@ -24,9 +24,12 @@ div.rusv-body-content-data {
 
 .rusv-branbox-main {
     height: 350px;
-    border: 1px solid;
     margin-bottom: 35px;
     overflow: hidden;
+}
+
+.rusv-branbox-main:not(.rusv-full-area) {
+    border: 1px solid;
 }
 
 .rusv-branbox-main.rusv-is-editabled {
