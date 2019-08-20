@@ -10,9 +10,9 @@ abstract class Employment
      */
     public static function setBussy()
     {
-        if ($_SESSION[INFS_ABVEXPO_MODULE_ID]['PROCESS']) return false;
+        if ($_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS']) return false;
         
-        return $_SESSION[INFS_ABVEXPO_MODULE_ID]['PROCESS'] = true;
+        return $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'] = true;
     }
 
     /**
@@ -22,8 +22,8 @@ abstract class Employment
      */
     public static function setFree()
     {
-        $oldFree = $_SESSION[INFS_ABVEXPO_MODULE_ID]['PROCESS'];
-        $_SESSION[INFS_ABVEXPO_MODULE_ID]['PROCESS'] = false;
+        $oldFree = $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'];
+        $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'] = false;
         return !$oldFree;
     }
 
