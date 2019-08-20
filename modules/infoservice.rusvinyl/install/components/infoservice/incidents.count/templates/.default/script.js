@@ -28,7 +28,11 @@
         dayCount = Math.floor(((new Date()) - dayCount) / (DAY_SECOND_COUNT * 1000));
 
         var lastDigits = dayCount % 100;
-        if (((lastDigits > 4) && (lastDigits < 20)) || !(lastDigits = dayCount % 10)) {
+        if (
+            ((lastDigits > 4) && (lastDigits < 20))
+            || !(lastDigits = dayCount % 10)
+            || (lastDigits > 4)
+        ) {
             dayCount += ' дней';
 
         } else if (lastDigits == 1) {
