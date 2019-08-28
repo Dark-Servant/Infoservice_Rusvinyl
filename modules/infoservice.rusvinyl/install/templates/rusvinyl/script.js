@@ -1,6 +1,7 @@
 ;(function() {
     var rusvSelector = {
         headDate: '.rusv-head-date',
+        footer: '.rusv-footer',
         printBtn: '.rusv-footer-menu li:last a',
         mainUserSelectorRemove: '.ui-tile-selector-item-remove',
         fileInput: '.rusv-modal-file-input',
@@ -47,16 +48,31 @@
 
         var unit = $(mustBeFixed.list[mustBeFixed.top[0]].obj);
         if (unit.hasClass(rusvClass.fixed)) {
-            if (unit.parent().get(0).getBoundingClientRect().y >= 0)
+            if (unit.parent().get(0).getBoundingClientRect().top >= 0)
                 cancelFixedStatus();
 
         } else {
-            var parentUnitY = unit.parent().get(0).getBoundingClientRect().y;
-            if (parentUnitY > 0) return;
-
+            var parentUnitY = unit.parent().get(0).getBoundingClientRect().top;
+            if (parentUnitY <= 0)
+                mustBeFixed.list.forEach(unit => {
+                    $(unit.obj).addClass(rusvClass.fixed)
+                });
+        }
+        if (unit.hasClass(rusvClass.fixed)) {
+            let topDiff = 0;
             mustBeFixed.list.forEach(unit => {
-                $(unit.obj).addClass(rusvClass.fixed);
-                $(unit.obj).css(unit.cssY);
+                let hValue = unit.cssY.top + window.scrollY + unit.obj.clientHeight
+                           - document.body.clientHeight + $(rusvSelector.footer).height();
+                if (hValue > topDiff) topDiff = hValue;
+            });
+            mustBeFixed.list.forEach(unit => {
+                var cssData = Object.assign(
+                                    {}, unit.cssX, unit.cssY, {
+                                        left: (parseInt(unit.cssX.left) - window.scrollX) + 'px',
+                                        top: (unit.cssY.top - topDiff) + 'px'
+                                    }
+                                );
+                $(unit.obj).css(cssData);
             });
         }
     }
@@ -190,18 +206,18 @@
     }
 
     /**
-     * Устанавливает для каждого элемента списка разницу между указанным параметром
-     * и таким же параметром родительского элемента первого элемента списка.
+     * Устанавливает для каждого элемента списка разницу между его значением указанного
+     * параметра и конкретным переданным значением
      * Результат сохраняется в css<название параметра>
      * 
-     * @param paramList -
-     * @param savedParam -
-     * @param paramName -
+     * @param offSetValue - значение, относительно которого надо получать разницу
+     * @param savedParam - css-параметр, для которого будет сохранена разница без применения к элементу
+     * @param paramName - краткое название, т.е. последняя часть группы, в которой будут сохранены результаты, например,
+     * для названия "r" сохранение будет у элементов в группе cssR
+     * 
      * @return void
      */
-    var initFixedUnitParamCSS = function(paramList, savedParam, paramName) {
-        var parentRect = $(mustBeFixed.list[paramList[0]].obj).parent().get(0).getBoundingClientRect();
-        var parentParamValue = parentRect[paramName];
+    var initFixedUnitParamCSS = function(offSetValue, savedParam, paramName) {
         // Получаем имя параметра, преобразовывая значения вроде "test-te_set" в "testTeSet"
         var cssParamName = 'css' + paramName.replace(/(?:^|[^a-z\d])(\w)/ig, (result, part) => {
             return part.toUpperCase();
@@ -209,7 +225,7 @@
 
         mustBeFixed.list.forEach(unit => {
             var params = {};
-            params[savedParam] = (unit.rect[paramName] - parentParamValue) + 'px';
+            params[savedParam] = unit.rect[savedParam] - offSetValue;
             unit[cssParamName] = Object.assign(unit[cssParamName] || {}, params);
         });
     }
@@ -233,11 +249,12 @@
                 cssY: {width: rect.width + 'px'}
             });
 
-            addWithSortingFixedByParam(num, rect, mustBeFixed.top, 'y');
-            addWithSortingFixedByParam(num, rect, mustBeFixed.left, 'x');
+            addWithSortingFixedByParam(num, rect, mustBeFixed.top, 'top');
+            addWithSortingFixedByParam(num, rect, mustBeFixed.left, 'left');
         });
-        initFixedUnitParamCSS(mustBeFixed.top, 'top', 'y');
-        initFixedUnitParamCSS(mustBeFixed.left, 'left', 'x');
+        var parentRect = $(mustBeFixed.list[mustBeFixed.top[0]].obj).parent().get(0).getBoundingClientRect();
+        initFixedUnitParamCSS(parentRect.top, 'top', 'y');
+        initFixedUnitParamCSS(0, 'left', 'x');
     }
 
     /**

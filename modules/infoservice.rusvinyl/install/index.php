@@ -802,7 +802,7 @@ class infoservice_rusvinyl extends CModule
      * файлов или папок без необходимости создавать для этого пустой файл в папке www модуля
      */
     const WWW_FILES = [
-        'index.php',
+        'index.php', '404.php',
         // меню
         '.top.menu.php', '.top.menu_ext.php',
         '.left.menu.php', '.left.menu_ext.php',
