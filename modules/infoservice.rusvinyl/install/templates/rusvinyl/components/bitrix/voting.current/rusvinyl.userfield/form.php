@@ -17,7 +17,7 @@ $params = $APPLICATION->IncludeComponent(
     ($this->__component->__parent ? $this->__component->__parent : $component),
     ['HIDE_ICONS' => 'Y']
 );
-$this->__component->params =(is_array($params) ? $params : []) + ['uid' => $arParams['UID']];?>
+$this->__component->params = (is_array($params) ? $params : []) + ['uid' => $arParams['UID']];?>
 <div class="bx-vote-bottom-block">
     <a
         href="javascript:void(0);"
