@@ -26,6 +26,9 @@ div.rusv-body-content-data {
     height: 350px;
     margin-bottom: 35px;
     overflow: hidden;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
 }
 
 .rusv-branbox-main:not(.rusv-full-area) {
@@ -166,12 +169,14 @@ div.rusv-body-content-data {
 
 .rusv-branbox-slider .rusv-news-list {
     height: 350px;
+    width: 100%;
 }
 
 .rusv-branbox-slider .rusv-news-item-image {
     width: 35%;
     float: left;
     height: 350px;
+    margin-top: 45px;
 }
 
 @media screen and (max-width: 1350px) {
@@ -215,5 +220,8 @@ div.rusv-body-content-data {
         width: 58%;
     }
 
+    .rusv-branbox-slider .rusv-news-item-preview-text {
+        max-width: none;
+    }
 }
 

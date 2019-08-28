@@ -61,8 +61,8 @@
         var rect = $(rusvSelector.searchLayer).get(0).getBoundingClientRect();
 
         if (
-            (rect.y + rect.height <= event.clientY) || (rect.y >= event.clientY)
-            || (rect.x + rect.width <= event.clientX) || (rect.x >= event.clientX)
+            (rect.top + rect.height <= event.clientY) || (rect.top >= event.clientY)
+            || (rect.left + rect.width <= event.clientX) || (rect.left >= event.clientX)
         ) {
             displayCount &= MAX_FLAG ^ MOUSE_IN_FLAG;
             hideSearchInput();
