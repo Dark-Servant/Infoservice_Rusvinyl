@@ -16,6 +16,11 @@ use Bitrix\Main\Localization\Loc;
         </div>
         <div class="rusv-unit-text rusv-employee-announce-unit-text">
             <span class="rusv-unit-text-value rusv-employee-announce-unit-text-value">{{{DETAIL_TEXT}}}</span>
+            {{#if DETAIL_PICTURE}}
+            <div class="rusv-unit-text-image rusv-employee-announce-unit-text-image">
+                <img class="rusv-unit-text-image-src rusv-employee-announce-unit-text-image-src" src="{{DETAIL_PICTURE}}">
+            </div>
+            {{/if}}
             {{#if MORE_DETAIL_TEXT}}
             <span class="rusv-unit-text-more rusv-employee-announce-unit-text-more">
                 <span class="rusv-unit-text-more-value rusv-employee-announce-unit-text-more-value">
@@ -47,9 +52,22 @@ use Bitrix\Main\Localization\Loc;
             class="rusv-textarea rusv-modal-textarea rusv-add-new-employee-announce-textarea"
             placeholder="<?=Loc::getMessage('NEW_EMPLOYEE_ANNOUNCE_TEXT')?>"></textarea>
     </div>
-    <div class="rusv-modal-area rusv-add-new-employee-announce-buttons">
-        <span class="rusv-button rusv-modal-button rusv-iblock-add-unit-button">
-            <?=Loc::getMessage('ADD_EMPLOYEE_ANNOUNCE_BUTTON_TITLE')?>
-        </span>
+    <div class="rusv-modal-area rusv-modal-control-table rusv-add-new-employee-announce-control">
+        <div class="rusv-add-new-employee-announce-file">
+            <label>
+                <input type="file" name="new-employee-announce-file" class="rusv-modal-file-input rusv-add-new-employee-announce-file-input">
+                <span class="rusv-modal-file-link rusv-add-new-employee-announce-file-link">
+                    <span class="rusv-modal-file-link-name rusv-add-new-employee-announce-file-link-name"></span>
+                    <span class="rusv-modal-file-link-value rusv-add-new-employee-announce-file-link-value">
+                        <?=Loc::getMessage('NEW_EMPLOYEE_ANNOUNCE_FILE_LINK')?>
+                    </span>
+                </span>
+            </label>
+        </div>
+        <div class="rusv-add-new-employee-announce-buttons">
+            <span class="rusv-button rusv-modal-button rusv-iblock-add-unit-button">
+                <?=Loc::getMessage('ADD_EMPLOYEE_ANNOUNCE_BUTTON_TITLE')?>
+            </span>
+        </div>
     </div>
 </div>

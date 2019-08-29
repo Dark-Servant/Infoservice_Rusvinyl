@@ -4,8 +4,9 @@ if ($arResult['isAdmin']):?>
     <input type="file" class="rusv-branbox-main-file-input"><?
 endif;?>
     <div class="rusv-branbox-main<?=$arResult['isAdmin'] ? ' rusv-is-editabled' : ''?><?=$arResult['MAIN_IMAGE'] ? ' rusv-full-area' : ''?>">
-        <img<?if ($arResult['MAIN_IMAGE']):?> src="<?=$arResult['MAIN_IMAGE'] . '?' . time()?>"<?endif;?>>
-    </div><?
+        <img<?if ($arResult['MAIN_IMAGE']):?> src="<?=$arResult['MAIN_IMAGE']['SRC'] . '?' . time()?>"<?endif;?>>
+    </div>
+    <pre><?print_r($arResult['IMAGE'])?></pre><?
 if ($arResult['isAdmin']):?>
 </label><?
 endif;?>

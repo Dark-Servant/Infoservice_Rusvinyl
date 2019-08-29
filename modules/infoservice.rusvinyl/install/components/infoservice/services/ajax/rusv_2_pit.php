@@ -18,9 +18,10 @@ class Rusv2Pit extends RusvReference
      */
     public function new()
     {
-        $userId = intval($this->request->getPost('new-2-pit-user'));
-        if (!$userId || !($user = \CUser::GetById($userId)->Fetch()))
-            throw new \Exception(Loc::getMessage('ERROR_USER_ID'));
+        global $USER; 
+
+        $userId = $USER->GetId();
+        $user = \CUser::GetById($userId)->Fetch();
             
         $dateFrom = $this->request->getPost('new-2-pit-from');
         $dateTo = $this->request->getPost('new-2-pit-to');
@@ -36,7 +37,6 @@ class Rusv2Pit extends RusvReference
                 'TO' => $dateTo
             ]),
             'PROPERTY_VALUES' => [
-                INFS_IB_2_PIT_PR_EMPLOYEE => $userId,
                 INFS_IB_2_PIT_PR_FROM => new DateTime($dateFrom),
                 INFS_IB_2_PIT_PR_TO => new DateTime($dateTo)
             ]

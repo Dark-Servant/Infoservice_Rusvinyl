@@ -39,7 +39,7 @@ class EntityFrames extends \CBitrixComponent
                     'NAME' => $element['NAME'],
                     'PREVIEW_PICTURE' => $element['DETAIL_PICTURE'] ?: $element['PREVIEW_PICTURE'],
                     'DETAIL_PAGE_URL' => str_replace('#ID#', $element['ID'], $element['DETAIL_PAGE_URL']),
-                    'PREVIEW_TEXT' => (empty($this->arParams['SHOW_PREVIEW_TEXT']) ? '' : $element['PREVIEW_TEXT'])
+                    'PREVIEW_TEXT' => (empty($this->arParams['SHOW_PREVIEW_TEXT']) ? '' : $element['PREVIEW_TEXT'] . PHP_EOL)
                                     . $element['DETAIL_TEXT'],
                 ];
 

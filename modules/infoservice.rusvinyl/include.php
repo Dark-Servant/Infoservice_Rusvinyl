@@ -129,8 +129,6 @@ define('INFS_IB_PARTICIPATE_PR_SEND_DESIRE', 'BP_SEND_DESIRE');
 define('INFS_IB_PARTICIPATE_PR_SEND_ANSWER', 'BP_SEND_ANSWER');
 
 // Свойства инфоблока "Справка 2 НДФЛ"
-// "Сотрудник"
-define('INFS_IB_2_PIT_PR_EMPLOYEE', 'EMPLOYEE');
 // "От"
 define('INFS_IB_2_PIT_PR_FROM', 'FROM');
 // "До"
@@ -264,11 +262,18 @@ define('INFS_RUSVINYL_OPTION_BRAINBOX_IMAGE', 'brainbox_image');
 define('INFS_USER_LINK', '/user/#ID#/');
 
 // Ссылки на сторонние сайты
+// Страница "BrainBox" -> "Фонд идей"
 define('INFS_IDEAS_FUND_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiNzE3'
                                    . 'MmE2NzAtYmY5Ny00N2NhLTgzNjMtYTRiNzIyOWNiMGI'
                                    . '4IiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
                                    . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
+// Страница "BrainBox" -> "Статистика"
 define('INFS_STATISTICS_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiODIx'
                                    . 'Njc4YmYtNTVlZS00OTU1LWIxMGUtZmQ2YmFjMzdiMzh'
                                    . 'mIiwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLT'
                                    . 'dhZTJhNjJlMmM4YyIsImMiOjl9');
+// Страница "Телефонный справочник"
+define('INFS_PHONEBOOK_IFRAME_URL', 'https://app.powerbi.com/view?r=eyJrIjoiODIxN'
+                                  . 'jc4YmYtNTVlZS00OTU1LWIxMGUtZmQ2YmFjMzdiMzhmI'
+                                  . 'iwidCI6Ijc0MzYzODlkLWFlNGEtNDE0My1hMzZmLTdhZ'
+                                  . 'TJhNjJlMmM4YyIsImMiOjl9');

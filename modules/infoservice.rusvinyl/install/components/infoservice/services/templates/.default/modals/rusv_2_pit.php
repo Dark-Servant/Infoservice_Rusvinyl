@@ -6,15 +6,6 @@ use Bitrix\Main\Localization\Loc;?>
             <?=Loc::getMessage('2_PIT_MAIN_TITLE')?>
         </span>
     </div>
-    <div class="rusv-modal-area rusv-2-pit-user"><?
-        $APPLICATION->IncludeComponent(
-            'bitrix:main.user.selector', '',
-            [
-                'INPUT_NAME' => 'new-2-pit-user',
-                'BUTTON_SELECT_CAPTION' => Loc::getMessage('NEW_2_PIT_USER')
-            ]
-        );?>
-    </div>
     <div class="rusv-modal-area rusv-2-pit-period">
         <span class="rusv-modal-title rusv-2-pit-title"><?=Loc::getMessage('2_PIT_PERIOD_TITLE')?></span>
         <input type="text" readonly

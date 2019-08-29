@@ -135,6 +135,7 @@
 
     .rusv-news-item-image {
         height: 175px;
+        min-width: 300px;
     }
 
     .rusv-main-page-unit-title {

@@ -181,8 +181,8 @@ input[type="file"] {
     max-width: 945px;
 }
 
-.rusv-body-content-data > img {
-    width: 100%;
+.rusv-body-content-data img {
+    max-width: 100%;
 }
 
 .rusv-footer-menu {
@@ -604,7 +604,7 @@ select:focus,
 
 .rusv-modal-file-link-name {
     display: inline-block;
-    max-width: 250px;
+    max-width: 220px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

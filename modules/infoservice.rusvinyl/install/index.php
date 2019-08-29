@@ -445,13 +445,6 @@ class infoservice_rusvinyl extends CModule
                 'PROPERTY_TYPE' => 'N'
             ],
 
-            // свойство "Сотрудник" для инфоблока "Справка 2 НДФЛ"
-            'INFS_IB_2_PIT_PR_EMPLOYEE' => [
-                'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
-                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_EMPLOYEE',
-                'PROPERTY_TYPE' => 'S',
-                'USER_TYPE' => 'UserID',
-            ],
             // свойство "От" для инфоблока "Справка 2 НДФЛ"
             'INFS_IB_2_PIT_PR_FROM' => [
                 'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
