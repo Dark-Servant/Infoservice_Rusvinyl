@@ -2,8 +2,6 @@
 $MESS['2_PIT_MAIN_TITLE'] = 'Справка 2 НДФЛ';
 $MESS['NEW_2_PIT_USER'] = 'Выберите сотрудника';
 $MESS['2_PIT_PERIOD_TITLE'] = 'За период';
-$MESS['2_PIT_PERIOD_FROM'] = 'от';
-$MESS['2_PIT_PERIOD_TO'] = 'до';
 $MESS['ADD_2_PIT_BUTTON_TITLE'] = 'Отправить';
 
 $MESS['VISA_MAIN_TITLE'] = 'Справка на визу';

@@ -129,10 +129,8 @@ define('INFS_IB_PARTICIPATE_PR_SEND_DESIRE', 'BP_SEND_DESIRE');
 define('INFS_IB_PARTICIPATE_PR_SEND_ANSWER', 'BP_SEND_ANSWER');
 
 // Свойства инфоблока "Справка 2 НДФЛ"
-// "От"
-define('INFS_IB_2_PIT_PR_FROM', 'FROM');
-// "До"
-define('INFS_IB_2_PIT_PR_TO', 'TO');
+// "За период"
+define('INFS_IB_2_PIT_PR_PERIOD', 'PERIOD');
 
 // Свойства инфоблока "Копия трудовой книжки"
 // "Количество копий"

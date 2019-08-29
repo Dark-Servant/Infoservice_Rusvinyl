@@ -445,19 +445,12 @@ class infoservice_rusvinyl extends CModule
                 'PROPERTY_TYPE' => 'N'
             ],
 
-            // свойство "От" для инфоблока "Справка 2 НДФЛ"
-            'INFS_IB_2_PIT_PR_FROM' => [
+            // свойство "За период" для инфоблока "Справка 2 НДФЛ"
+            'INFS_IB_2_PIT_PR_PERIOD' => [
                 'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
-                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_FROM',
+                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_PERIOD',
                 'PROPERTY_TYPE' => 'S',
-                'USER_TYPE' => 'DateTime'
-            ],
-            // свойство "До" для инфоблока "Справка 2 НДФЛ"
-            'INFS_IB_2_PIT_PR_TO' => [
-                'IBLOCK_ID' => 'INFS_IBLOCK_2_PIT',
-                'LANG_CODE' => 'IBLOCK_2_PIT_PROPERTY_TO',
-                'PROPERTY_TYPE' => 'S',
-                'USER_TYPE' => 'DateTime'
+                'USER_TYPE' => ''
             ],
 
             // свойство "Количество копий" для инфоблока "Копия трудовой книжки"
