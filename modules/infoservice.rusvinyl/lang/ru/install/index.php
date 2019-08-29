@@ -220,9 +220,7 @@ $MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_YES'] = 'Подтверждено';
 $MESS['HL_PARTICIPATE_CONFIRMATION_FIELD_NO'] = 'Отказано';
 
 // Свойства инфоблока "Справка 2 НДФЛ"
-$MESS['IBLOCK_2_PIT_PROPERTY_EMPLOYEE'] = 'Сотрудник';
-$MESS['IBLOCK_2_PIT_PROPERTY_FROM'] = 'От';
-$MESS['IBLOCK_2_PIT_PROPERTY_TO'] = 'До';
+$MESS['IBLOCK_2_PIT_PROPERTY_PERIOD'] = 'За период';
 
 // Свойства инфоблока "Копия трудовой книжки"
 $MESS['IBLOCK_SERVICERECORD_PROPERTY_COUNT'] = 'Количество копий';

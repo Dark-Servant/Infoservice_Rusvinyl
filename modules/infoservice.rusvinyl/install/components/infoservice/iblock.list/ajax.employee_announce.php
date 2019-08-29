@@ -18,6 +18,8 @@ switch ($action) {
                 INFS_IB_EMPLOYEE_ANNOUNCE_PR_THEME => trim($request->getPost('new-employee-announce-theme'))
             ]
         ];
+        if (!empty($fileData = $request->getFile('new-employee-announce-file')))
+            $fields['DETAIL_PICTURE'] = $fileData;
 
         $employeeAnnounceIBElement = new CIBlockElement;
         if (!($employeeAnnounceId = $employeeAnnounceIBElement->Add($fields)))

@@ -24,9 +24,5 @@ $this->__component->params = (is_array($params) ? $params : []) + ['uid' => $arP
         class="rusv-button"
         id="vote-<?=$arParams['UID']?>-act"
         onmousedown="BX.addClass(this, 'feed-add-button-press')"
-        onmouseup="BX.removeClass(this,'feed-add-button-press')"><?=Loc::getMessage('VOTE_SUBMIT_BUTTON')?></a><!--
-    --><a
-        class="rusv-button"
-        href="<?=$APPLICATION->GetCurPageParam('view_result=Y', $arParams['GET_KILL'])?>"
-        id="vote-<?=$arParams['UID']?>-results" ><?=Loc::getMessage('VOTE_RESULTS')?></a>
+        onmouseup="BX.removeClass(this,'feed-add-button-press')"><?=Loc::getMessage('VOTE_SUBMIT_BUTTON')?></a>
 </div>

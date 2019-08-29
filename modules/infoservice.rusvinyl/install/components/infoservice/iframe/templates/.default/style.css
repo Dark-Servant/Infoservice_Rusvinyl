@@ -15,4 +15,5 @@ div.rusv-body-content-data {
 div.rusv-body-content-data > iframe {
     width: 100%;
     height: 100%;
+    border: 0;
 }

@@ -18,12 +18,12 @@ class Rusv2Pit extends RusvReference
      */
     public function new()
     {
-        $userId = intval($this->request->getPost('new-2-pit-user'));
-        if (!$userId || !($user = \CUser::GetById($userId)->Fetch()))
-            throw new \Exception(Loc::getMessage('ERROR_USER_ID'));
+        global $USER; 
+
+        $userId = $USER->GetId();
+        $user = \CUser::GetById($userId)->Fetch();
             
-        $dateFrom = $this->request->getPost('new-2-pit-from');
-        $dateTo = $this->request->getPost('new-2-pit-to');
+        $period = $this->request->getPost('new-2-pit-period');
         $fields = [
             'ACTIVE' => 'N',
             'NAME' => Loc::getMessage('2PIT_TITLE', [
@@ -32,13 +32,10 @@ class Rusv2Pit extends RusvReference
             ]),
             'IBLOCK_ID' => $this->optionUnits['IBlocks'][INFS_IBLOCK_2_PIT],
             'DETAIL_TEXT' => Loc::getMessage('PERIOD_TEXT', [
-                'FROM' => $dateFrom,
-                'TO' => $dateTo
+                'PERIOD' => $period
             ]),
             'PROPERTY_VALUES' => [
-                INFS_IB_2_PIT_PR_EMPLOYEE => $userId,
-                INFS_IB_2_PIT_PR_FROM => new DateTime($dateFrom),
-                INFS_IB_2_PIT_PR_TO => new DateTime($dateTo)
+                INFS_IB_2_PIT_PR_PERIOD => $period,
             ]
         ];
         $TwoPitIBElement = new \CIBlockElement;

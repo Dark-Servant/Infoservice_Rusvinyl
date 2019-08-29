@@ -39,7 +39,7 @@ $aMenuLinks = [
     ],
     [
         Loc::getMessage('MAIN_MENU_PHONEBOOK_TITLE'), 
-        'phonebook/', 
+        'useful/phonebook/', 
         [], 
         ['CODE' => 'phonebook'], 
         ''
