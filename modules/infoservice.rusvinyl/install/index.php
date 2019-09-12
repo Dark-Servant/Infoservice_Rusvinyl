@@ -651,6 +651,23 @@ class infoservice_rusvinyl extends CModule
         /**
          * Настройки для создания агентов, в "значении" указываются параметры, которые передаются
          * методу CAgent::AddAgent, с "ключами" как названия параметров
+         *     period - периодичность запуска, после чего следующий запус будет вычисляться как
+         *              next_exec = next_exec + interval;
+         *     interval - интервал (в секундах), с какой периодичностью запускать агента;
+         *     datecheck - дата первой проверки "не пора ли запустить агент" в формате текущего языка;
+         *     active - активность агента;
+         *     next_exec - дата первого запуска агента в формате текущего языка, по-умолчанию текущее время, т.е.
+         *                 после установки агента он будет тут же запущен и, если метод агета вовзращает что-то
+         *                 неправильное, то тут же будет удален;
+         *     sort - индекс сортировки;
+         *     user_id - id пользователя, с правами которого запускается агент.
+         * Параметр name указывать не надо, он берется из значения константы, название которой указано в Agents
+         * как "ключ". В значении константы указывается последняя часть namespace, название класса и метод.
+         * Параметры datecheck и next_exec поддерживают запись как у функции strtotime, т.е. есть возможность
+         * установить дату на завтра, через неделю от текущего числа и т.д.
+         * Обязательно нужно, чтобы каждый метод агента возвращал строковое значение, в котором прописан
+         * код для следующего запуска, обычно это тот же метод, иначе после запуска агент будет удален
+         * из системы
          */
         'Agents' => [],
 
@@ -1368,7 +1385,6 @@ class infoservice_rusvinyl extends CModule
             );
         return $elementId;
     }
-
     
     /**
      * Создание агентов в системе
@@ -1383,21 +1399,31 @@ class infoservice_rusvinyl extends CModule
         foreach ($optionValue as $paramName => $paramData) {
             $$paramName = $paramData;
         }
-        if (empty($name))
-            throw new Exception(Loc::getMessage('ERROR_AGENT_EMPTY_NAME', ['AGENT' => $constName]));
-            
+        $methodName = $this->nameSpaceValue . '\\' . constant($constName);
+        if (!preg_match('/^([^:]+)::(\w+)(?:\(([\W\w]*)\))?;?$/', $methodName, $methodParts))
+            return;
+
+        list(, $className, $methodName, $params) = $methodParts;
+        if (!method_exists($className, $methodName)) return;
+
+        if ($datecheck)
+            $datecheck = DateTime::createFromTimestamp(strtotime($datecheck));
+
+        if ($next_exec)
+            $next_exec = DateTime::createFromTimestamp(strtotime($next_exec));
+
         return \CAgent::AddAgent(
-            $this->nameSpaceValue . '\\' . rtrim($name, ';') . ';',
-            $this->MODULE_ID,
-            $period ?? 'N',
-            $interval ?? 60,
-            $datecheck ?? '',
-            $active ?? 'Y',
-            $next_exec ?? '',
-            $sort ?? 100,
-            $user_id ?? self::USER_ID,
-            $existError ?? false
-        );
+                    $className . '::' . $methodName . '(' . ($params ?? '') . ');',
+                    $this->MODULE_ID,
+                    $period ?? 'N',
+                    $interval ?? 60,
+                    $datecheck ?? '',
+                    $active ?? 'Y',
+                    $next_exec ?? '',
+                    $sort ?? 100,
+                    $user_id ?? self::USER_ID,
+                    $existError ?? false
+                ) ?: null;
     }
 
     /**
@@ -2240,15 +2266,15 @@ class infoservice_rusvinyl extends CModule
     protected static function deleteEmptyPath(string $fileTarget, string $where)
     {
         $result = $where . $fileTarget;
-        if (is_dir($result)) {
-            rmdir($result);
+        if (is_link($result) || !is_dir($result)) {
+            @unlink($result) || rmdir($result);
 
         } else {
-            @unlink($result);
+            rmdir($result);
         }
 
         $toDelete = true;
-        for (; $toDelete && ($fileTarget = preg_replace('/\/?[^\/]+$/', '', $fileTarget)); ) {
+        while ($toDelete && ($fileTarget = preg_replace('/\/?[^\/]+$/', '', $fileTarget))) {
             $result = $where . $fileTarget;
             $dUnit = opendir($result);
             while ($fUnit = readdir($dUnit)) {

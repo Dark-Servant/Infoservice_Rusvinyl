@@ -31,10 +31,6 @@ div.rusv-body-content-data {
     -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
 }
 
-.rusv-branbox-main:not(.rusv-full-area) {
-    border: 1px solid;
-}
-
 .rusv-branbox-main.rusv-is-editabled {
     cursor: pointer;
 }
