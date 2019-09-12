@@ -14,7 +14,7 @@ endif;?>
 <?$APPLICATION->IncludeComponent(
     'bitrix:menu', 'rusvinyl.default', 
     [
-        'ROOT_MENU_TYPE' => 'main',
+        'ROOT_MENU_TYPE' => 'brain',
         'USE_EXT' => 'Y'
     ]
 );?>
