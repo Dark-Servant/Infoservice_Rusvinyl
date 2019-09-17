@@ -36,31 +36,86 @@ abstract class Options
     }
 
     /**
-     * Общий для всех статических get/set-методов
+     * Общий для всех статических get/set/add-методов
      * 
-     * @param $method - Название метода
+     * @param $method - название метода
      * @param $params - параметры метода
      * @return mixed
      */
     public static function __callStatic($method, $params)
     {
-        if (!preg_match('/^([sg]et)(\w+)$/i', $method, $methodParts)) return;
-        $group = self::getParams()[$methodParts[2]];
+        if (!preg_match('/^([sg]et|add)(\w+)$/i', $method, $methodParts)) return;
+        list(, $actionName, $paramGroupName) = $methodParts;
+        $paramCount = count($params);
 
-        if (strcasecmp('get', $methodParts[1])) {
-            $paramsCount = count($params);
-            if ($paramsCount > 1) {
-                self::$params[$methodParts[2]][$params[0]] = $params[1];
+        switch (strtolower($actionName)) {
+            /**
+             * Обработчик методов set<Название группы>. Метод полностью перезаписывает данные
+             * конкретной группы
+             */
+            case 'set':
+                if (!$paramCount) return null;
+                
+                // сохраняет последний переданный параметр
+                return $resultValue = self::$params[$paramGroupName] = end($params);
 
-            } elseif ($paramsCount) {
-                self::$params[$methodParts[2]] = $params[0];
-            }
+            /**
+             * Обработчик методов add<Название группы>. Метод добавляет данные к конкретной группы
+             */
+            case 'add':
+                if (!$paramCount) return null;
+                
+                // берем первый параметр и запоминаем его как возвращаемое значение
+                $resultValue = $firstParam = current($params);
+                if (is_array($firstParam)) { // если этот параметр массив
+                    // то только его данные дописываем к конкретной группе
+                    self::$params[$paramGroupName] = array_replace(self::$params[$paramGroupName], $firstParam);
 
-        } else {
-            if (empty($params)) return $group;
+                } elseif ($paramCount < 2) { // если первый параметр единственный переданный параметр
+                    // то добавляем его к параметрам конкретной группы
+                    self::$params[$paramGroupName][] = $firstParam;
 
-            if (!empty($group[$params[0]]))
-                return $group[$params[0]];
+                // если переданно несколько параметров, и первый либо целочисленное значение или непустая строка
+                } elseif (is_numeric($firstParam) || (is_string($firstParam) && !empty($firstParam))) {
+                    /**
+                     * то в конкретной группе переписываем параметр с "ключом" равным значению первого параметра
+                     * на значение последнего параметра
+                     */
+                    $resultValue = end($params);
+                    self::$params[$paramGroupName][$firstParam] = $resultValue;
+
+                } else {
+                    return null;
+                }
+                return $resultValue;
+
+            /**
+             * По-умолчанию, обработчик методов get<Название группы>. Метод берет данные из конкретной группы
+             */
+            default:
+                /**
+                 * Получаем данные конкретной группы, и если не было переданно ни одного параметра,
+                 * то возвращаем данные этой группы
+                 */
+                $group = self::getParams()[$paramGroupName];
+                if (!$paramCount) return $group;
+
+                /**
+                 * Если были указанны параметры, то берем те данные, которые хранятся под "ключами", названия
+                 * которых указаны в параметрах
+                 */
+                $resultValue = [];
+                foreach ($params as $paramName) {
+                    if (!is_numeric($paramName) && (!is_string($paramName) || empty($paramName))) continue;
+
+                    $resultValue[$paramName] = $group[$paramName];
+                }
+
+                /**
+                 * Если параметров было переданно больше одно, то возвращаем весь собранный результат,
+                 * иначе только значение первого параметра
+                 */
+                return $paramCount > 1 ? $resultValue : current($resultValue);
         }
     }
 }

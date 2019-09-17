@@ -12,6 +12,7 @@
     };
     var rusvClass = {
         fixed: 'rusv-fixed',
+        hidden: 'rusv-hidden',
 
         // обязательны для вызова модальных окон
         inited: 'rusv-inited',
