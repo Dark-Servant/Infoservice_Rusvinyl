@@ -759,7 +759,7 @@ class infoservice_rusvinyl extends CModule
 
     /**
      * Описание обработчиков событий. Под "ключом" указывается название другого модуля, события которого
-     * нужно обрабатывать, в "значении" указывается массив с навазниями классов этого модуля, которые
+     * нужно обрабатывать, в "значении" указывается массив с названиями классов этого модуля, которые
      * будут отвечать за обработку событий. Сам класс находится в папке lib модуля.
      * У названия класса не надо указывать пространство имен, кроме той части, что идет после
      * названий партнера и модуля. Для обработки конкретных событий эти классы должны иметь
@@ -1014,7 +1014,7 @@ class infoservice_rusvinyl extends CModule
         $fieldId = $fieldEntity->Add($fields);
         if (!$fieldId)
             throw new Exception(
-                Loc::getMessage('ERROR_USERFIELD_CREATING', ['NAME' => $constName]) . PHP_EOL .
+                Loc::getMessage('ERROR_USER_FIELD_CREATING', ['NAME' => $constName]) . PHP_EOL .
                 $APPLICATION->GetException()->GetString()
             );
         
@@ -1087,7 +1087,7 @@ class infoservice_rusvinyl extends CModule
                     || !isset(static::OPTIONS['UserGroup'][$constName]))
                     continue;
                 $constValue = constant($constName);
-                if (!is_numeric($userGroupId = Options::getUserGroup($constValue)) || empty($userGroupId))
+                if (!is_integer($userGroupId = Options::getUserGroup($constValue)) || empty($userGroupId))
                     continue;
 
                 $groupIds[] = $userGroupId;
@@ -1183,7 +1183,7 @@ class infoservice_rusvinyl extends CModule
 
         $permissions = [];
         foreach ($permissionsDefault as $groupId => $accessValue) {
-            if (is_numeric($groupId)) {
+            if (is_integer($groupId)) {
                 $permissions[$groupId] = $accessValue;
 
             } elseif (
@@ -1621,7 +1621,7 @@ class infoservice_rusvinyl extends CModule
 
                 $value = $this->$methodName($constName, $optionValue);
                 if (!isset($value)) continue;
-                $optionMethod = 'set' . $methodNameBody;
+                $optionMethod = 'add' . $methodNameBody;
                 Options::$optionMethod(constant($constName), $value);
             }
         }
@@ -1691,7 +1691,7 @@ class infoservice_rusvinyl extends CModule
         foreach (static::EVENTS_HANDLES as $moduleName => $classNames) {
             foreach ($classNames as $className) {
                 $classNameValue = $this->nameSpaceValue . '\\' . $className;
-                if (!class_exists($classNameValue)) return;
+                if (!class_exists($classNameValue)) continue;
 
                 $registerModuleName = $moduleName == 'highloadblock' ? '' : $moduleName;
                 $reflectionClass = new ReflectionClass($classNameValue);
@@ -1795,7 +1795,7 @@ class infoservice_rusvinyl extends CModule
                     if (file_exists($fullPath)) {
                         $savingFile = $newResult . '.' . date('YmdHis');
                         rename($fullPath, $_SERVER['DOCUMENT_ROOT'] . $savingFile);
-                        Options::setWWWFiles($moduleFile['target'], $savingFile);
+                        Options::addWWWFiles($moduleFile['target'], $savingFile);
                     }
                     $fullTagerPath = __DIR__ . '/www/' . $moduleFile['target'];
                     if (file_exists($fullTagerPath)) symlink($fullTagerPath, $fullPath);
@@ -2106,7 +2106,7 @@ class infoservice_rusvinyl extends CModule
         if (!Loader::includeModule('iblock')) return;
 
         $iblockCode = constant($constName);
-        if (empty($iblockId = Options::getIBlocks($iblockCode)) || !is_numeric($iblockId))
+        if (empty($iblockId = Options::getIBlocks($iblockCode)) || !is_integer($iblockId))
             return;
 
         CIBlock::Delete($iblockId);
