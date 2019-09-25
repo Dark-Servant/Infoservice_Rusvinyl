@@ -1,6 +1,6 @@
 ;(function() {
     var ajaxURL = document.location.origin + '/local/components/infoservice/iblock.list/ajax.php?action=';
-    var handlebarUnits= {
+    var handlebarUnits = {
         thanksList: {selector: '#rusv-iblock-thanks-list-template'},
         questionList: {selector: '#rusv-iblock-question-list-template'},
         employee_announceList: {selector: '#rusv-iblock-employee-announce-list-template'},

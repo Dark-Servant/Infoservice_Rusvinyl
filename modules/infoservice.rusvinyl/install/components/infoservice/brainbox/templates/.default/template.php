@@ -1,12 +1,18 @@
 <?
-if ($arResult['isAdmin']):?>
+ $addClass = '';
+if ($arResult['isAdmin']):
+    $addClass = ' rusv-is-editabled';
+    if (empty($arResult['MAIN_IMAGE']['SRC']))
+        $addClass .= ' rusv-is-empty';?>
 <label>
     <input type="file" class="rusv-branbox-main-file-input"><?
 endif;?>
-    <div class="rusv-branbox-main<?=$arResult['isAdmin'] ? ' rusv-is-editabled' : ''?><?=$arResult['MAIN_IMAGE'] ? ' rusv-full-area' : ''?>">
-        <img<?if ($arResult['MAIN_IMAGE']):?> src="<?=$arResult['MAIN_IMAGE']['SRC'] . '?' . time()?>"<?endif;?>>
-    </div>
-    <pre><?print_r($arResult['IMAGE'])?></pre><?
+    <div
+        class="rusv-branbox-main<?=$addClass?>"><?
+        if (!empty($arResult['MAIN_IMAGE']['SRC'])):?>
+        <img src="<?=$arResult['MAIN_IMAGE']['SRC']?>"><?
+        endif;?>
+    </div><?
 if ($arResult['isAdmin']):?>
 </label><?
 endif;?>
