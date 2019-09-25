@@ -22,11 +22,6 @@ div.rusv-body-content-data {
     max-width: none;
 }
 
-@media screen and (max-width: 1650px) {
-    .rusv-body-content-data {
-    }
-}
-
 .rusv-branbox-main {
     margin-bottom: 35px;
 }
