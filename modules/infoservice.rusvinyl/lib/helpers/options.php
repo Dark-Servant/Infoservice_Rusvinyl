@@ -5,7 +5,27 @@ use Bitrix\Main\Config\Option;
 
 abstract class Options
 {
+    const OPTION_NAME = 'installed';
+
     protected static $params;
+
+    /**
+     * Загрузка всех параметров модуля
+     * 
+     * @return array
+     */
+    protected static function &loadParams()
+    {
+        if (!self::$params) {
+            $data = Option::get(
+                        INFS_RUSVINYL_MODULE_ID,
+                        self::OPTION_NAME, false,
+                        \CSite::GetDefSite()
+                    );
+            self::$params = $data ? json_decode($data, true) : [];
+        }
+        return self::$params;
+    }
 
     /**
      * Получение всех параметров модуля
@@ -14,15 +34,7 @@ abstract class Options
      */
     public static function getParams()
     {
-        if (!self::$params) {
-            $data = Option::get(
-                        INFS_RUSVINYL_MODULE_ID,
-                        INFS_RUSVINYL_OPTION_NAME, false,
-                        \CSite::GetDefSite()
-                    );
-            self::$params = $data ? json_decode($data, true) : [];
-        }
-        return self::$params;
+        return self::loadParams();
     }
 
     /**
@@ -32,7 +44,7 @@ abstract class Options
      */
     public static function save()
     {
-        Option::set(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_NAME, json_encode(self::getParams()));
+        Option::set(INFS_RUSVINYL_MODULE_ID, self::OPTION_NAME, json_encode(self::getParams()));
     }
 
     /**
@@ -57,7 +69,7 @@ abstract class Options
                 if (!$paramCount) return null;
                 
                 // сохраняет последний переданный параметр
-                return $resultValue = self::$params[$paramGroupName] = end($params);
+                return $resultValue = self::loadParams()[$paramGroupName] = end($params);
 
             /**
              * Обработчик методов add<Название группы>. Метод добавляет данные к конкретной группы
@@ -69,11 +81,11 @@ abstract class Options
                 $resultValue = $firstParam = current($params);
                 if (is_array($firstParam)) { // если этот параметр массив
                     // то только его данные дописываем к конкретной группе
-                    self::$params[$paramGroupName] = array_replace(self::$params[$paramGroupName], $firstParam);
+                    self::loadParams()[$paramGroupName] = array_replace(self::loadParams()[$paramGroupName], $firstParam);
 
                 } elseif ($paramCount < 2) { // если первый параметр единственный переданный параметр
                     // то добавляем его к параметрам конкретной группы
-                    self::$params[$paramGroupName][] = $firstParam;
+                    self::loadParams()[$paramGroupName][] = $firstParam;
 
                 // если переданно несколько параметров, и первый либо целочисленное значение или непустая строка
                 } elseif (is_numeric($firstParam) || (is_string($firstParam) && !empty($firstParam))) {
@@ -82,7 +94,7 @@ abstract class Options
                      * на значение последнего параметра
                      */
                     $resultValue = end($params);
-                    self::$params[$paramGroupName][$firstParam] = $resultValue;
+                    self::loadParams()[$paramGroupName][$firstParam] = $resultValue;
 
                 } else {
                     return null;

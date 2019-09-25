@@ -2,11 +2,14 @@
 use Bitrix\Main\{Localization\Loc, Loader, EventManager, Config\Option};
 use Bitrix\Highloadblock\{HighloadBlockTable, HighloadBlockLangTable};
 use Bitrix\Iblock\PropertyTable;
-use Infoservice\RusVinyl\Helpers\Options;
+use Infoservice\RusVinyl\{
+    Helpers\Options,
+    EventHandles\Employment
+};
 
 class infoservice_rusvinyl extends CModule
 {
-    public $MODULE_ID = 'infoservice.rusvinyl';
+    public $MODULE_ID;
     public $MODULE_NAME;
     public $MODULE_VERSION;
     public $MODULE_VERSION_DATE;
@@ -28,8 +31,7 @@ class infoservice_rusvinyl extends CModule
      * создать методы init<"Ключ">Options и remove<"Ключ">Options. В каждой группе опции
      * "ключ" - название константы, которая хранит название опции, эта константа должны быть бъявлена в
      * файле include.php, под "значением" описываются данные для ее инициализации. Данные опций будут
-     * сохранены в опциях модуля в параметре с именем указанным в константе INFS_RUSVINYL_OPTION_NAME,
-     * каждый в своей группе
+     * сохранены в опциях модуля, каждый в своей группе
      */
     const OPTIONS = [
         /**
@@ -821,6 +823,7 @@ class infoservice_rusvinyl extends CModule
 
     function __construct()
     {
+        $this->MODULE_ID = str_replace('_', '.', get_called_class());
         $this->MODULE_NAME = Loc::getMessage('MODULE_NAME');
         $this->MODULE_DESCRIPTION = Loc::getMessage('MODULE_DESCRIPTION');
 
@@ -1951,7 +1954,7 @@ class infoservice_rusvinyl extends CModule
         RegisterModule($this->MODULE_ID);
         $this->initDefinedContants();
 
-        Infoservice\RusVinyl\EventHandles\Employment::setBussy();
+        Employment::setBussy();
         try {
             $this->initOptions();
             $this->addAddrRules();
@@ -1963,13 +1966,13 @@ class infoservice_rusvinyl extends CModule
             $this->runSQLFile('install');
             Options::setConstants(array_keys($this->definedContants));
             Options::save();
-            Infoservice\RusVinyl\EventHandles\Employment::setFree();
+            Employment::setFree();
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_INSTALLED'), __DIR__ . '/step1.php');
 
         } catch (Exception $error) {
             $this->removeAll();
             $_SESSION['MODULE_ERROR'] = $error->getMessage();
-            Infoservice\RusVinyl\EventHandles\Employment::setFree();
+            Employment::setFree();
             $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_NOT_INSTALLED'), __DIR__ . '/error.php');
         }
     }
@@ -2410,13 +2413,13 @@ class infoservice_rusvinyl extends CModule
     {
         global $APPLICATION;
         Loader::IncludeModule($this->MODULE_ID);
-        Infoservice\RusVinyl\EventHandles\Employment::setBussy();
+        Employment::setBussy();
         $this->definedContants = array_fill_keys(Options::getConstants(), '');
         array_walk($this->definedContants, function(&$value, $key) { $value = constant($key); });
 
         $this->removeAll();
-        Option::delete($this->MODULE_ID, ['name' => INFS_RUSVINYL_OPTION_NAME]);
-        Infoservice\RusVinyl\EventHandles\Employment::setFree();
+        Option::delete($this->MODULE_ID);
+        Employment::setFree();
         $APPLICATION->IncludeAdminFile(Loc::getMessage('MODULE_WAS_DELETED'), __DIR__ . '/unstep1.php');
     }
 

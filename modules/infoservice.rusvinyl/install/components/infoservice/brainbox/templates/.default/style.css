@@ -22,22 +22,32 @@ div.rusv-body-content-data {
     max-width: none;
 }
 
+@media screen and (max-width: 1650px) {
+    .rusv-body-content-data {
+    }
+}
+
 .rusv-branbox-main {
-    height: 350px;
     margin-bottom: 35px;
-    overflow: hidden;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
 }
 
 .rusv-branbox-main.rusv-is-editabled {
     cursor: pointer;
 }
 
+.rusv-branbox-main.rusv-is-empty.rusv-is-editabled {
+    height: 100px;
+}
+
 .rusv-branbox-main img {
     width: 100%;
-    height: 100%;
+}
+
+.rusv-branbox-main img,
+.rusv-branbox-main.rusv-is-empty.rusv-is-editabled {
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
 }
 
 .rusv-branbox-menu .rusv-main-menu {
@@ -55,17 +65,17 @@ div.rusv-body-content-data {
     color: #5A5A5A;
     text-align: center;
     text-transform: inherit;
-    font-size: 20px;
+    font-size: 26px;
 }
 
 .rusv-branbox-menu .rusv-main-menu-unit:before {
     content: '';
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     display: block;
     border-radius: 100px;
     border: 1px solid red;
-    margin-left: calc((100% - 200px) / 2);
+    margin-left: calc((100% - 180px) / 2);
     margin-bottom: 25px;
     background-position: center;
     background-size: 60%;
@@ -76,21 +86,17 @@ div.rusv-body-content-data {
     .rusv-branbox-menu .rusv-main-menu-unit,
     .rusv-branbox-menu .rusv-main-menu-unit:visited {
         height: 270px;
+        font-size: 24px;
     }
 
     .rusv-branbox-menu .rusv-main-menu-unit:before {
-        width: 170px;
-        height: 170px;
-        margin-left: calc((100% - 180px) / 2);
+        width: 160px;
+        height: 160px;
+        margin-left: calc((100% - 160px) / 2);
     }
 }
 
 @media screen and (max-width: 1450px) {
-    .rusv-branbox-menu .rusv-main-menu-unit,
-    .rusv-branbox-menu .rusv-main-menu-unit:visited {
-        height: 240px;
-    }
-
     .rusv-branbox-menu .rusv-main-menu-unit:before {
         width: 150px;
         height: 150px;
@@ -101,7 +107,8 @@ div.rusv-body-content-data {
 @media screen and (max-width: 1450px) {
     .rusv-branbox-menu .rusv-main-menu-unit,
     .rusv-branbox-menu .rusv-main-menu-unit:visited {
-        height: 220px;
+        height: 240px;
+        font-size: 22px;
     }
 
     .rusv-branbox-menu .rusv-main-menu-unit:before {

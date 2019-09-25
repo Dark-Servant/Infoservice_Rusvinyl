@@ -1,5 +1,5 @@
 <?
-use Bitrix\Main\{Localization\Loc, Loader, Config\Option};
+use Bitrix\Main\Config\Option;
 
 if (!defined("B_PROLOG_INCLUDED") || (B_PROLOG_INCLUDED !== true)) die();
 
@@ -18,6 +18,7 @@ class BraingBox extends \CBitrixComponent
             $this->arResult['currentUserId'] = $USER->GetId();
             $this->arResult['isAdmin'] = $USER->isAdmin();
             $fileId = Option::get(INFS_RUSVINYL_MODULE_ID, INFS_RUSVINYL_OPTION_BRAINBOX_IMAGE);
+
             if ($fileId) {
                 $fileData = CFile::GetFileArray($fileId);
                 if (file_exists($_SERVER['DOCUMENT_ROOT'] . $fileData['SRC']))

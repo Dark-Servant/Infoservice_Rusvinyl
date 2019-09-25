@@ -1,7 +1,6 @@
 <?
 // Основные константы
 define('INFS_RUSVINYL_MODULE_ID', 'infoservice.rusvinyl');
-define('INFS_RUSVINYL_OPTION_NAME', 'installed');
 
 // Данные о версии модуля
 require __DIR__ . '/install/version.php';
