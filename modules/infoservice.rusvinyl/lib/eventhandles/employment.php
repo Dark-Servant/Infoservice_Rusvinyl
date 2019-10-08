@@ -3,6 +3,8 @@ namespace Infoservice\RusVinyl\EventHandles;
 
 abstract class Employment
 {
+    private static $bussyStatus = false;
+
     /**
      * Устанавливает занятость для всех обработчиков событий
      *
@@ -10,9 +12,9 @@ abstract class Employment
      */
     public static function setBussy()
     {
-        if ($_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS']) return false;
+        if (self::$bussyStatus) return false;
         
-        return $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'] = true;
+        return self::$bussyStatus = true;
     }
 
     /**
@@ -22,8 +24,8 @@ abstract class Employment
      */
     public static function setFree()
     {
-        $oldFree = $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'];
-        $_SESSION[INFS_RUSVINYL_MODULE_ID]['PROCESS'] = false;
+        $oldFree = self::$bussyStatus;
+        self::$bussyStatus = false;
         return !$oldFree;
     }
 

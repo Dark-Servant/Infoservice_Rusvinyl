@@ -23,6 +23,7 @@ class infoservice_rusvinyl extends CModule
     const ALL_USER_GROUP_ID = 2;
     const SIMPLE_USER_GROUP_ID = 3;
     const USER_ID = 1;
+    const VOTE_ACCESS_ROLE_ID = 2;
     
     /**
      * Опции, которые необходимо добавить в проект, сгруппированные по названию методов, которые их
@@ -74,6 +75,21 @@ class infoservice_rusvinyl extends CModule
          * За SYMBOLIC_NAME будет браться значение константы, название которой указано в "ключе"
          * Остальные параметры, кроме TITLE, ACTIVE и SYMBOLIC_NAME, такие же, как и при обычном
          * создании группы опросов
+         * Для указания доступа конкретным группам надо использовать GROUP_ACCESS, где "ключ", 
+         * если указан как строка, то должен хранить название константы, значение которой либо ID
+         * уже существующей пользовательской группы, либо код, под которым хранится ID
+         * пользовательской группы, созданной модулем, т.е. быть того же значения, как и "ключ" в
+         * настройках UserGroup. Если "ключ" не строковое значение, то строковым должно быть
+         * "значение", где действуют те же правила, как и для строкового "ключа".
+         * Если "ключ" строковое значние, то "значение" должно быть идентификатором доступа.
+         * Все идентификаторы доступа для опросов указываются модулем vote в 
+         * $GLOBALS["aVotePermissions"], где доступы указаны как
+         *     0. закрыт
+         *     1. смотреть результаты
+         *     2. принять участие (используется по-умолчанию)
+         *     3. изменить опрос
+         * Если GROUP_ACCESS не используется, то для всех существующих и активных 
+         * пользовательских групп устанавливаются права доступа по-умолчанию
          */
         'VoteChannels' => [
             'INFS_RUSVINYL_SIMPLE_VOTE_CODE' => [
@@ -1512,7 +1528,6 @@ class infoservice_rusvinyl extends CModule
     public function initVoteChannelsOptions(string $constName, array $optionValue)
     {
         if (!Loader::includeModule('vote')) return;
- 
         $title = self::checkLangCode($optionValue['LANG_CODE'], 'VOTE_GROUP_UNIT', ['VOTE_GROUP' => $constName]);
         $data = [
                     'TITLE' => $title,
@@ -1520,7 +1535,7 @@ class infoservice_rusvinyl extends CModule
                     'SYMBOLIC_NAME' => constant($constName),
                 ]
               + array_filter($optionValue, function($key) {
-                    return !in_array($key, ['LANG_CODE']);
+                    return !in_array($key, ['LANG_CODE', 'GROUP_ACCESS']);
                 }, ARRAY_FILTER_USE_KEY)
               + [
                     'USE_CAPTCHA' => 'N',
@@ -1532,6 +1547,36 @@ class infoservice_rusvinyl extends CModule
         if (!$channelId)
             throw new Exception(Loc::getMessage('ERROR_VOTE_GROUP_UNIT_CREATING', ['VOTE_GROUP' => $constName]));
 
+        $defaultAccessId = $GLOBALS['aVotePermissions']['reference_id'][self::VOTE_ACCESS_ROLE_ID];
+        $userGroupIds = [];
+        // Если указан параметр для доступов пользовательским группам
+        if (is_array($optionValue['GROUP_ACCESS'])) {
+            // Устанавливаем конкретные доступы для указанных групп
+            foreach ($optionValue['GROUP_ACCESS'] as $groupCode => $groupAccess) {
+                $accessId = $groupAccess;
+                if (!is_string($groupCode)) {
+                    if (!is_string($groupAccess)) continue;
+
+                    $groupCode = $groupAccess;
+                    $accessId = $defaultAccessId;
+                }
+                if (!defined($groupCode) || empty($groupCode = constant($groupCode))
+                    || !is_integer($userGroupId = Options::getUserGroup($groupCode))
+                    || !is_integer($userGroupId = constant($groupCode))
+                    || empty($userGroupId)) continue;
+
+                $userGroupIds[$userGroupId] = $accessId;
+            }
+
+        // Если не указан параметр для доступов пользовательским группам,
+        // указать доступ для всех групп по-умолчанию
+        } else {
+            $groups = CGroup::GetList($field = 'ID', $dir = 'ASC', ['ACTIVE' => 'Y']);
+            while ($group = $groups->Fetch()) {
+                $userGroupIds[$group['ID']] = $defaultAccessId;
+            }
+        }
+        CVoteChannel::SetAccessPermissions($channelId, $userGroupIds);
         return $channelId;
     }
 
